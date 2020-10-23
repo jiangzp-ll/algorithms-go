@@ -1,5 +1,6 @@
 package sort
 
+// MergeSort 归并排序
 func MergeSort(in []int) []int {
 	if len(in) == 1 {
 		return in
@@ -16,6 +17,7 @@ func MergeSort(in []int) []int {
 	return result
 }
 
+// merge 合并两个切片
 func merge(left []int, right []int) []int {
 	ret := make([]int, len(left)+len(right))
 	var l, r, x int
