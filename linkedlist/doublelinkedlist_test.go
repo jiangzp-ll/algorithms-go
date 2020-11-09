@@ -36,9 +36,9 @@ func TestDoubleLinkedList_FindByIndex(t *testing.T) {
 	node := doubleLinkedList.FindByIndex(3)
 	doubleLinkedList.Print()
 	if node.value == 103 {
-		t.Log("通过索引查找结点成功")
+		t.Log("通过索引查找节点成功")
 	} else {
-		t.Error("通过索引查找结点失败")
+		t.Error("通过索引查找节点失败")
 	}
 }
 
@@ -51,9 +51,9 @@ func TestDoubleLinkedList_InsertAfter(t *testing.T) {
 	result := doubleLinkedList.InsertAfter(node, 0)
 	doubleLinkedList.Print()
 	if result && doubleLinkedList.FindByIndex(4).value == 0{
-		t.Log("插入结点成功！")
+		t.Log("插入节点成功！")
 	} else {
-		t.Error("插入结点失败！")
+		t.Error("插入节点失败！")
 	}
 }
 
@@ -66,9 +66,9 @@ func TestDoubleLinkedList_InsertBefore(t *testing.T) {
 	result := doubleLinkedList.InsertBefore(node, 0)
 	doubleLinkedList.Print()
 	if result && doubleLinkedList.FindByIndex(3).value == 0{
-		t.Log("插入结点成功！")
+		t.Log("插入节点成功！")
 	} else {
-		t.Error("插入结点失败！")
+		t.Error("插入节点失败！")
 	}
 }
 
@@ -84,9 +84,9 @@ func TestDoubleLinkedList_DeleteNode(t *testing.T) {
 	}
 	newNode := doubleLinkedList.FindByIndex(3)
 	if newNode.value == 104 {
-		t.Log("删除结点成功")
+		t.Log("删除节点成功")
 	} else {
-		t.Error("删除结点失败")
+		t.Error("删除节点失败")
 	}
 }
 
@@ -102,9 +102,9 @@ func TestDoubleLinkedList_DeleteHead(t *testing.T) {
 	doubleLinkedList.Print()
 	newHead := doubleLinkedList.head
 	if newHead.value == 101 && doubleLinkedList.length == 4{
-		t.Log("删除链表头结点成功")
+		t.Log("删除链表头节点成功")
 	} else {
-		t.Error("删除链表头结点失败")
+		t.Error("删除链表头节点失败")
 	}
 }
 
@@ -120,8 +120,8 @@ func TestDoubleLinkedList_DeleteTail(t *testing.T) {
 	doubleLinkedList.Print()
 	newHead := doubleLinkedList.tail
 	if newHead.value == 103 && doubleLinkedList.length == 4 {
-		t.Log("删除链表头结点成功")
+		t.Log("删除链表头节点成功")
 	} else {
-		t.Error("删除链表头结点失败")
+		t.Error("删除链表头节点失败")
 	}
 }

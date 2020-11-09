@@ -130,8 +130,69 @@ func (l *LinkedList) Print() {
 		format += fmt.Sprintf("%+v", cur.GetValue())
 		cur = cur.next
 		if nil != cur {
-			format+="->"
+			format += "->"
 		}
 	}
 	fmt.Println(format)
+}
+
+// Reverse 单链表反转
+func (l *LinkedList) Reverse() {
+	if nil == l.head || nil == l.head.next {
+		return
+	}
+	var pre *ListNode
+	cur := l.head.next
+	for nil != cur {
+		next := cur.next
+		cur.next = pre
+		pre, cur = cur, next
+	}
+	l.head.next = pre
+}
+
+// HasCycle 判断链表是否有环
+func (l *LinkedList) HasCycle() bool {
+	if nil != l.head {
+		slow, fast := l.head, l.head
+		for nil != fast && nil != fast.next {
+			slow = slow.next
+			fast = fast.next.next
+			if slow == fast {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// DeleteReciprocal 删除倒数第几个节点
+func (l *LinkedList) DeleteReciprocal(index int) *ListNode {
+	if index < 0 || index > l.length || nil == l.head || nil == l.head.next {
+		return nil
+	}
+	cur := l.head
+	for i := 0; i <= l.length-index-1; i++ {
+		cur = cur.next
+	}
+	dNode := cur.next
+	newNext := cur.next.next
+	cur.next = newNext
+	return dNode
+}
+
+// GetMiddle 获取链表中间节点
+func (l *LinkedList) GetMiddle() *ListNode {
+	if nil == l.head || nil == l.head.next {
+		return nil
+	}
+	if nil == l.head.next.next {
+		return l.head.next
+	}
+	slow, fast := l.head, l.head
+	for nil != fast && nil != fast.next {
+		slow = slow.next
+		fast = fast.next.next
+	}
+	return slow
 }
