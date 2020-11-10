@@ -62,6 +62,7 @@ func (s *ArrayStack) Top() interface{} {
 
 // Flush
 func (s *ArrayStack) Flush() {
+	s.data = make([]interface{}, 0, 32)
 	s.top = -1
 }
 

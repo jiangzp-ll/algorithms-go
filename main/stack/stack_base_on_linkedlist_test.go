@@ -1,6 +1,8 @@
 package stack
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestLinkedListStack_Push(t *testing.T) {
 	stack := NewLinkedListStack()
@@ -40,5 +42,18 @@ func TestLinkedListStack_Top(t *testing.T) {
 		t.Log("返回栈顶元素成功")
 	} else {
 		t.Error("返回栈顶元素失败")
+	}
+}
+
+func TestLinkedListStack_Flush(t *testing.T) {
+	stack := NewLinkedListStack()
+	for i := 0; i < 5; i++ {
+		stack.Push(i)
+	}
+	stack.Flush()
+	if nil == stack.topNode {
+		t.Log("清空栈成功")
+	} else {
+		t.Error("清空栈失败")
 	}
 }

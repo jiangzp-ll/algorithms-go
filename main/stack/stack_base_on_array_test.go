@@ -1,6 +1,9 @@
 package stack
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestArrayStack_Push(t *testing.T) {
 	stack := NewArrayStack()
@@ -40,5 +43,19 @@ func TestArrayStack_Top(t *testing.T) {
 		t.Log("获取栈顶元素成功")
 	} else {
 		t.Error("获取栈顶元素失败")
+	}
+}
+
+func TestArrayStack_Flush(t *testing.T) {
+	stack := NewArrayStack()
+	for i := 0; i < 5; i++ {
+		stack.Push(i)
+	}
+	stack.Flush()
+	fmt.Println("after:", stack.data)
+	if stack.top == -1 && len(stack.data) == 0{
+		t.Log("清空栈成功")
+	} else {
+		t.Error("清空栈失败")
 	}
 }

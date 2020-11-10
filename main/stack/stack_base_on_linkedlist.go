@@ -54,7 +54,7 @@ func (s *LinkedListStack) Top() interface{} {
 }
 
 // Flush 清空栈
-func (s LinkedListStack) Flush() {
+func (s *LinkedListStack) Flush() {
 	s.topNode = nil
 }
 
