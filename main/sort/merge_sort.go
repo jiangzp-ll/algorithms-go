@@ -2,7 +2,7 @@ package sort
 
 // MergeSort 归并排序
 func MergeSort(in []int) []int {
-	if len(in) == 1 {
+	if len(in) <= 1 {
 		return in
 	}
 
