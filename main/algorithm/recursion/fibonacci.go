@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/zepeng-jiang/go-basic-demo/main/sort"
+	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/sort"
 )
 
 // 递归实现斐波那契数列
