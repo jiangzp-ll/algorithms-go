@@ -36,6 +36,16 @@ func NewLinkedList() *LinkedList {
 	return &LinkedList{NewListNode(0), 0}
 }
 
+// GetHead 获取链表头
+func (l *LinkedList) GetHead() *ListNode {
+	return l.head
+}
+
+// GetLength 获取链表长度
+func (l *LinkedList) GetLength() int {
+	return l.length
+}
+
 // InsertAfter 在某个结点后插入结点
 func (l *LinkedList) InsertAfter(p *ListNode, v interface{}) bool {
 	if nil == p {

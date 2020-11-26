@@ -22,6 +22,27 @@ func NewArrayQueue(n int) *ArrayQueue {
 	}
 }
 
+// GetQueue
+func (q *ArrayQueue) GetQueue() []interface{} {
+	return q.queue
+}
+
+// GetCapacity
+func (q *ArrayQueue) GetCapacity() int {
+	return q.capacity
+}
+
+// GetHead
+func (q *ArrayQueue) GetHead() int {
+	return q.head
+}
+
+// GetTail
+func (q *ArrayQueue) GetTail() int {
+	return q.tail
+}
+
+
 // EnQueue 入队
 func (q *ArrayQueue) EnQueue(v interface{}) bool {
 	if q.capacity == q.tail {

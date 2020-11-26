@@ -1,4 +1,4 @@
-package main
+package recursion
 
 import "fmt"
 
@@ -10,10 +10,8 @@ type RangeType struct {
 }
 
 // NewRangeArray 全排列
-func NewRangeArray(n int) *RangeType {
-	return &RangeType{
-		make([]interface{}, n),
-	}
+func NewRangeArray(val []interface{}) *RangeType {
+	return &RangeType{value:val}
 }
 
 // RangeAll 全排列

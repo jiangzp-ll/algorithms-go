@@ -2,15 +2,16 @@ package queue
 
 import (
 	"fmt"
+	"github.com/zepeng-jiang/go-basic-demo/main/data-structure/queue"
 	"testing"
 )
 
 func TestLinkedListQueue_EnQueue(t *testing.T) {
-	q := NewLinkedListQueue()
+	q := queue.NewLinkedListQueue()
 	for i := 0; i < 5; i++ {
 		q.EnQueue(i)
 	}
-	if q.head.value == 0 && q.tail.value == 4 {
+	if q.GetHead().GetValue() == 0 && q.GetTail().GetValue() == 4 {
 		t.Log("入队成功")
 	} else {
 		t.Error("入队失败")
@@ -18,7 +19,7 @@ func TestLinkedListQueue_EnQueue(t *testing.T) {
 }
 
 func TestLinkedListQueue_DeQueue(t *testing.T) {
-	q := NewLinkedListQueue()
+	q := queue.NewLinkedListQueue()
 	for i := 0; i < 5; i++ {
 		q.EnQueue(i)
 	}
@@ -32,7 +33,7 @@ func TestLinkedListQueue_DeQueue(t *testing.T) {
 }
 
 func TestLinkedListQueue_ToString(t *testing.T) {
-	q := NewLinkedListQueue()
+	q := queue.NewLinkedListQueue()
 	for i := 0; i < 5; i++ {
 		q.EnQueue(i)
 	}

@@ -43,6 +43,16 @@ func NewSkipList() *SkipList {
 	return &SkipList{head, 1, 0}
 }
 
+// GetValue
+func (n *skipListNode) GetValue() interface{} {
+	return n.v
+}
+
+// GetScore
+func (n *skipListNode) GetScore() int {
+	return n.score
+}
+
 // GetLength 获取跳表长度
 func (sl *SkipList) GetLength() int {
 	return sl.length

@@ -1,10 +1,13 @@
 package sort
 
-import "testing"
+import (
+	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/sort"
+	"testing"
+)
 
 func TestCountingSort(t *testing.T) {
 	arr := []int{1, 6, 3, 5, 8, 6, 4}
-	ret := CountingSort(arr)
+	ret := sort.CountingSort(arr)
 	if ret[0] == 1 && ret[len(arr)-1] == 8 {
 		t.Log("计数排序成功")
 	} else {
@@ -14,7 +17,7 @@ func TestCountingSort(t *testing.T) {
 
 func TestCountingSortTwo(t *testing.T) {
 	arr := []int{1, 6, 3, 5, 8, 6, 4}
-	ret := CountingSortTwo(arr)
+	ret := sort.CountingSortTwo(arr)
 	if ret[0] == 1 && ret[len(arr)-1] == 8 {
 		t.Log("计数排序成功")
 	} else {

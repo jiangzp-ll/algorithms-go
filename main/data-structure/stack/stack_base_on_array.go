@@ -20,6 +20,16 @@ func NewArrayStack() *ArrayStack {
 	}
 }
 
+// GetTop
+func (s *ArrayStack) GetTop() int {
+	return s.top
+}
+
+// GetData
+func (s *ArrayStack) GetData() []interface{} {
+	return s.data
+}
+
 // IsEmpty 是否为空
 func (s *ArrayStack) IsEmpty() bool {
 	if s.top < 0 {

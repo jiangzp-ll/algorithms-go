@@ -22,6 +22,19 @@ func NewLinkedListStack() *LinkedListStack {
 	return &LinkedListStack{nil}
 }
 
+// GetNext
+func (n *Node) GetNext() *Node {
+	return n.next
+}
+
+// GetValue
+func (n *Node) GetValue() interface{} {
+	return n.value
+}
+// GetTopNode
+func (s *LinkedListStack) GetTopNode() *Node {
+	return s.topNode
+}
 // IsEmpty 是否为空
 func (s *LinkedListStack) IsEmpty() bool {
 	return s.topNode == nil

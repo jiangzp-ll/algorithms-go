@@ -17,7 +17,7 @@ func BinarySearch(arr []int, t int) int {
 	low := 0
 	high := length - 1
 	for low <= high {
-		mid = low + ((high - low) >> 2)
+		mid = low + ((high - low) >> 1)
 		if arr[mid] == t {
 			return mid
 		}

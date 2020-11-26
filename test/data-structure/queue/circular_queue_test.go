@@ -1,36 +1,39 @@
 package queue
 
 import (
+	"fmt"
+	"github.com/zepeng-jiang/go-basic-demo/main/data-structure/queue"
 	"testing"
 )
 
-func TestArrayQueue_EnQueue(t *testing.T) {
-	q := NewArrayQueue(5)
+func TestCircularQueue_EnQueue(t *testing.T) {
+	q := queue.NewCircularQueue(5)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}
-	if q.queue[q.head] == 0 && q.queue[q.tail-1] == 4 {
+	fmt.Println(q.GetQueue()[q.GetTail()-1])
+	if q.GetQueue()[q.GetHead()] == 0 && q.GetQueue()[q.GetTail()-1] == 3 {
 		t.Log("入队成功")
 	} else {
 		t.Error("入队失败")
 	}
 }
 
-func TestArrayQueue_DeQueue(t *testing.T) {
-	q := NewArrayQueue(5)
+func TestCircularQueue_DeQueue(t *testing.T) {
+	q := queue.NewCircularQueue(6)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}
-	first := q.DeQueue()
-	if first == 0 {
+	ret := q.DeQueue()
+	if ret == 0 {
 		t.Log("出队成功")
 	} else {
 		t.Error("出队失败")
 	}
 }
 
-func TestArrayQueue_ToString(t *testing.T) {
-	q := NewArrayQueue(5)
+func TestCircularQueue_ToString(t *testing.T) {
+	q := queue.NewCircularQueue(6)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}

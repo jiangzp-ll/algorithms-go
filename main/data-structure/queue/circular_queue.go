@@ -25,6 +25,26 @@ func NewCircularQueue(n int) *CircularQueue {
 	}
 }
 
+// GetQueue
+func (q *CircularQueue) GetQueue() []interface{} {
+	return q.queue
+}
+
+// GetCapacity
+func (q *CircularQueue) GetCapacity() int {
+	return q.capacity
+}
+
+// GetHead
+func (q *CircularQueue) GetHead() int {
+	return q.head
+}
+
+// GetTail
+func (q *CircularQueue) GetTail() int {
+	return q.tail
+}
+
 // IsEmpty 是否为空
 // 栈空条件：head==tail为true
 func (q *CircularQueue) IsEmpty() bool {

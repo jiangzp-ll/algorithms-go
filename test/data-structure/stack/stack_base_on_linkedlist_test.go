@@ -1,15 +1,16 @@
 package stack
 
 import (
+	stack2 "github.com/zepeng-jiang/go-basic-demo/main/data-structure/stack"
 	"testing"
 )
 
 func TestLinkedListStack_Push(t *testing.T) {
-	stack := NewLinkedListStack()
+	stack := stack2.NewLinkedListStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
-	if stack.topNode.value == 4 {
+	if stack.GetTopNode().GetValue() == 4 {
 		t.Log("压栈成功")
 	} else {
 		t.Error("压栈失败")
@@ -17,7 +18,7 @@ func TestLinkedListStack_Push(t *testing.T) {
 }
 
 func TestLinkedListStack_Pop(t *testing.T) {
-	stack := NewLinkedListStack()
+	stack := stack2.NewLinkedListStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
@@ -33,7 +34,7 @@ func TestLinkedListStack_Pop(t *testing.T) {
 }
 
 func TestLinkedListStack_Top(t *testing.T) {
-	stack := NewLinkedListStack()
+	stack := stack2.NewLinkedListStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
@@ -46,12 +47,12 @@ func TestLinkedListStack_Top(t *testing.T) {
 }
 
 func TestLinkedListStack_Flush(t *testing.T) {
-	stack := NewLinkedListStack()
+	stack := stack2.NewLinkedListStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
 	stack.Flush()
-	if nil == stack.topNode {
+	if nil == stack.GetTopNode() {
 		t.Log("清空栈成功")
 	} else {
 		t.Error("清空栈失败")

@@ -26,6 +26,31 @@ func NewLinkedListQueue() *LinkedListQueue {
 	}
 }
 
+// GetValue
+func (n *Node) GetValue() interface{}{
+	return n.value
+}
+
+// GetNext
+func (n *Node) GetNext() *Node{
+	return n.next
+}
+
+// GetHead
+func (q *LinkedListQueue) GetHead() *Node {
+	return q.head
+}
+
+// GetTail
+func (q *LinkedListQueue) GetTail() *Node {
+	return q.tail
+}
+
+// GetTail
+func (q *LinkedListQueue) GetLength() int {
+	return q.length
+}
+
 // EnQueue 入队
 func (q *LinkedListQueue) EnQueue(v interface{}) {
 	node := &Node{

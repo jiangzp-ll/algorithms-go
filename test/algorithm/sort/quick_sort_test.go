@@ -1,6 +1,7 @@
 package sort
 
 import (
+	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/sort"
 	"testing"
 )
 
@@ -8,7 +9,7 @@ func TestQuickSort(t *testing.T) {
 	in := []int{4, 9, 8, 7, 3, 1, 2}
 	expect := []int{1, 2, 3, 4, 7, 8, 9}
 	flag := false
-	actual := QuickSort(in, 0, len(in)-1)
+	actual := sort.QuickSort(in, 0, len(in)-1)
 	for i := 0; i < len(expect); i++ {
 		if expect[i] != actual[i] {
 			flag = true
@@ -25,7 +26,7 @@ func TestQuickSortTwo(t *testing.T) {
 	in := []int{4, 9, 8, 7, 3, 1, 2}
 	expect := []int{1, 2, 3, 4, 7, 8, 9}
 	flag := false
-	actual := QuickSortTwo(in, 0, len(in)-1)
+	actual := sort.QuickSortTwo(in, 0, len(in)-1)
 	for i := 0; i < len(expect); i++ {
 		if expect[i] != actual[i] {
 			flag = true

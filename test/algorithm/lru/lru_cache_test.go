@@ -1,12 +1,15 @@
 package lru
 
-import "testing"
+import (
+	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/lru"
+	"testing"
+)
 
 func TestLRUCache_Put_And_Get(t *testing.T) {
-	lru := NewLRUCache(2)
-	lru.Put(1, 1)
-	lru.Put(2, 2)
-	v1 := lru.Get(1)
+	l := lru.NewLRUCache(2)
+	l.Put(1, 1)
+	l.Put(2, 2)
+	v1 := l.Get(1)
 	if v1 == 1 {
 		t.Log("put and get success")
 	} else {
@@ -15,14 +18,14 @@ func TestLRUCache_Put_And_Get(t *testing.T) {
 }
 
 func TestLRUCache_Delete(t *testing.T) {
-	lru := NewLRUCache(2)
-	lru.Put(1, 1)
-	lru.Put(2, 2)
-	lru.Put(3, 3)
-	val := lru.Get(1)
+	l := lru.NewLRUCache(2)
+	l.Put(1, 1)
+	l.Put(2, 2)
+	l.Put(3, 3)
+	val := l.Get(1)
 	if val == -1 {
 		t.Log("delete last use element success")
 	} else {
-		t.Error("lru realize failed")
+		t.Error("l realize failed")
 	}
 }

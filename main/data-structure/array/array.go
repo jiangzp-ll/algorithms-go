@@ -26,8 +26,13 @@ func (arr *Array) Len() int {
 	return arr.length
 }
 
-// isIndexOutOfRange 判断数组是否越界
-func (arr *Array) isIndexOutOfRange(index int) bool {
+// Data 元素
+func (arr *Array) Data() []int {
+	return arr.data
+}
+
+// IsIndexOutOfRange 判断数组是否越界
+func (arr *Array) IsIndexOutOfRange(index int) bool {
 	if index >= cap(arr.data) {
 		return true
 	}
@@ -36,7 +41,7 @@ func (arr *Array) isIndexOutOfRange(index int) bool {
 
 // Find 通过索引查找数组，索引范围[0,n-1]
 func (arr *Array) Find(index int) (int, error) {
-	if arr.isIndexOutOfRange(index) {
+	if arr.IsIndexOutOfRange(index) {
 		return 0, errors.New("out of index range")
 	}
 	return arr.data[index], nil
@@ -47,7 +52,7 @@ func (arr *Array) Insert(index, val int) error {
 	if len(arr.data) == arr.Len() {
 		arr.Expansion()
 	}
-	if index != arr.length && arr.isIndexOutOfRange(index) {
+	if index != arr.length && arr.IsIndexOutOfRange(index) {
 		return errors.New("out of index range")
 	}
 	for i := arr.length; i > index; i-- {
@@ -65,7 +70,7 @@ func (arr *Array) InsertToTail(val int) error {
 
 // Delete 从数组中删除下标是index的元素并返回
 func (arr *Array) Delete(index int) (int, error) {
-	if arr.isIndexOutOfRange(index) {
+	if arr.IsIndexOutOfRange(index) {
 		return 0, errors.New("out of index range")
 	}
 	val := arr.data[index]

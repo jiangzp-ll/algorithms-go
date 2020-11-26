@@ -1,9 +1,12 @@
 package stack
 
-import "testing"
+import (
+	"github.com/zepeng-jiang/go-basic-demo/main/data-structure/stack"
+	"testing"
+)
 
 func TestBrowser_Forward(t *testing.T) {
-	b := NewBrowser()
+	b := stack.NewBrowser()
 	b.PushBack("www.qq.com")
 	b.PushBack("www.baidu.com")
 	b.PushBack("www.sina.com")
