@@ -1,7 +1,7 @@
 package lru
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/lru"
+	"github.com/zepeng-jiang/go-basic-demo/algorithm/lru"
 	"testing"
 )
 

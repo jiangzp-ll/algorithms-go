@@ -1,7 +1,7 @@
 package recursion
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/recursion"
+	"github.com/zepeng-jiang/go-basic-demo/algorithm/recursion"
 	"testing"
 )
 

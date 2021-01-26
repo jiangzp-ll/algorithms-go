@@ -1,7 +1,7 @@
 package linkedlist
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/main/data-structure/linkedlist"
+	"github.com/zepeng-jiang/go-basic-demo/data-structure/linkedlist"
 	"testing"
 )
 

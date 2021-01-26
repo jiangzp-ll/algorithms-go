@@ -2,7 +2,7 @@ package recursion
 
 import (
 	"fmt"
-	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/sort"
+	"github.com/zepeng-jiang/go-basic-demo/algorithm/sort"
 )
 
 // 递归实现斐波那契数列

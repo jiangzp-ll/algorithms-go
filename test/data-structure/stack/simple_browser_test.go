@@ -1,7 +1,7 @@
 package stack
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/main/data-structure/stack"
+	"github.com/zepeng-jiang/go-basic-demo/data-structure/stack"
 	"testing"
 )
 

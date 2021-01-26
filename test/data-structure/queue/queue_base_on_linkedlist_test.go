@@ -2,7 +2,7 @@ package queue
 
 import (
 	"fmt"
-	"github.com/zepeng-jiang/go-basic-demo/main/data-structure/queue"
+	"github.com/zepeng-jiang/go-basic-demo/data-structure/queue"
 	"testing"
 )
 

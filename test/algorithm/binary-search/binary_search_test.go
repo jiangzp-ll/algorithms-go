@@ -1,7 +1,7 @@
 package binary_search
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/binary-search"
+	"github.com/zepeng-jiang/go-basic-demo/algorithm/binary-search"
 	"testing"
 )
 

@@ -1,7 +1,7 @@
 package skiplist
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/main/data-structure/skiplist"
+	"github.com/zepeng-jiang/go-basic-demo/data-structure/skiplist"
 	"testing"
 )
 

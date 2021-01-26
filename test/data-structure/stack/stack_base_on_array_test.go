@@ -2,7 +2,7 @@ package stack
 
 import (
 	"fmt"
-	stack2 "github.com/zepeng-jiang/go-basic-demo/main/data-structure/stack"
+	stack2 "github.com/zepeng-jiang/go-basic-demo/data-structure/stack"
 	"testing"
 )
 

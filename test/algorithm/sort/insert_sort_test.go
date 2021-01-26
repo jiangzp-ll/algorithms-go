@@ -1,7 +1,7 @@
 package sort
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/main/algorithm/sort"
+	"github.com/zepeng-jiang/go-basic-demo/algorithm/sort"
 	"testing"
 )
 

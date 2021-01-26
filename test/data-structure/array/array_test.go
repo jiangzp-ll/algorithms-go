@@ -2,7 +2,7 @@ package array
 
 import (
 	"fmt"
-	"github.com/zepeng-jiang/go-basic-demo/main/data-structure/array"
+	"github.com/zepeng-jiang/go-basic-demo/data-structure/array"
 	"testing"
 )
 
