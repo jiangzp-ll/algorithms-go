@@ -8,18 +8,18 @@ import (
 // hasCycle 判断链表是否有环
 // 快慢指针法
 func hasCycle(head *linkedlist.ListNode) bool {
-	if head.GetNext() == nil || head.GetNext().GetNext() == nil {
+	if nil == head || nil == head.Next {
 		return false
 	}
-	fast, slow := head.GetNext(), head
-	for nil != head  {
-		fast = fast.GetNext().GetNext()
-		slow = slow.GetNext()
-		if fast == slow {
-			return true
+	slow, fast := head, head.Next
+	for fast != slow {
+		if fast == nil || fast.Next == nil {
+			return false
 		}
+		slow = slow.Next
+		fast = fast.Next.Next
 	}
-	return false
+	return true
 }
 
 func TestHasCycle(t *testing.T) {
