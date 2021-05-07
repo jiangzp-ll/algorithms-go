@@ -2,12 +2,11 @@ package queue
 
 import (
 	"fmt"
-	"github.com/zepeng-jiang/go-basic-demo/data-structure/queue"
 	"testing"
 )
 
 func TestCircularQueue_EnQueue(t *testing.T) {
-	q := queue.NewCircularQueue(5)
+	q := NewCircularQueue(5)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}
@@ -20,7 +19,7 @@ func TestCircularQueue_EnQueue(t *testing.T) {
 }
 
 func TestCircularQueue_DeQueue(t *testing.T) {
-	q := queue.NewCircularQueue(6)
+	q := NewCircularQueue(6)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}
@@ -33,7 +32,7 @@ func TestCircularQueue_DeQueue(t *testing.T) {
 }
 
 func TestCircularQueue_ToString(t *testing.T) {
-	q := queue.NewCircularQueue(6)
+	q := NewCircularQueue(6)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}

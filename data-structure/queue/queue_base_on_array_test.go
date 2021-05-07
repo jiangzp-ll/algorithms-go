@@ -1,12 +1,11 @@
 package queue
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/data-structure/queue"
 	"testing"
 )
 
 func TestArrayQueue_EnQueue(t *testing.T) {
-	q := queue.NewArrayQueue(5)
+	q := NewArrayQueue(5)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}
@@ -18,7 +17,7 @@ func TestArrayQueue_EnQueue(t *testing.T) {
 }
 
 func TestArrayQueue_DeQueue(t *testing.T) {
-	q := queue.NewArrayQueue(5)
+	q := NewArrayQueue(5)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}
@@ -31,7 +30,7 @@ func TestArrayQueue_DeQueue(t *testing.T) {
 }
 
 func TestArrayQueue_ToString(t *testing.T) {
-	q := queue.NewArrayQueue(5)
+	q := NewArrayQueue(5)
 	for i := 0; i < 5; i++ {
 		_ = q.EnQueue(i)
 	}

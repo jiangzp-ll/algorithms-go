@@ -2,12 +2,11 @@ package stack
 
 import (
 	"fmt"
-	stack2 "github.com/zepeng-jiang/go-basic-demo/data-structure/stack"
 	"testing"
 )
 
 func TestArrayStack_Push(t *testing.T) {
-	stack := stack2.NewArrayStack()
+	stack := NewArrayStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
@@ -19,7 +18,7 @@ func TestArrayStack_Push(t *testing.T) {
 }
 
 func TestArrayStack_Pop(t *testing.T) {
-	stack := stack2.NewArrayStack()
+	stack := NewArrayStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
@@ -35,7 +34,7 @@ func TestArrayStack_Pop(t *testing.T) {
 }
 
 func TestArrayStack_Top(t *testing.T) {
-	stack := stack2.NewArrayStack()
+	stack := NewArrayStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
@@ -48,7 +47,7 @@ func TestArrayStack_Top(t *testing.T) {
 }
 
 func TestArrayStack_Flush(t *testing.T) {
-	stack := stack2.NewArrayStack()
+	stack := NewArrayStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}

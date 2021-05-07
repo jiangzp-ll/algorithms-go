@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// Array 数组
 type Array struct {
 	data   []int
 	length int

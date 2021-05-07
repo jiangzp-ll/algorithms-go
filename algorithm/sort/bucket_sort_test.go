@@ -1,13 +1,12 @@
 package sort
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/algorithm/sort"
 	"testing"
 )
 
 func TestBucketSort(t *testing.T) {
 	arr := []int{1, 6, 3, 5, 8, 6, 4}
-	ret := sort.BucketSort(arr)
+	ret := BucketSort(arr)
 	if ret[0] == 1 && ret[len(arr)-1] == 8 {
 		t.Log("桶排序成功")
 	} else {
@@ -17,7 +16,7 @@ func TestBucketSort(t *testing.T) {
 
 func TestBucketSortSimple(t *testing.T) {
 	arr := []int{1, 6, 3, 5, 8, 6, 4}
-	ret := sort.BucketSortSimple(arr)
+	ret := BucketSortSimple(arr)
 	if ret[0] == 1 && ret[len(arr)-1] == 8 {
 		t.Log("桶排序成功")
 	} else {

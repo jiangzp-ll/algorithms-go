@@ -1,12 +1,11 @@
 package recursion
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/algorithm/recursion"
 	"testing"
 )
 
 func TestFibonacci(t *testing.T) {
-	fib := recursion.NewFib(8)
+	fib := NewFib(8)
 	n := fib.Fibonacci(7)
 	if n == 13 {
 		t.Log("递归成功")
@@ -16,7 +15,7 @@ func TestFibonacci(t *testing.T) {
 }
 
 func TestFib_Print(t *testing.T) {
-	fib := recursion.NewFib(8)
+	fib := NewFib(8)
 	n := fib.Fibonacci(7)
 	result := fib.Print()
 	except := "[1,1,2,3,5,8,13]"

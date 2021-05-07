@@ -1,12 +1,11 @@
 package skiplist
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/data-structure/skiplist"
 	"testing"
 )
 
 func TestSkipList_Insert(t *testing.T) {
-	list := skiplist.NewSkipList()
+	list := NewSkipList()
 	list.Insert("A", 65)
 	list.Insert("B", 66)
 	list.Insert("C", 67)
@@ -21,7 +20,7 @@ func TestSkipList_Insert(t *testing.T) {
 }
 
 func TestSkipList_Find(t *testing.T) {
-	list := skiplist.NewSkipList()
+	list := NewSkipList()
 	list.Insert("A", 65)
 	list.Insert("B", 66)
 	list.Insert("C", 67)
@@ -37,7 +36,7 @@ func TestSkipList_Find(t *testing.T) {
 }
 
 func TestSkipList_Delete(t *testing.T) {
-	list := skiplist.NewSkipList()
+	list := NewSkipList()
 	list.Insert("A", 65)
 	list.Insert("B", 66)
 	list.Insert("C", 67)

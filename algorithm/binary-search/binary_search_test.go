@@ -1,14 +1,13 @@
 package binary_search
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/algorithm/binary-search"
 	"testing"
 )
 
 func TestBinarySearch(t *testing.T) {
 	arr := []int{1, 3, 4, 6, 8, 9}
 	expect := 9
-	index := binary_search.BinarySearch(arr, expect)
+	index := BinarySearch(arr, expect)
 	if index >= 0 && arr[index] == expect {
 		t.Log("在数组中找到该元素")
 	} else if index == -1 {
@@ -21,7 +20,7 @@ func TestBinarySearch(t *testing.T) {
 func TestBinarySearchFindFirst(t *testing.T) {
 	arr := []int{1, 3, 4, 4, 4, 4, 6, 8, 9}
 	expect := 4
-	index := binary_search.BinarySearchFindFirst(arr, expect)
+	index := BinarySearchFindFirst(arr, expect)
 	if index == 2 && arr[index] == expect {
 		t.Log("找到给定值，并且是第一个")
 	} else if index != 2 && index > 0 && arr[index] == expect {
@@ -36,7 +35,7 @@ func TestBinarySearchFindFirst(t *testing.T) {
 func TestBinarySearchFindLast(t *testing.T) {
 	arr := []int{1, 3, 4, 4, 4, 4, 6, 8, 9}
 	expect := 4
-	index := binary_search.BinarySearchFindLast(arr, expect)
+	index := BinarySearchFindLast(arr, expect)
 	if index == 5 && arr[index] == expect {
 		t.Log("找到给定值，并且是最后一个")
 	} else if index != 5 && index > 0 && arr[index] == expect {
@@ -51,7 +50,7 @@ func TestBinarySearchFindLast(t *testing.T) {
 func TestBinarySearchFirstGT(t *testing.T) {
 	arr := []int{1, 3, 4, 6, 8, 9}
 	expect := 5
-	index := binary_search.BinarySearchFirstGT(arr, expect)
+	index := BinarySearchFirstGT(arr, expect)
 	if index == 3 && arr[index] > expect {
 		t.Log("在数组中找到第一个大于等于给定值的元素")
 	} else if index != 3 && index > 0 && arr[index] > expect {
@@ -66,7 +65,7 @@ func TestBinarySearchFirstGT(t *testing.T) {
 func TestBinarySearchLastLT(t *testing.T) {
 	arr := []int{1, 3, 4, 6, 8, 9}
 	expect := 5
-	index := binary_search.BinarySearchLastLT(arr, expect)
+	index := BinarySearchLastLT(arr, expect)
 	if index == 2 && arr[index] < expect {
 		t.Log("在数组中找到最后一个大于等于给定值的元素")
 	} else if index != 2 && index > 0 && arr[index] < expect {

@@ -2,15 +2,14 @@ package array
 
 import (
 	"fmt"
-	"github.com/zepeng-jiang/go-basic-demo/data-structure/array"
 	"testing"
 )
 
-var arr = array.NewArray(10)
+var arr = NewArray(10)
 
 func TestNewArray(t *testing.T) {
 	cap := 10
-	arr := array.NewArray(cap)
+	arr := NewArray(cap)
 	if arr.Len() == 0 && len(arr.Data()) == 10 {
 		t.Logf("成功初始化长度%d的数组！\n", cap)
 	} else {
@@ -97,7 +96,7 @@ func TestArray_Print(t *testing.T) {
 
 // 数组动态扩容
 func TestArray_Expansion(t *testing.T) {
-	array := array.NewArray(2)
+	array := NewArray(2)
 	fmt.Printf("before array address: %v \n", &array)
 	for i := 0; i < 1025; i++ {
 		_ = array.Insert(i, i+1)
@@ -110,8 +109,8 @@ func TestArray_Expansion(t *testing.T) {
 
 // 将两个有序书组合合并成一个有序数组
 func TestMergeArray(t *testing.T) {
-	arr := array.NewArray(2)
-	other := array.NewArray(2)
+	arr := NewArray(2)
+	other := NewArray(2)
 	_ = arr.Insert(0, 1)
 	_ = arr.Insert(1, 3)
 	_ = other.Insert(0, 2)

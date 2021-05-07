@@ -1,12 +1,11 @@
 package stack
 
 import (
-	stack2 "github.com/zepeng-jiang/go-basic-demo/data-structure/stack"
 	"testing"
 )
 
 func TestLinkedListStack_Push(t *testing.T) {
-	stack := stack2.NewLinkedListStack()
+	stack := NewLinkedListStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
@@ -18,7 +17,7 @@ func TestLinkedListStack_Push(t *testing.T) {
 }
 
 func TestLinkedListStack_Pop(t *testing.T) {
-	stack := stack2.NewLinkedListStack()
+	stack := NewLinkedListStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
@@ -34,7 +33,7 @@ func TestLinkedListStack_Pop(t *testing.T) {
 }
 
 func TestLinkedListStack_Top(t *testing.T) {
-	stack := stack2.NewLinkedListStack()
+	stack := NewLinkedListStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
@@ -47,7 +46,7 @@ func TestLinkedListStack_Top(t *testing.T) {
 }
 
 func TestLinkedListStack_Flush(t *testing.T) {
-	stack := stack2.NewLinkedListStack()
+	stack := NewLinkedListStack()
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}

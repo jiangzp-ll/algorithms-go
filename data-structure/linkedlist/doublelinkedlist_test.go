@@ -1,12 +1,11 @@
 package linkedlist
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/data-structure/linkedlist"
 	"testing"
 )
 
 func TestDoubleLinkedList_InsertToHead(t *testing.T) {
-	doubleLinkedList := linkedlist.NewDoubleLinkedList()
+	doubleLinkedList := NewDoubleLinkedList()
 	for i := 100; i < 110; i++ {
 		doubleLinkedList.InsertToHead(i)
 	}
@@ -18,7 +17,7 @@ func TestDoubleLinkedList_InsertToHead(t *testing.T) {
 }
 
 func TestDoubleLinkedList_InsertToTail(t *testing.T) {
-	doubleLinkedList := linkedlist.NewDoubleLinkedList()
+	doubleLinkedList := NewDoubleLinkedList()
 	for i := 100; i < 110; i++ {
 		doubleLinkedList.InsertToTail(i)
 	}
@@ -30,7 +29,7 @@ func TestDoubleLinkedList_InsertToTail(t *testing.T) {
 }
 
 func TestDoubleLinkedList_FindByIndex(t *testing.T) {
-	doubleLinkedList := linkedlist.NewDoubleLinkedList()
+	doubleLinkedList := NewDoubleLinkedList()
 	for i := 100; i < 105; i++ {
 		doubleLinkedList.InsertToTail(i)
 	}
@@ -44,7 +43,7 @@ func TestDoubleLinkedList_FindByIndex(t *testing.T) {
 }
 
 func TestDoubleLinkedList_InsertAfter(t *testing.T) {
-	doubleLinkedList := linkedlist.NewDoubleLinkedList()
+	doubleLinkedList := NewDoubleLinkedList()
 	for i := 100; i < 105; i++ {
 		doubleLinkedList.InsertToTail(i)
 	}
@@ -59,7 +58,7 @@ func TestDoubleLinkedList_InsertAfter(t *testing.T) {
 }
 
 func TestDoubleLinkedList_InsertBefore(t *testing.T) {
-	doubleLinkedList := linkedlist.NewDoubleLinkedList()
+	doubleLinkedList := NewDoubleLinkedList()
 	for i := 100; i < 105; i++ {
 		doubleLinkedList.InsertToTail(i)
 	}
@@ -74,7 +73,7 @@ func TestDoubleLinkedList_InsertBefore(t *testing.T) {
 }
 
 func TestDoubleLinkedList_DeleteNode(t *testing.T) {
-	doubleLinkedList := linkedlist.NewDoubleLinkedList()
+	doubleLinkedList := NewDoubleLinkedList()
 	for i := 100; i < 105; i++ {
 		doubleLinkedList.InsertToTail(i)
 	}
@@ -92,7 +91,7 @@ func TestDoubleLinkedList_DeleteNode(t *testing.T) {
 }
 
 func TestDoubleLinkedList_DeleteHead(t *testing.T) {
-	doubleLinkedList := linkedlist.NewDoubleLinkedList()
+	doubleLinkedList := NewDoubleLinkedList()
 	for i := 100; i < 105; i++ {
 		doubleLinkedList.InsertToTail(i)
 	}
@@ -110,7 +109,7 @@ func TestDoubleLinkedList_DeleteHead(t *testing.T) {
 }
 
 func TestDoubleLinkedList_DeleteTail(t *testing.T) {
-	doubleLinkedList := linkedlist.NewDoubleLinkedList()
+	doubleLinkedList := NewDoubleLinkedList()
 	for i := 100; i < 105; i++ {
 		doubleLinkedList.InsertToTail(i)
 	}

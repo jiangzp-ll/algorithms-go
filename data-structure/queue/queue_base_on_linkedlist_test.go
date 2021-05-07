@@ -2,12 +2,11 @@ package queue
 
 import (
 	"fmt"
-	"github.com/zepeng-jiang/go-basic-demo/data-structure/queue"
 	"testing"
 )
 
 func TestLinkedListQueue_EnQueue(t *testing.T) {
-	q := queue.NewLinkedListQueue()
+	q := NewLinkedListQueue()
 	for i := 0; i < 5; i++ {
 		q.EnQueue(i)
 	}
@@ -19,7 +18,7 @@ func TestLinkedListQueue_EnQueue(t *testing.T) {
 }
 
 func TestLinkedListQueue_DeQueue(t *testing.T) {
-	q := queue.NewLinkedListQueue()
+	q := NewLinkedListQueue()
 	for i := 0; i < 5; i++ {
 		q.EnQueue(i)
 	}
@@ -33,7 +32,7 @@ func TestLinkedListQueue_DeQueue(t *testing.T) {
 }
 
 func TestLinkedListQueue_ToString(t *testing.T) {
-	q := queue.NewLinkedListQueue()
+	q := NewLinkedListQueue()
 	for i := 0; i < 5; i++ {
 		q.EnQueue(i)
 	}

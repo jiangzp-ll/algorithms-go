@@ -1,12 +1,11 @@
 package lru
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/algorithm/lru"
 	"testing"
 )
 
 func TestLRUCache_Put_And_Get(t *testing.T) {
-	l := lru.NewLRUCache(2)
+	l := NewLRUCache(2)
 	l.Put(1, 1)
 	l.Put(2, 2)
 	v1 := l.Get(1)
@@ -18,7 +17,7 @@ func TestLRUCache_Put_And_Get(t *testing.T) {
 }
 
 func TestLRUCache_Delete(t *testing.T) {
-	l := lru.NewLRUCache(2)
+	l := NewLRUCache(2)
 	l.Put(1, 1)
 	l.Put(2, 2)
 	l.Put(3, 3)

@@ -1,12 +1,11 @@
 package linkedlist
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/data-structure/linkedlist"
 	"testing"
 )
 
 func TestLinkedList_InsertToHead(t *testing.T) {
-	linkedList := linkedlist.NewLinkedList()
+	linkedList := NewLinkedList()
 	for i := 0; i < 10; i++ {
 		linkedList.InsertToHead(i)
 	}
@@ -20,7 +19,7 @@ func TestLinkedList_InsertToHead(t *testing.T) {
 }
 
 func TestLinkedList_InsertToTail(t *testing.T) {
-	linkedList := linkedlist.NewLinkedList()
+	linkedList := NewLinkedList()
 	for i := 0; i < 10; i++ {
 		linkedList.InsertToTail(i)
 	}
@@ -34,7 +33,7 @@ func TestLinkedList_InsertToTail(t *testing.T) {
 }
 
 func TestLinkedList_InsertAfter(t *testing.T) {
-	linkedList := linkedlist.NewLinkedList()
+	linkedList := NewLinkedList()
 	for i := 0; i < 5; i++ {
 		linkedList.InsertToTail(i)
 	}
@@ -52,7 +51,7 @@ func TestLinkedList_InsertAfter(t *testing.T) {
 }
 
 func TestLinkedList_InsertBefore(t *testing.T) {
-	linkedList := linkedlist.NewLinkedList()
+	linkedList := NewLinkedList()
 	for i := 0; i < 5; i++ {
 		linkedList.InsertToTail(i)
 	}
@@ -70,7 +69,7 @@ func TestLinkedList_InsertBefore(t *testing.T) {
 }
 
 func TestLinkedList_DeleteNode(t *testing.T) {
-	linkedList := linkedlist.NewLinkedList()
+	linkedList := NewLinkedList()
 	for i := 0; i < 5; i++ {
 		linkedList.InsertToTail(i)
 	}
@@ -88,7 +87,7 @@ func TestLinkedList_DeleteNode(t *testing.T) {
 }
 
 func TestLinkedList_Reverse(t *testing.T) {
-	linkedList := linkedlist.NewLinkedList()
+	linkedList := NewLinkedList()
 	for i := 0; i < 5; i++ {
 		linkedList.InsertToTail(i)
 	}
@@ -120,7 +119,7 @@ func TestLinkedList_Reverse(t *testing.T) {
 //}
 
 func TestLinkedList_DeleteReciprocal(t *testing.T) {
-	linkedList := linkedlist.NewLinkedList()
+	linkedList := NewLinkedList()
 	for i := 0; i < 5; i++ {
 		linkedList.InsertToTail(i)
 	}
@@ -137,7 +136,7 @@ func TestLinkedList_DeleteReciprocal(t *testing.T) {
 }
 
 func TestLinkedList_GetMiddle(t *testing.T) {
-	linkedList := linkedlist.NewLinkedList()
+	linkedList := NewLinkedList()
 	for i := 0; i < 5; i++ {
 		linkedList.InsertToTail(i)
 	}
