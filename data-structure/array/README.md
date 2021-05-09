@@ -9,12 +9,11 @@
 * `func (arr *Array) IndexOf(val string) int`：返回元素在数组中的位置 
 * `func (arr *Array) Insert(index int, val string) error`：插入元素
 * `func (arr *Array) IsEmpty() bool`：判断数组是否为空
-* `func (arr *Array) IsIndexOutOfRange(index int) bool`：判断数组下标是否越界
+* `func (arr *Array) isIndexOutOfRange(index int) bool`：判断数组下标是否越界
 * `func (arr *Array) Len() int` ：获取数组元素个数
 * `func (arr *Array) MergeArray(other *Array) *Array`：合并两个数组
 * `func (arr *Array) Remove(index int) (string, error)`：删除并返回指定下标的元素
 * `func (arr *Array) Replace(index int, val string) (string, error)`：替换元素并返回旧值
 * `func (arr *Array) Set(index int, val string) error`：设置指定下标的元素
-* `func (arr *Array) Sort()`：数组排序
 * `func (arr *Array) SubArray(start, end int) *Array`：获取子数组
 * `func (arr *Array) ToString() string`：转成用“, ”分隔的字符串

@@ -2,8 +2,9 @@ package array
 
 import (
 	"errors"
-	"fmt"
 )
+
+var IndexOutOfBoundsError = errors.New("array index out of bounds error")
 
 // Array ,like Java ArrayList
 type Array struct {
@@ -14,12 +15,21 @@ type Array struct {
 // NewArray ,init Array
 func NewArray(capacity int) (*Array, error) {
 	if capacity < 0 {
-		return nil, errors.New("capacity must be greater than zero")
+		return nil, errors.New("capacity must be greater than or equal to zero")
 	}
 	return &Array{
 		data: make([]string, capacity),
 		len:  0,
 	}, nil
+}
+
+// Add ,
+func (arr *Array) Add(val string) {
+	if len(arr.data) == arr.Len() {
+		arr.Expansion()
+	}
+	arr.data[arr.len] = val
+	arr.len++
 }
 
 // Clear ，make Array to empty
@@ -48,8 +58,12 @@ func (arr *Array) Data() []string {
 // When the number of elements in the array is less than 1024, the capacity becomes twice of the original array;
 // When the number of elements in the array is greater than 1024, the capacity becomes 1.25 times of the original array.
 func (arr *Array) Expansion() {
-	if len(arr.data) < 1024 {
-		newData := make([]string, 2*len(arr.data))
+	if arr.len < 1024 {
+		if arr.len == 0 {
+			arr.data = make([]string, 1)
+			return
+		}
+		newData := make([]string, 2*arr.len)
 		for i := 0; i < arr.Len(); i++ {
 			newData[i] = arr.data[i]
 		}
@@ -67,8 +81,8 @@ func (arr *Array) Expansion() {
 // Get ,get the element at the specified index
 // TODO 全局错误码
 func (arr *Array) Get(index int) (string, error) {
-	if arr.IsIndexOutOfRange(index) {
-		return "", errors.New("out of index range")
+	if arr.isIndexOutOfRange(index) {
+		return "", IndexOutOfBoundsError
 	}
 	return arr.data[index], nil
 }
@@ -89,8 +103,8 @@ func (arr *Array) Insert(index int, val string) error {
 	if len(arr.data) == arr.Len() {
 		arr.Expansion()
 	}
-	if index != arr.len && arr.IsIndexOutOfRange(index) {
-		return errors.New("out of index range")
+	if index != arr.len && arr.isIndexOutOfRange(index) {
+		return IndexOutOfBoundsError
 	}
 	for i := arr.len; i > index; i-- {
 		arr.data[i] = arr.data[i-1]
@@ -105,9 +119,9 @@ func (arr *Array) IsEmpty() bool {
 	return arr.len == 0
 }
 
-// IsIndexOutOfRange ,determine whether the index of the Array is out of bounds
-func (arr *Array) IsIndexOutOfRange(index int) bool {
-	return index >= len(arr.data)
+// isIndexOutOfRange ,determine whether the index of the Array is out of bounds
+func (arr *Array) isIndexOutOfRange(index int) bool {
+	return index >= len(arr.data) || index < 0
 }
 
 // Len , get Array element number
@@ -147,8 +161,8 @@ func (arr *Array) MergeArray(other *Array) *Array {
 
 // Remove , remove and return the element with the specified index
 func (arr *Array) Remove(index int) (string, error) {
-	if arr.IsIndexOutOfRange(index) {
-		return "", errors.New("out of index range")
+	if arr.isIndexOutOfRange(index) {
+		return "", IndexOutOfBoundsError
 	}
 	val := arr.data[index]
 	for i := index; i < len(arr.data); i++ {
@@ -160,8 +174,8 @@ func (arr *Array) Remove(index int) (string, error) {
 
 // Replace ,replace and return the new value with the specified index
 func (arr *Array) Replace(index int, val string) (string, error) {
-	if arr.IsIndexOutOfRange(index) {
-		return "", errors.New("out of index range")
+	if arr.isIndexOutOfRange(index) {
+		return "", IndexOutOfBoundsError
 	}
 	old := arr.data[index]
 	arr.data[index] = val
@@ -170,31 +184,33 @@ func (arr *Array) Replace(index int, val string) (string, error) {
 
 // Set , set a value for the specified index
 func (arr *Array) Set(index int, val string) error {
-	if arr.IsIndexOutOfRange(index) {
-		return errors.New("out of index range")
+	if arr.isIndexOutOfRange(index) {
+		return IndexOutOfBoundsError
 	}
 	arr.data[index] = val
 	return nil
 }
 
-// Find 通过索引查找数组，索引范围[0,n-1]
-func (arr *Array) Find(index int) (string, error) {
-	if arr.IsIndexOutOfRange(index) {
-		return "", errors.New("out of index range")
+// SubArray ,get sub Array
+func (arr *Array) SubArray(start, end int) *Array {
+	if arr.isIndexOutOfRange(start) || arr.isIndexOutOfRange(end) {
+		return nil
 	}
-	return arr.data[index], nil
+	return &Array{
+		data: arr.data[start:end],
+		len:  end - start,
+	}
 }
 
-// InsertToTail 从尾部插入元素
-func (arr *Array) InsertToTail(val string) error {
-	return arr.Insert(arr.Len(), val)
-}
-
-// Print 打印数组
-func (arr *Array) Print() {
-	var format string
-	for i := 0; i < arr.Len(); i++ {
-		format += fmt.Sprintf("|%+v", arr.data[i])
+// ToString ,convert array to string separated by ","
+func (arr *Array) ToString() string {
+	ret := "["
+	for i := 0; i < len(arr.data); i++ {
+		if i == len(arr.data)-1 {
+			ret = ret + arr.data[i]
+		} else {
+			ret = ret + arr.data[i] + ", "
+		}
 	}
-	fmt.Println(format)
+	return ret + "]"
 }
