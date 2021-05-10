@@ -26,7 +26,7 @@ func NewArray(capacity int) (*Array, error) {
 // Add ,
 func (arr *Array) Add(val string) {
 	if len(arr.data) == arr.Len() {
-		arr.Expansion()
+		arr.expansion()
 	}
 	arr.data[arr.len] = val
 	arr.len++
@@ -39,8 +39,8 @@ func (arr *Array) Clear() {
 	}
 }
 
-// Contains, determine whether the value is included in the Array
-func (arr *Array) Contains(val string) bool {
+// Contain, determine whether the value is included in the Array
+func (arr *Array) Contain(val string) bool {
 	for i := 0; i < len(arr.data); i++ {
 		if arr.data[i] == val {
 			return true
@@ -54,10 +54,10 @@ func (arr *Array) Data() []string {
 	return arr.data
 }
 
-// Expansion , Array expansion
+// expansion , Array expansion
 // When the number of elements in the array is less than 1024, the capacity becomes twice of the original array;
 // When the number of elements in the array is greater than 1024, the capacity becomes 1.25 times of the original array.
-func (arr *Array) Expansion() {
+func (arr *Array) expansion() {
 	if arr.len < 1024 {
 		if arr.len == 0 {
 			arr.data = make([]string, 1)
@@ -79,7 +79,6 @@ func (arr *Array) Expansion() {
 }
 
 // Get ,get the element at the specified index
-// TODO 全局错误码
 func (arr *Array) Get(index int) (string, error) {
 	if arr.isIndexOutOfRange(index) {
 		return "", IndexOutOfBoundsError
@@ -88,20 +87,19 @@ func (arr *Array) Get(index int) (string, error) {
 }
 
 // IndexOf ,return the index of the value in the Array
-// TODO 全局错误码
-func (arr *Array) IndexOf(val string) int {
+func (arr *Array) IndexOf(val string) (int, error) {
 	for i := 0; i < len(arr.data); i++ {
 		if arr.data[i] == val {
-			return i
+			return i, nil
 		}
 	}
-	return -1
+	return -1, errors.New("not exist the value in the Array")
 }
 
 // Insert, insert the value at the specified index
 func (arr *Array) Insert(index int, val string) error {
 	if len(arr.data) == arr.Len() {
-		arr.Expansion()
+		arr.expansion()
 	}
 	if index != arr.len && arr.isIndexOutOfRange(index) {
 		return IndexOutOfBoundsError
@@ -131,32 +129,36 @@ func (arr *Array) Len() int {
 
 // MergeArray , merge two Array
 func (arr *Array) MergeArray(other *Array) *Array {
-	al, ol := arr.len, other.len
-	result, _ := NewArray(al + ol)
-	var l, r, k int
-	for l < al && r < ol {
-		if arr.data[l] < other.data[r] {
-			_ = result.Insert(k, arr.data[l])
-			l++
-		} else {
-			_ = result.Insert(k, other.data[r])
-			r++
-		}
-		k++
+	//al, ol := arr.len, other.len
+	//result, _ := NewArray(al + ol)
+	//var l, r, k int
+	//for l < al && r < ol {
+	//	if arr.data[l] < other.data[r] {
+	//		_ = result.Insert(k, arr.data[l])
+	//		l++
+	//	} else {
+	//		_ = result.Insert(k, other.data[r])
+	//		r++
+	//	}
+	//	k++
+	//}
+	//if l < al {
+	//	for i := l; i < al; i++ {
+	//		_ = result.Insert(k, arr.data[i])
+	//		k++
+	//	}
+	//}
+	//if r < ol {
+	//	for i := r; i < ol; i++ {
+	//		_ = result.Insert(k, other.data[i])
+	//		k++
+	//	}
+	//}
+	//return result
+	for i := 0; i < other.len; i++ {
+		arr.Add(other.data[i])
 	}
-	if l < al {
-		for i := l; i < al; i++ {
-			_ = result.Insert(k, arr.data[i])
-			k++
-		}
-	}
-	if r < ol {
-		for i := r; i < ol; i++ {
-			_ = result.Insert(k, other.data[i])
-			k++
-		}
-	}
-	return result
+	return arr
 }
 
 // Remove , remove and return the element with the specified index

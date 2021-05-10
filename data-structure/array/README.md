@@ -4,9 +4,9 @@
 * `func (arr *Array) Clear()`：清空数组
 * `func (arr *Array) Contains(val string) bool`：判断数组中是否包含该元素
 * `func (arr *Array) Data() []string`：获取数组中所有元素
-* `func (arr *Array) Expansion()`：数组扩容
+* `func (arr *Array) expansion()`：数组扩容
 * `func (arr *Array) Get(index int) (string, error)`：获取指定下标的元素
-* `func (arr *Array) IndexOf(val string) int`：返回元素在数组中的位置 
+* `func (arr *Array) IndexOf(val string) (int, error)`：返回元素在数组中的位置 
 * `func (arr *Array) Insert(index int, val string) error`：插入元素
 * `func (arr *Array) IsEmpty() bool`：判断数组是否为空
 * `func (arr *Array) isIndexOutOfRange(index int) bool`：判断数组下标是否越界
