@@ -155,6 +155,9 @@ func (arr *Array) MergeArray(other *Array) *Array {
 	//	}
 	//}
 	//return result
+	if other.len < 1 {
+		return arr
+	}
 	for i := 0; i < other.len; i++ {
 		arr.Add(other.data[i])
 	}
@@ -167,7 +170,7 @@ func (arr *Array) Remove(index int) (string, error) {
 		return "", IndexOutOfBoundsError
 	}
 	val := arr.data[index]
-	for i := index; i < len(arr.data); i++ {
+	for i := index; i < len(arr.data)-1; i++ {
 		arr.data[i] = arr.data[i+1]
 	}
 	arr.len--
@@ -194,14 +197,17 @@ func (arr *Array) Set(index int, val string) error {
 }
 
 // SubArray ,get sub Array
-func (arr *Array) SubArray(start, end int) *Array {
+func (arr *Array) SubArray(start, end int) (*Array, error) {
+	if start > end {
+		return nil, errors.New("start must be less than or equal to end")
+	}
 	if arr.isIndexOutOfRange(start) || arr.isIndexOutOfRange(end) {
-		return nil
+		return nil, IndexOutOfBoundsError
 	}
 	return &Array{
 		data: arr.data[start:end],
 		len:  end - start,
-	}
+	}, nil
 }
 
 // ToString ,convert array to string separated by ","
