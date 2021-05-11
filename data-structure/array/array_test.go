@@ -7,15 +7,6 @@ import (
 	"testing"
 )
 
-func initArray(capacity int, t *testing.T) *Array {
-	arr, err := NewArray(capacity)
-	if err != nil {
-		t.Errorf("init Array has error! error: %v \n", err)
-		return nil
-	}
-	return arr
-}
-
 func TestArray_NewArray_With_Capacity_Greater_Than_Zero(t *testing.T) {
 	capacity := 2
 	arr := initArray(capacity, t)
@@ -62,10 +53,7 @@ func TestArray_Add_With_Need_Expansion_And_Array_Length_Less_Than_1024(t *testin
 	in := []string{"a", "b", "c"}
 	capacity := 2
 	flag := true
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	for i := 0; i < len(in); i++ {
 		if in[i] != arr.data[i] {
 			flag = false
@@ -96,10 +84,7 @@ func TestArray_Add_With_Need_Expansion_And_Array_Is_Empty(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 0
 	flag := true
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	for i := 0; i < len(in); i++ {
 		if in[i] != arr.data[i] {
 			flag = false
@@ -118,10 +103,7 @@ func TestArray_Clear(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 3
 	flag := true
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	arr.Clear()
 	for i := 0; i < len(arr.data); i++ {
 		if "" != arr.data[i] {
@@ -140,10 +122,7 @@ func TestArray_Contains_With_Contain_The_Value(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 3
 	target := "a"
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	ret := arr.Contain(target)
 	if ret {
 		t.Logf("Array contain %s \n", target)
@@ -156,10 +135,7 @@ func TestArray_Contains_With_Not_Contain_The_Value(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 3
 	target := "A"
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	ret := arr.Contain(target)
 	if !ret {
 		t.Logf("Array not contain %s \n", target)
@@ -172,10 +148,7 @@ func TestArray_Data(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 3
 	flag := true
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	data := arr.Data()
 	for i := 0; i < len(data); i++ {
 		if data[i] != in[i] {
@@ -194,10 +167,7 @@ func TestArray_Get_With_Index_In_The_Array(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 3
 	index := rand.Intn(3)
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	val, err1 := arr.Get(index)
 	if err1 != nil {
 		t.Errorf("get value is failed! error: %v", err1)
@@ -214,10 +184,7 @@ func TestArray_Get_With_Index_Not_In_The_Array(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 3
 	index := capacity + 1
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.Get(index)
 	if err1 != nil {
 		if errors.Is(err1, IndexOutOfBoundsError) {
@@ -234,10 +201,7 @@ func TestArray_IndexOf_With_Array_Has_Existed_The_Value(t *testing.T) {
 	target := "c"
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	index, err1 := arr.IndexOf(target)
 	if err1 != nil {
 		t.Errorf("get index failed! error: %v \n", err1)
@@ -254,10 +218,7 @@ func TestArray_IndexOf_With_Array_Not_Exist_The_Value(t *testing.T) {
 	target := "C"
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.IndexOf(target)
 	if err1 != nil {
 		t.Logf("Array not exist %s \n", target)
@@ -271,10 +232,7 @@ func TestArray_Insert_With_Index_In_The_Array(t *testing.T) {
 	index := 0
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	if err := arr.Insert(index, target); err != nil {
 		t.Errorf("insert value has error! error: %v", err)
 		return
@@ -291,10 +249,7 @@ func TestArray_Insert_With_Index_Not_In_The_Array_And_Array_Not_Full(t *testing.
 	index := 5
 	in := []string{"a", "b", "c"}
 	capacity := 4
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	if err := arr.Insert(index, target); err != nil {
 		if errors.Is(err, IndexOutOfBoundsError) {
 			t.Logf("Array not full and index out of bounds")
@@ -311,10 +266,7 @@ func TestArray_Insert_With_Index_Not_In_The_Array_And_Array_Is_Full(t *testing.T
 	index := -1
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	if err := arr.Insert(index, target); err != nil {
 		if errors.Is(err, IndexOutOfBoundsError) {
 			t.Logf("Array not full and index out of bounds")
@@ -339,10 +291,7 @@ func TestArray_IsEmpty_With_Array_Is_Empty(t *testing.T) {
 func TestArray_IsEmpty_With_Array_Is_Not_Empty(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	if !arr.IsEmpty() {
 		t.Log("Array is not empty")
 	} else {
@@ -353,10 +302,7 @@ func TestArray_IsEmpty_With_Array_Is_Not_Empty(t *testing.T) {
 func TestArray_Len(t *testing.T) {
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	target := len(in)
 	if target == arr.Len() {
 		t.Logf("Array len is %d \n", target)
@@ -431,10 +377,7 @@ func TestArray_Remove_With_Index_In_The_Array(t *testing.T) {
 	flag := true
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	ret, err1 := arr.Remove(index)
 	if err1 != nil {
 		t.Errorf("remove is error! error: %v \n", err1)
@@ -457,10 +400,7 @@ func TestArray_Remove_With_Index_Not_In_The_Array(t *testing.T) {
 	index := -1
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.Remove(index)
 	if err1 != nil {
 		if errors.Is(err1, IndexOutOfBoundsError) {
@@ -482,10 +422,7 @@ func TestArray_Replace_With_Index_In_The_Array(t *testing.T) {
 	flag := true
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	oldVal, err1 := arr.Replace(index, newVal)
 	if err1 != nil {
 		t.Errorf("replace value has error! error: %v \n", err1)
@@ -513,10 +450,7 @@ func TestArray_Replace_With_Index_Not_In_The_Array(t *testing.T) {
 	newVal := "B"
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.Replace(index, newVal)
 	if err1 != nil {
 		if errors.Is(err1, IndexOutOfBoundsError) {
@@ -538,10 +472,7 @@ func TestArray_Set_With_Index_In_The_Array(t *testing.T) {
 	flag := true
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	err := arr.Set(index, newVal)
 	if err != nil {
 		t.Errorf("set value has error! error: %v \n", err)
@@ -569,10 +500,7 @@ func TestArray_Set_With_Index_Not_In_The_Array(t *testing.T) {
 	newVal := "B"
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	err := arr.Set(index, newVal)
 	if err != nil {
 		if errors.Is(err, IndexOutOfBoundsError) {
@@ -593,10 +521,7 @@ func TestArray_SubArray_With_Start_And_End_Index_In_The_Array(t *testing.T) {
 	flag := true
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	subArr, err1 := arr.SubArray(start, end)
 	if err1 != nil {
 		t.Errorf("get sub Array has error! error: %v \n", err1)
@@ -623,10 +548,7 @@ func TestArray_SubArray_With_End_Less_Than_Start(t *testing.T) {
 	start, end := 2, 1
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.SubArray(start, end)
 	if err1 != nil {
 		if err1.Error() == "start must be less than or equal to end" {
@@ -645,10 +567,7 @@ func TestArray_SubArray_With_Start_Less_Than_Zero(t *testing.T) {
 	start, end := -1, 2
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.SubArray(start, end)
 	if err1 != nil {
 		if errors.Is(err1, IndexOutOfBoundsError) {
@@ -667,10 +586,7 @@ func TestArray_SubArray_With_End_Greater_Than_Array_Length(t *testing.T) {
 	start, end := -1, 4
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.SubArray(start, end)
 	if err1 != nil {
 		if errors.Is(err1, IndexOutOfBoundsError) {
@@ -689,14 +605,30 @@ func TestArray_ToString(t *testing.T) {
 	target := "[a, b, c]"
 	in := []string{"a", "b", "c"}
 	capacity := 3
-	arr := initArray(capacity, t)
-	for _, v := range in {
-		arr.Add(v)
-	}
+	arr := initArrayAndAddValue(capacity, t, in)
 	ret := arr.ToString()
 	if ret == target {
 		t.Log("function ToString is good")
 	} else {
 		t.Error("function ToString has bug")
 	}
+}
+
+// initArray ,init a empty Array
+func initArray(capacity int, t *testing.T) *Array {
+	arr, err := NewArray(capacity)
+	if err != nil {
+		t.Errorf("init Array has error! error: %v \n", err)
+		return nil
+	}
+	return arr
+}
+
+// initArrayAndAddValue ,init A empty Array and add value
+func initArrayAndAddValue(capacity int, t *testing.T, in []string) *Array {
+	arr := initArray(capacity, t)
+	for _, v := range in {
+		arr.Add(v)
+	}
+	return arr
 }

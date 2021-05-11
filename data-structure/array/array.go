@@ -23,7 +23,7 @@ func NewArray(capacity int) (*Array, error) {
 	}, nil
 }
 
-// Add ,
+// Add , add a value to tail
 func (arr *Array) Add(val string) {
 	if len(arr.data) == arr.Len() {
 		arr.expansion()
@@ -129,6 +129,7 @@ func (arr *Array) Len() int {
 
 // MergeArray , merge two Array
 func (arr *Array) MergeArray(other *Array) *Array {
+	////merge two arrays by merge sort
 	//al, ol := arr.len, other.len
 	//result, _ := NewArray(al + ol)
 	//var l, r, k int
@@ -155,6 +156,8 @@ func (arr *Array) MergeArray(other *Array) *Array {
 	//	}
 	//}
 	//return result
+
+	// only append other Array to this Array tail
 	if other.len < 1 {
 		return arr
 	}
