@@ -1,12 +1,13 @@
 package linkedlist
 
 import (
+	"github.com/zepeng-jiang/go-basic-demo/data-structure/linkedlist/single"
 	"testing"
 )
 
 func TestIsPalindromeTrue(t *testing.T) {
 	str := "ssoss"
-	list := NewLinkedList()
+	list := single.NewLinkedList()
 	for _, s := range str {
 		list.InsertToTail(string(s))
 	}
@@ -20,7 +21,7 @@ func TestIsPalindromeTrue(t *testing.T) {
 
 func TestIsPalindromeFalse(t *testing.T) {
 	str := "hello"
-	list := NewLinkedList()
+	list := single.NewLinkedList()
 	for _, s := range str {
 		list.InsertToTail(string(s))
 	}

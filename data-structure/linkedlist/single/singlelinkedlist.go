@@ -1,0 +1,208 @@
+package single
+
+import "fmt"
+
+// 单链表实现
+
+// Node 结点
+type Node struct {
+	next  *Node
+	value interface{}
+}
+
+// SingleLinkedList 链表
+type LinkedList struct {
+	head *Node
+	len  int
+}
+
+// NewNode 初始化结点
+func NewNode(v interface{}) *Node {
+	return &Node{nil, v}
+}
+
+// GetNext 获取下一个结点
+func (l *Node) GetNext() *Node {
+	return l.next
+}
+
+// GetValue 获取结点的值
+func (l *Node) GetValue() interface{} {
+	return l.value
+}
+
+// NewLinkedList 初始化链表
+func NewLinkedList() *LinkedList {
+	return &LinkedList{NewNode(0), 0}
+}
+
+// GetHead 获取链表头
+func (l *LinkedList) GetHead() *Node {
+	return l.head
+}
+
+// GetLength 获取链表长度
+func (l *LinkedList) GetLength() int {
+	return l.len
+}
+
+// InsertAfter 在某个结点后插入结点
+func (l *LinkedList) InsertAfter(p *Node, v interface{}) bool {
+	if nil == p {
+		return false
+	}
+	newNode := NewNode(v)
+	oldNext := p.next
+	p.next = newNode
+	newNode.next = oldNext
+	l.len++
+	return true
+}
+
+// InsertBefore 在某个结点前插入结点
+func (l *LinkedList) InsertBefore(p *Node, v interface{}) bool {
+	if nil == p || p == l.head {
+		return false
+	}
+	cur := l.head.next
+	pre := l.head
+	for nil != cur {
+		if cur == p {
+			break
+		}
+		pre = cur
+		cur = cur.next
+	}
+	if nil == cur {
+		return false
+	}
+	newNode := NewNode(v)
+	pre.next = newNode
+	newNode.next = cur
+	l.len++
+	return true
+}
+
+// InsertToHead 在链表头部插入结点
+func (l *LinkedList) InsertToHead(v interface{}) bool {
+	return l.InsertAfter(l.head, v)
+}
+
+// InsertToTail 在链表尾部插入结点
+func (l *LinkedList) InsertToTail(v interface{}) bool {
+	cur := l.head
+	for nil != cur.next {
+		cur = cur.next
+	}
+	return l.InsertAfter(cur, v)
+}
+
+// FindByIndex 通过索引查找结点
+func (l *LinkedList) FindByIndex(index int) *Node {
+	if index >= l.len {
+		return nil
+	}
+	cur := l.head.next
+	for i := 0; i < index; i++ {
+		cur = cur.next
+	}
+	return cur
+}
+
+// DeleteNode 删除结点
+func (l *LinkedList) DeleteNode(p *Node) bool {
+	if nil == p {
+		return false
+	}
+	cur := l.head.next
+	pre := l.head
+	for nil != cur {
+		if cur == p {
+			break
+		}
+		pre = cur
+		cur = cur.next
+	}
+	if nil == cur {
+		return false
+	}
+	pre.next = p.next
+	p = nil
+	l.len--
+	return true
+}
+
+// Print 打印链表
+func (l *LinkedList) Print() {
+	cur := l.head.next
+	format := ""
+	for nil != cur {
+		format += fmt.Sprintf("%+v", cur.GetValue())
+		cur = cur.next
+		if nil != cur {
+			format += "->"
+		}
+	}
+	fmt.Println(format)
+}
+
+// Reverse 单链表反转
+func (l *LinkedList) Reverse() {
+	if nil == l.head || nil == l.head.next {
+		return
+	}
+	var pre *Node
+	cur := l.head.next
+	for nil != cur {
+		next := cur.next
+		cur.next = pre
+		pre, cur = cur, next
+	}
+	l.head.next = pre
+}
+
+// HasCycle 判断链表是否有环
+func (l *LinkedList) HasCycle() bool {
+	if nil != l.head {
+		slow, fast := l.head, l.head
+		for nil != fast && nil != fast.next {
+			slow = slow.next
+			fast = fast.next.next
+			if slow == fast {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// DeleteReciprocal 删除倒数第几个节点
+func (l *LinkedList) DeleteReciprocal(index int) *Node {
+	if index < 0 || index > l.len || nil == l.head || nil == l.head.next {
+		return nil
+	}
+	cur := l.head
+	for i := 0; i <= l.len-index-1; i++ {
+		cur = cur.next
+	}
+	dNode := cur.next
+	newNext := cur.next.next
+	cur.next = newNext
+	return dNode
+}
+
+// GetMiddle 获取链表中间节点
+func (l *LinkedList) GetMiddle() *Node {
+	if nil == l.head || nil == l.head.next {
+		return nil
+	}
+	if nil == l.head.next.next {
+		return l.head.next
+	}
+	slow, fast := l.head, l.head
+	for nil != fast && nil != fast.next {
+		slow = slow.next
+		fast = fast.next.next
+	}
+	return slow
+}

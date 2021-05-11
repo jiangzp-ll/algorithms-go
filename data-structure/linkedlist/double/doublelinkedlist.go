@@ -1,4 +1,4 @@
-package linkedlist
+package double
 
 import (
 	"errors"
@@ -7,70 +7,70 @@ import (
 
 // 双向链表
 
-// DNode 结点
-type DNode struct {
-	prev  *DNode
-	next  *DNode
+// Node 结点
+type Node struct {
+	prev  *Node
+	next  *Node
 	value interface{}
 }
 
 // DoubleLinkedList 双向链表
-type DoubleLinkedList struct {
-	head   *DNode
-	tail   *DNode
+type LinkedList struct {
+	head   *Node
+	tail   *Node
 	length int
 }
 
-// NewDNode 初始化结点
-func NewDNode(v interface{}) *DNode {
-	return &DNode{nil, nil, v}
+// NewNode 初始化结点
+func NewNode(v interface{}) *Node {
+	return &Node{nil, nil, v}
 }
 
 // GetValue 获取结点的值
-func (d *DNode) GetValue() interface{} {
+func (d *Node) GetValue() interface{} {
 	return d.value
 }
 
 // GetPrev 获取前一个结点
-func (d *DNode) GetPrev() *DNode {
+func (d *Node) GetPrev() *Node {
 	return d.prev
 }
 
 // GetNext 获取下一个结点
-func (d *DNode) GetNext() *DNode {
+func (d *Node) GetNext() *Node {
 	return d.next
 }
 
 // NewDoubleLinkedList 初始化双向链表
-func NewDoubleLinkedList() *DoubleLinkedList {
-	return &DoubleLinkedList{
-		head:   &DNode{},
-		tail:   &DNode{},
+func NewDoubleLinkedList() *LinkedList {
+	return &LinkedList{
+		head:   &Node{},
+		tail:   &Node{},
 		length: 0,
 	}
 }
 
 // GetLength 获取链表长度
-func (d *DoubleLinkedList) GetLength() int {
+func (d *LinkedList) GetLength() int {
 	return d.length
 }
 
 // GetHead 获取头结点
-func (d *DoubleLinkedList) GetHead() *DNode {
+func (d *LinkedList) GetHead() *Node {
 	return d.head
 }
 
 // GetTail 获取头结点
-func (d *DoubleLinkedList) GetTail() *DNode {
+func (d *LinkedList) GetTail() *Node {
 	return d.tail
 }
 
 // InsertAfter 在任意结点后插入数据
-func (d *DoubleLinkedList) InsertAfter(p *DNode, v interface{}) bool {
+func (d *LinkedList) InsertAfter(p *Node, v interface{}) bool {
 	if nil == p {
 		return false
 	}
-	newDNode := NewDNode(v)
+	newDNode := NewNode(v)
 	oldDNode := p.next
 	p.next = newDNode
 	newDNode.prev = p
@@ -81,11 +81,11 @@ func (d *DoubleLinkedList) InsertAfter(p *DNode, v interface{}) bool {
 }
 
 // InsertBefore 在任意结点前插入数据
-func (d *DoubleLinkedList) InsertBefore(p *DNode, v interface{}) bool {
+func (d *LinkedList) InsertBefore(p *Node, v interface{}) bool {
 	if nil == p {
 		return false
 	}
-	newDNode := NewDNode(v)
+	newDNode := NewNode(v)
 	oldDNode := p.prev
 	oldDNode.next = newDNode
 	newDNode.prev = oldDNode
@@ -96,8 +96,8 @@ func (d *DoubleLinkedList) InsertBefore(p *DNode, v interface{}) bool {
 }
 
 // InsertToHead 在双向链表头插入数据
-func (d *DoubleLinkedList) InsertToHead(v interface{}) bool {
-	node := NewDNode(v)
+func (d *LinkedList) InsertToHead(v interface{}) bool {
+	node := NewNode(v)
 	oldHead := d.head
 	if nil == oldHead.value { //如果是空链表
 		d.head = node
@@ -122,8 +122,8 @@ func (d *DoubleLinkedList) InsertToHead(v interface{}) bool {
 }
 
 // InsetToTail 在双向列表尾部插入数据
-func (d *DoubleLinkedList) InsertToTail(v interface{}) bool {
-	node := NewDNode(v)
+func (d *LinkedList) InsertToTail(v interface{}) bool {
+	node := NewNode(v)
 	oldHead := d.head
 	if nil == oldHead.value { //如果是空链表
 		d.head = node
@@ -143,7 +143,7 @@ func (d *DoubleLinkedList) InsertToTail(v interface{}) bool {
 }
 
 // FindByIndex 通过索引查找结点
-func (d *DoubleLinkedList) FindByIndex(index int) *DNode {
+func (d *LinkedList) FindByIndex(index int) *Node {
 	if index > d.length || index < 0 {
 		return nil
 	}
@@ -155,7 +155,7 @@ func (d *DoubleLinkedList) FindByIndex(index int) *DNode {
 }
 
 // DeleteDNode 删除结点
-func (d *DoubleLinkedList) DeleteNode(p *DNode) error {
+func (d *LinkedList) DeleteNode(p *Node) error {
 	if 0 == d.length {
 		return errors.New("链表为空，无法进行删除操作！")
 	}
@@ -184,13 +184,13 @@ func (d *DoubleLinkedList) DeleteNode(p *DNode) error {
 }
 
 // DeleteTail 删除链表尾结点
-func (d *DoubleLinkedList) DeleteTail() error {
+func (d *LinkedList) DeleteTail() error {
 	if d.length == 0 {
 		return errors.New("空链表，无法进行删除尾结点操作！")
 	}
 	if d.length == 1 {
-		d.head = &DNode{}
-		d.tail = &DNode{}
+		d.head = &Node{}
+		d.tail = &Node{}
 		d.length = 0
 		return nil
 	}
@@ -202,13 +202,13 @@ func (d *DoubleLinkedList) DeleteTail() error {
 }
 
 // DeleteHead 删除链表头结点
-func (d *DoubleLinkedList) DeleteHead() error {
+func (d *LinkedList) DeleteHead() error {
 	if d.length == 0 {
 		return errors.New("空链表，无法进行删除头结点操作！")
 	}
 	if d.length == 1 {
-		d.head = &DNode{}
-		d.tail = &DNode{}
+		d.head = &Node{}
+		d.tail = &Node{}
 		d.length = 0
 		return nil
 	}
@@ -220,7 +220,7 @@ func (d *DoubleLinkedList) DeleteHead() error {
 }
 
 // Print 打印链表
-func (d *DoubleLinkedList) Print() {
+func (d *LinkedList) Print() {
 	cur := d.head
 	format := ""
 	for nil != cur {
