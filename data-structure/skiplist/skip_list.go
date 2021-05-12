@@ -53,7 +53,7 @@ func (n *skipListNode) GetScore() int {
 	return n.score
 }
 
-// GetLength 获取跳表长度
+// Len 获取跳表长度
 func (sl *SkipList) GetLength() int {
 	return sl.length
 }
