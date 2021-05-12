@@ -2,7 +2,6 @@ package single
 
 import (
 	"errors"
-	"fmt"
 )
 
 var InsertValueMustBeNotEmptyError = errors.New("insert value must be not empty")
@@ -103,6 +102,11 @@ func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error) {
 		cur = cur.next
 	}
 	return indexes, nil
+}
+
+// checkElementIndex ,check whether index is in LinkedList
+func (l *LinkedList) checkElementIndex(index int) bool {
+	return index > 0 && index <= l.len
 }
 
 // Clear , clear the Single LinkedList
@@ -269,8 +273,25 @@ func (l *LinkedList) Middle() *Node {
 }
 
 // Remove ,remove the specified node of Single LinkedList
-// TODO
 func (l *LinkedList) Remove(n *Node) error {
+	if nil == n {
+		return errors.New("input node must be not nil")
+	}
+	cur := l.head.next
+	pre := l.head
+	for nil != cur {
+		if cur == n {
+			break
+		}
+		pre = cur
+		cur = cur.next
+	}
+	if nil == cur {
+		return errors.New("this node not existed")
+	}
+	pre.next = n.next
+	n = nil
+	l.len--
 	return nil
 }
 
@@ -289,53 +310,21 @@ func (l *LinkedList) Reverse() {
 	l.head.next = pre
 }
 
-// FindByIndex 通过索引查找结点
-func (l *LinkedList) FindByIndex(index int) *Node {
-	if index >= l.len {
-		return nil
+// Set ,set the value of the specified index in the LinkedList
+func (l *LinkedList) Set(index int, val interface{}) (interface{}, error) {
+	if !l.checkElementIndex(index) {
+		return nil, errors.New("invalid index")
 	}
-	cur := l.head.next
-	for i := 0; i < index; i++ {
-		cur = cur.next
+	if nil == val {
+		return nil, errors.New("value must be not nil")
 	}
-	return cur
-}
-
-// DeleteNode 删除结点
-func (l *LinkedList) DeleteNode(p *Node) bool {
-	if nil == p {
-		return false
+	n, err := l.Get(index)
+	if err != nil {
+		return nil, err
 	}
-	cur := l.head.next
-	pre := l.head
-	for nil != cur {
-		if cur == p {
-			break
-		}
-		pre = cur
-		cur = cur.next
-	}
-	if nil == cur {
-		return false
-	}
-	pre.next = p.next
-	p = nil
-	l.len--
-	return true
-}
-
-// Print 打印链表
-func (l *LinkedList) Print() {
-	cur := l.head.next
-	format := ""
-	for nil != cur {
-		format += fmt.Sprintf("%+v", cur.Value())
-		cur = cur.next
-		if nil != cur {
-			format += "->"
-		}
-	}
-	fmt.Println(format)
+	oldVal := n.value
+	n.value = val
+	return oldVal, nil
 }
 
 // DeleteReciprocal 删除倒数第几个节点

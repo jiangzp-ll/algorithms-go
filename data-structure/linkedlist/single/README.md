@@ -8,6 +8,7 @@
     * `func (l *LinkedList) Add(val interface{}) error`：添加元素到单向链表的尾部
     * `func (l *LinkedList) AddToHead(v interface{}) error`：插入元素单向链表头部
     * `func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error)`：返回指定元素在单向链表中出现的所有索引
+    * `func (l *LinkedList) checkElementIndex(index int) bool`：检查下标是否在单向链表中
     * `func (l *LinkedList) Clear()`：清空单向链表
     * `func (l *LinkedList) Contain(val interface{}) (bool, error)`：判断单向链表中是否包含该元素
     * `func (l *LinkedList) Get(index int) (*Node, error)`：获取单向链表尾部
