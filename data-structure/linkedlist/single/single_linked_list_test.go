@@ -498,6 +498,156 @@ func Test_LinkedList_LastIndexOf_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
+func Test_LinkedList_Middle_With_LinkedList_Number_Is_Odd(t *testing.T) {
+	defer list.Clear()
+	target := 2
+	elements := []int{1, target, 3}
+	for _, e := range elements {
+		list.Add(e)
+	}
+	node := list.Middle()
+	if node.value == target {
+		t.Log("get middle node success")
+	} else {
+		t.Error("get middle node failed")
+	}
+}
+
+func Test_LinkedList_Middle_With_LinkedList_Number_Is_Even(t *testing.T) {
+	defer list.Clear()
+	target := 3
+	elements := []int{1, 2, target, 4}
+	for _, e := range elements {
+		list.Add(e)
+	}
+	node := list.Middle()
+	if node.value == target {
+		t.Log("get middle node success")
+	} else {
+		t.Error("get middle node failed")
+	}
+}
+
+func Test_LinkedList_Remove(t *testing.T) {
+	defer list.Clear()
+	index := 2
+	elements := []int{1, 2, 3}
+	for _, e := range elements {
+		list.Add(e)
+	}
+	node, _ := list.Get(index)
+	if err := list.Remove(node); err != nil {
+		t.Errorf("remove node has error! error: %v \n", err)
+		return
+	}
+	if list.Len() == len(elements)-1 {
+		t.Log("remove node is success")
+	} else {
+		t.Error("remove node is failed")
+	}
+}
+
+func Test_LinkedList_Remove_With_Node_Not_Existed(t *testing.T) {
+	defer list.Clear()
+	elements := []int{1, 2, 3}
+	for _, e := range elements {
+		list.Add(e)
+	}
+	node := NewNode("a")
+	if err := list.Remove(node); err != nil {
+		if errors.Is(err, NodeNotExistError) {
+			t.Log("node not exited")
+			return
+		} else {
+			t.Errorf("unknown error! error: %v \n", err)
+			return
+		}
+	} else {
+		t.Error("function Remove has bug")
+	}
+}
+
+func Test_LinkedList_Remove_With_Node_Is_Empty(t *testing.T) {
+	defer list.Clear()
+	elements := []int{1, 2, 3}
+	for _, e := range elements {
+		list.Add(e)
+	}
+	var node *Node
+	if err := list.Remove(node); err != nil {
+		if errors.Is(err, InputNodeIsEmptyError) {
+			t.Log("input node is empty")
+			return
+		} else {
+			t.Errorf("unknown error! error: %v \n", err)
+			return
+		}
+	} else {
+		t.Error("function Remove has bug")
+	}
+}
+
+//func Test_LinkedList_Reverse(t *testing.T) {
+//	defer list.Clear()
+//	elements := []int{1, 2, 3}
+//	for _, e := range elements {
+//		list.Add(e)
+//	}
+//	list.Reverse()
+//	t.Logf("list: %#v \n", list.head.value)
+//	if list.Head().Value() == elements[len(elements)-1] &&
+//		list.Head().Next().Value() == elements[len(elements)-2] &&
+//		list.Head().Next().Next().Value() == elements[len(elements)-3]  &&
+//		list.Len() == len(elements){
+//		t.Log("reverse LinkedList is success")
+//	} else {
+//		t.Error("reverse LinkedList is failed")
+//	}
+//}
+
+func Test_LinkedList_Set(t *testing.T) {
+	defer list.Clear()
+	target := "a"
+	index := 2
+	elements := []int{1, 2, 3}
+	for _, e := range elements {
+		list.Add(e)
+	}
+	old, err := list.Set(index, target)
+	if err != nil {
+		t.Errorf("set value has error! error: %v \n", err)
+		return
+	}
+	node, _ := list.Get(index)
+	if old == 2 && node.Value() == target {
+		t.Log("set value is success")
+	} else {
+		t.Error("set value is failed")
+	}
+}
+
+func Test_LinkedList_Set_With_Invalid_Index(t *testing.T) {
+	defer list.Clear()
+	target := "a"
+	index := -1
+	elements := []int{1, 2, 3}
+	for _, e := range elements {
+		list.Add(e)
+	}
+	_, err := list.Set(index, target)
+	if err != nil {
+		if errors.Is(err, InvalidIndexError) {
+			t.Log("invalid index")
+			return
+		} else {
+			t.Errorf("unknown error! error: %v \n", err)
+			return
+		}
+	} else {
+		t.Error("function Set has bug")
+	}
+}
+
 //
 //import (
 //	"testing"

@@ -5,12 +5,11 @@ import (
 )
 
 var (
-	LinkedListValueMustBeNotEmptyError = errors.New("value must be not empty")
-	LinkedListIsEmptyError             = errors.New("LinkedList is empty")
-	InputNodeIsEmptyError              = errors.New("input node is empty")
-	NodeNotExistError                  = errors.New("node not exist in this LinkedList")
-	InvalidIndexError                  = errors.New("invalid index")
-	ValueNotExistError                 = errors.New("value exist in the LinkedList")
+	LinkedListIsEmptyError = errors.New("LinkedList is empty")
+	InputNodeIsEmptyError  = errors.New("input node is empty")
+	NodeNotExistError      = errors.New("node not exist in this LinkedList")
+	InvalidIndexError      = errors.New("invalid index")
+	ValueNotExistError     = errors.New("value exist in the LinkedList")
 )
 
 // Node ,LinkedList element
@@ -296,9 +295,6 @@ func (l *LinkedList) Reverse() {
 func (l *LinkedList) Set(index int, val interface{}) (interface{}, error) {
 	if !l.checkElementIndex(index) {
 		return nil, InvalidIndexError
-	}
-	if nil == val {
-		return nil, LinkedListValueMustBeNotEmptyError
 	}
 	n, err := l.Get(index)
 	if err != nil {
