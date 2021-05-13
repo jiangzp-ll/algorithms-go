@@ -4,7 +4,14 @@ import (
 	"errors"
 )
 
-var InsertValueMustBeNotEmptyError = errors.New("insert value must be not empty")
+var (
+	LinkedListValueMustBeNotEmptyError = errors.New("value must be not empty")
+	LinkedListIsEmptyError             = errors.New("LinkedList is empty")
+	InputNodeIsEmptyError              = errors.New("input node is empty")
+	NodeNotExistError                  = errors.New("node not exist in this LinkedList")
+	InvalidIndexError                  = errors.New("invalid index")
+	ValueNotExistError                 = errors.New("value exist in the LinkedList")
+)
 
 // Node ,LinkedList element
 type Node struct {
@@ -19,11 +26,8 @@ type LinkedList struct {
 }
 
 // NewNode ，init Node
-func NewNode(v interface{}) (*Node, error) {
-	if nil == v {
-		return nil, InsertValueMustBeNotEmptyError
-	}
-	return &Node{nil, v}, nil
+func NewNode(v interface{}) *Node {
+	return &Node{nil, v}
 }
 
 // Next ,get next Node
@@ -38,25 +42,16 @@ func (n *Node) Value() interface{} {
 
 // NewLinkedList ,init a empty Single LinkedList
 func NewLinkedList() *LinkedList {
-	return &LinkedList{nil, 0}
+	return &LinkedList{NewNode(nil), 0}
 }
 
 // Add , add a value to Single LinkedList tail
-func (l *LinkedList) Add(v interface{}) error {
-	//cur := l.head
-	//for nil != cur.next {
-	//	cur = cur.next
-	//}
-	//return l.InsertAfter(cur, v)
-
-	node, err := NewNode(v)
-	if err != nil {
-		return err
-	}
-	if nil == l.head {
+func (l *LinkedList) Add(v interface{}) {
+	node := NewNode(v)
+	if nil == l.head.value {
 		l.head = node
 		l.len++
-		return nil
+		return
 	}
 	cur := l.head
 	for nil != cur.next {
@@ -64,35 +59,29 @@ func (l *LinkedList) Add(v interface{}) error {
 	}
 	cur.next = node
 	l.len++
-	return nil
+	return
 }
 
 // AddToHead ,add a value to Single LinkedList head
-func (l *LinkedList) AddToHead(v interface{}) error {
-	node, err := NewNode(v)
-	if err != nil {
-		return err
-	}
-	if nil == l.head {
+func (l *LinkedList) AddToHead(v interface{}) {
+	node := NewNode(v)
+	if nil == l.head.value {
 		l.head = node
 		l.len++
-		return nil
+		return
 	}
 	oldHead := l.head
 	node.next = oldHead
 	l.head = node
 	l.len++
-	return nil
+	return
 }
 
 // AllIndexesOf ,Returns all indexes of the specified element in the LinkedList
 func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error) {
 	indexes := make([]int, 0)
-	if nil == val {
-		return indexes, errors.New("value must be not nil")
-	}
-	if nil == l.head {
-		return indexes, errors.New("LinkedList is empty")
+	if nil == l.head.value {
+		return indexes, LinkedListIsEmptyError
 	}
 	cur := l.head
 	for i := 1; i <= l.len; i++ {
@@ -111,26 +100,26 @@ func (l *LinkedList) checkElementIndex(index int) bool {
 
 // Clear , clear the Single LinkedList
 func (l *LinkedList) Clear() {
-	l.head = nil
+	l.head = NewNode(nil)
 	l.len = 0
 }
 
 // Contain ,determine whether the value contain in the Single LinkedList
-func (l *LinkedList) Contain(val interface{}) (bool, error) {
-	index, err := l.IndexOf(val)
+func (l *LinkedList) Contain(val interface{}) bool {
+	_, err := l.IndexOf(val)
 	if err != nil {
-		return false, err
+		return false
 	}
-	return index >= 0, nil
+	return true
 }
 
 // Get ,Get the index element in the Single LinkedList
 func (l *LinkedList) Get(index int) (*Node, error) {
-	if index < 0 || index > l.len {
-		return nil, errors.New("input the index does not exist")
+	if !l.checkElementIndex(index) {
+		return nil, InvalidIndexError
 	}
 	cur := l.head
-	for i := 1; i <= index; i++ {
+	for i := 1; i < index; i++ {
 		cur = cur.next
 	}
 	return cur, nil
@@ -138,17 +127,17 @@ func (l *LinkedList) Get(index int) (*Node, error) {
 
 // HasCycle ,judge whether the Single LinkedList has cycle
 func (l *LinkedList) HasCycle() bool {
-	if nil != l.head {
-		slow, fast := l.head, l.head
-		for nil != fast && nil != fast.next {
-			slow = slow.next
-			fast = fast.next.next
-			if slow == fast {
-				return true
-			}
-		}
+	if l.head == nil || l.head.next == nil {
+		return false
 	}
-	return false
+	slow, fast := l.head, l.head.next
+	for fast != slow {
+		if fast == nil || fast.next == nil {
+			return false
+		}
+		slow, fast = slow.next, fast.next.next
+	}
+	return true
 }
 
 // Head ,get Single LinkedList Head
@@ -158,11 +147,8 @@ func (l *LinkedList) Head() *Node {
 
 // IndexOf ,get the position of the value in the Single LinkedList
 func (l *LinkedList) IndexOf(val interface{}) (int, error) {
-	if nil == val {
-		return -1, errors.New("value must be not nil")
-	}
-	if nil == l.head {
-		return -2, errors.New("LinkedList is empty")
+	if nil == l.head.value {
+		return -1, LinkedListIsEmptyError
 	}
 	cur := l.head
 	for i := 1; i <= l.len; i++ {
@@ -171,65 +157,62 @@ func (l *LinkedList) IndexOf(val interface{}) (int, error) {
 		}
 		cur = cur.next
 	}
-	return 0, errors.New("the value does not exist")
+	return 0, ValueNotExistError
 }
 
 // InsertAfter ,insert a node after the specified node
 func (l *LinkedList) InsertAfter(n *Node, val interface{}) error {
 	if nil == n {
-		return errors.New("node is nil")
+		return InputNodeIsEmptyError
 	}
-	newNode, err := NewNode(val)
-	if err != nil {
-		return err
+	if nil == l.head.value {
+		return LinkedListIsEmptyError
 	}
-	if nil == l.head {
-		return l.AddToHead(val)
-	}
+	newNode := NewNode(val)
 	cur := l.head
 	for nil != cur {
 		next := cur.next
-		if cur == n {
-			n.next = newNode
+		if cur.value == n.value {
+			cur.next = newNode
 			newNode.next = next
+			l.len++
 			return nil
 		}
+		cur = next
 	}
-	return errors.New("input node not in this LinkedList")
+	return NodeNotExistError
 }
 
 // InsertBefore ,insert a node before the specified node
 func (l *LinkedList) InsertBefore(n *Node, val interface{}) error {
 	if nil == n {
-		return errors.New("node is nil")
+		return InputNodeIsEmptyError
 	}
-	if nil == l.head {
-		return errors.New("LinkedList is empty")
+	if nil == l.head.value {
+		return LinkedListIsEmptyError
 	}
 	if l.head == n {
-		return l.AddToHead(val)
+		l.AddToHead(val)
+		return nil
 	}
-	node, err := NewNode(val)
-	if err != nil {
-		return err
-	}
+	node := NewNode(val)
 	cur, pre := l.head, &Node{}
 	for nil != cur.next {
 		next := cur.next
 		pre = cur
-		cur = next
-		if cur.value == val {
-			pre.next = node
-			node.next = cur
+		if next.value == n.value {
+			pre.next, node.next = node, next
+			l.len++
 			return nil
 		}
+		cur = next
 	}
-	return errors.New("input node not in this LinkedList")
+	return NodeNotExistError
 }
 
 // Last , get LinkedList last node
 func (l *LinkedList) Last() *Node {
-	if nil == l.head {
+	if nil == l.head.value {
 		return nil
 	}
 	cur := l.head
@@ -246,7 +229,7 @@ func (l *LinkedList) LastIndexOf(val interface{}) (int, error) {
 		return -1, err
 	}
 	if len(indexes) == 0 {
-		return 0, errors.New("the value does not exist")
+		return 0, ValueNotExistError
 	}
 	return indexes[len(indexes)-1], nil
 }
@@ -257,6 +240,7 @@ func (l *LinkedList) Len() int {
 }
 
 // Middle ，get middle node of Single LinkedList
+// TODO 重构这个方法
 func (l *LinkedList) Middle() *Node {
 	if nil == l.head || nil == l.head.next {
 		return nil
@@ -275,19 +259,17 @@ func (l *LinkedList) Middle() *Node {
 // Remove ,remove the specified node of Single LinkedList
 func (l *LinkedList) Remove(n *Node) error {
 	if nil == n {
-		return errors.New("input node must be not nil")
+		return InputNodeIsEmptyError
 	}
-	cur := l.head.next
-	pre := l.head
+	cur, pre := l.head.next, l.head
 	for nil != cur {
 		if cur == n {
 			break
 		}
-		pre = cur
-		cur = cur.next
+		pre, cur = cur, cur.next
 	}
 	if nil == cur {
-		return errors.New("this node not existed")
+		return NodeNotExistError
 	}
 	pre.next = n.next
 	n = nil
@@ -313,10 +295,10 @@ func (l *LinkedList) Reverse() {
 // Set ,set the value of the specified index in the LinkedList
 func (l *LinkedList) Set(index int, val interface{}) (interface{}, error) {
 	if !l.checkElementIndex(index) {
-		return nil, errors.New("invalid index")
+		return nil, InvalidIndexError
 	}
 	if nil == val {
-		return nil, errors.New("value must be not nil")
+		return nil, LinkedListValueMustBeNotEmptyError
 	}
 	n, err := l.Get(index)
 	if err != nil {
@@ -327,17 +309,17 @@ func (l *LinkedList) Set(index int, val interface{}) (interface{}, error) {
 	return oldVal, nil
 }
 
-// DeleteReciprocal 删除倒数第几个节点
-func (l *LinkedList) DeleteReciprocal(index int) *Node {
-	if index < 0 || index > l.len || nil == l.head || nil == l.head.next {
-		return nil
-	}
-	cur := l.head
-	for i := 0; i <= l.len-index-1; i++ {
-		cur = cur.next
-	}
-	dNode := cur.next
-	newNext := cur.next.next
-	cur.next = newNext
-	return dNode
-}
+//// DeleteReciprocal 删除倒数第几个节点
+//func (l *LinkedList) DeleteReciprocal(index int) *Node {
+//	if index < 0 || index > l.len || nil == l.head || nil == l.head.next {
+//		return nil
+//	}
+//	cur := l.head
+//	for i := 0; i <= l.len-index-1; i++ {
+//		cur = cur.next
+//	}
+//	dNode := cur.next
+//	newNext := cur.next.next
+//	cur.next = newNext
+//	return dNode
+//}
