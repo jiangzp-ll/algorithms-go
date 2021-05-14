@@ -3,7 +3,7 @@
     * `func func NewNode(v interface{}) *Node`：初始化节点
     * `func (n *Node) Next() *Node`：获取下一个节点
     * `func (n *Node) Value() interface{}`：获取节点值
-2. <a href="#list"><font size=4 color=#00f>type LinkedList</font></a>：单单向链表
+2. <a href="#list"><font size=4 color=#00f>type LinkedList</font></a>：单向链表
     * `func NewLinkedList() *LinkedList`：初始化单向链表
     * `func (l *LinkedList) Add(val interface{})`：添加元素到单向链表的尾部
     * `func (l *LinkedList) AddToHead(v interface{})`：插入元素单向链表头部
