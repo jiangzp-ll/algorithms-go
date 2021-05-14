@@ -1,234 +1,253 @@
 package double
 
 import (
-	"errors"
-	"fmt"
+	"github.com/zepeng-jiang/go-basic-demo/data-structure/linkedlist/single"
 )
 
 // 双向链表
 
-// Node 结点
+// Node ,LinkedList element
 type Node struct {
 	prev  *Node
 	next  *Node
 	value interface{}
 }
 
-// DoubleLinkedList 双向链表
+// LinkedList ,double LinkedList
 type LinkedList struct {
-	head   *Node
-	tail   *Node
-	length int
+	head *Node
+	tail *Node
+	len  int
 }
 
-// NewNode 初始化结点
-func NewNode(v interface{}) *Node {
-	return &Node{nil, nil, v}
+// NewNode ,init Node
+func NewNode(val interface{}) *Node {
+	return &Node{nil, nil, val}
 }
 
-// GetValue 获取结点的值
-func (d *Node) GetValue() interface{} {
-	return d.value
+// Prev ,get prev Node
+func (n *Node) Prev() *Node {
+	return n.prev
 }
 
-// GetPrev 获取前一个结点
-func (d *Node) GetPrev() *Node {
-	return d.prev
+// Next ,get next Node
+func (n *Node) Next() *Node {
+	return n.next
 }
 
-// GetNext 获取下一个结点
-func (d *Node) GetNext() *Node {
-	return d.next
+// Value ,get the value stored in Node
+func (n *Node) Value() interface{} {
+	return n.value
 }
 
-// NewDoubleLinkedList 初始化双向链表
-func NewDoubleLinkedList() *LinkedList {
+// NewLinkedList ,init a empty Double LinkedList
+func NewLinkedList() *LinkedList {
 	return &LinkedList{
-		head:   &Node{},
-		tail:   &Node{},
-		length: 0,
+		head: NewNode(nil),
+		tail: NewNode(nil),
+		len:  0,
 	}
 }
 
-// GetLength 获取链表长度
-func (d *LinkedList) GetLength() int {
-	return d.length
-}
-
-// GetHead 获取头结点
-func (d *LinkedList) GetHead() *Node {
-	return d.head
-}
-
-// GetTail 获取头结点
-func (d *LinkedList) GetTail() *Node {
-	return d.tail
-}
-
-// InsertAfter 在任意结点后插入数据
-func (d *LinkedList) InsertAfter(p *Node, v interface{}) bool {
-	if nil == p {
-		return false
-	}
-	newDNode := NewNode(v)
-	oldDNode := p.next
-	p.next = newDNode
-	newDNode.prev = p
-	newDNode.next = oldDNode
-	oldDNode.prev = newDNode
-	d.length++
-	return true
-}
-
-// InsertBefore 在任意结点前插入数据
-func (d *LinkedList) InsertBefore(p *Node, v interface{}) bool {
-	if nil == p {
-		return false
-	}
-	newDNode := NewNode(v)
-	oldDNode := p.prev
-	oldDNode.next = newDNode
-	newDNode.prev = oldDNode
-	newDNode.next = p
-	p.prev = newDNode
-	d.length++
-	return true
-}
-
-// InsertToHead 在双向链表头插入数据
-func (d *LinkedList) InsertToHead(v interface{}) bool {
+// Add , add a value to Double LinkedList tail
+func (l *LinkedList) Add(v interface{}) {
 	node := NewNode(v)
-	oldHead := d.head
-	if nil == oldHead.value { //如果是空链表
-		d.head = node
-		d.tail = node
-		d.length++
-	} else {
-		node.next = oldHead
-		oldHead.prev = node
-		d.head = node
-		// 更新尾结点
-		cur := d.head.next
-		for nil != cur {
-			if nil == cur.next {
-				break
-			}
-			cur = cur.next
-		}
-		d.tail = cur
-		d.length++
+	if nil == l.head.value {
+		l.head = node
+		l.tail = node
+		l.len++
+		return
 	}
-	return d.head.value == v
-}
-
-// InsetToTail 在双向列表尾部插入数据
-func (d *LinkedList) InsertToTail(v interface{}) bool {
-	node := NewNode(v)
-	oldHead := d.head
-	if nil == oldHead.value { //如果是空链表
-		d.head = node
-		d.tail = node
-		d.length++
-	} else {
-		cur := d.head
-		for nil != cur.next {
-			cur = cur.next
-		}
-		cur.next = node
-		node.prev = cur
-		d.tail = node
-		d.length++
-	}
-	return d.tail.value == v
-}
-
-// FindByIndex 通过索引查找结点
-func (d *LinkedList) FindByIndex(index int) *Node {
-	if index > d.length || index < 0 {
-		return nil
-	}
-	cur := d.head
-	for i := 0; i < index; i++ {
+	cur := l.head
+	for nil != cur.next {
 		cur = cur.next
 	}
-	return cur
+	cur.next = node
+	l.tail = node
+	l.len++
+	return
 }
 
-// DeleteDNode 删除结点
-func (d *LinkedList) DeleteNode(p *Node) error {
-	if 0 == d.length {
-		return errors.New("链表为空，无法进行删除操作！")
+// AddToHead ,add a value to Double LinkedList head
+func (l *LinkedList) AddToHead(v interface{}) {
+	node := NewNode(v)
+	if nil == l.head.value {
+		l.head = node
+		l.len++
+		return
 	}
-	if nil == p {
-		return errors.New("删除的结点不能为空！")
+	oldHead := l.head
+	node.next = oldHead
+	l.head = node
+	l.len++
+	return
+}
+
+// AllIndexesOf ,Returns all indexes of the specified element in the LinkedList
+// Using two pointers to speed up traversal of Double LinkedList
+func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error) {
+	indexes := make([]int, 0)
+	if nil == l.head.value {
+		return indexes, single.LinkedListIsEmptyError
 	}
-	if d.tail == p {
-		return d.DeleteTail()
-	}
-	if d.head == p {
-		return d.DeleteHead()
-	}
-	cur := d.head.next
-	for nil != cur {
-		if cur == p {
+	h, t := l.head, l.tail
+	for {
+		mid := l.len >> 1
+		for i := l.len; i >= mid; i-- {
+			if t.value == val {
+				indexes = append(indexes, i)
+			}
+			t = t.prev
+		}
+		for i := 1; i <= mid; i++ {
+			if h.value == val {
+				indexes = append(indexes, i)
+			}
+			h = h.next
+		}
+		if t == h {
 			break
 		}
+	}
+	return indexes, nil
+}
+
+// checkElementIndex ,check whether index is in LinkedList
+func (l *LinkedList) checkElementIndex(index int) bool {
+	return index > 0 && index <= l.len
+}
+
+// checkNode , check whether the node and LinkedList is valid
+func (l *LinkedList) checkNodeAndLinkedList(n *Node) error {
+	if nil == n {
+		return single.InputNodeIsEmptyError
+	}
+	if 0 == l.len {
+		return single.LinkedListIsEmptyError
+	}
+	return nil
+}
+
+// Clear , clear the Double LinkedList
+func (l *LinkedList) Clear() {
+	l.head = NewNode(nil)
+	l.tail = l.head
+	l.len = 0
+}
+
+// Contain ,determine whether the value contain in the Double LinkedList
+func (l *LinkedList) Contain(val interface{}) bool {
+	_, err := l.IndexOf(val)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+// Get ,Get the index element in the Double LinkedList
+func (l *LinkedList) Get(index int) (*Node, error) {
+	if !l.checkElementIndex(index) {
+		return nil, single.InvalidIndexError
+	}
+	cur := l.head
+	for i := 1; i < index; i++ {
 		cur = cur.next
 	}
-	pre := cur.prev
-	next := cur.next
-	pre.next = next
-	next.prev = pre
-	d.length--
-	return nil
+	return cur, nil
 }
 
-// DeleteTail 删除链表尾结点
-func (d *LinkedList) DeleteTail() error {
-	if d.length == 0 {
-		return errors.New("空链表，无法进行删除尾结点操作！")
+// HasCycle ,judge whether the Double LinkedList has cycle
+func (l *LinkedList) HasCycle() bool {
+	if l.head == nil || l.head.next == nil {
+		return false
 	}
-	if d.length == 1 {
-		d.head = &Node{}
-		d.tail = &Node{}
-		d.length = 0
-		return nil
-	}
-	newTail := d.tail.prev
-	newTail.next = nil
-	d.tail = newTail
-	d.length--
-	return nil
-}
-
-// DeleteHead 删除链表头结点
-func (d *LinkedList) DeleteHead() error {
-	if d.length == 0 {
-		return errors.New("空链表，无法进行删除头结点操作！")
-	}
-	if d.length == 1 {
-		d.head = &Node{}
-		d.tail = &Node{}
-		d.length = 0
-		return nil
-	}
-	newHead := d.head.next
-	newHead.prev = nil
-	d.head = newHead
-	d.length--
-	return nil
-}
-
-// Print 打印链表
-func (d *LinkedList) Print() {
-	cur := d.head
-	format := ""
-	for nil != cur {
-		format += fmt.Sprintf("%+v", cur.GetValue())
-		cur = cur.next
-		if nil != cur {
-			format += "->"
+	slow, fast := l.head, l.head.next
+	for fast != slow {
+		if fast == nil || fast.next == nil {
+			return false
 		}
+		slow, fast = slow.next, fast.next.next
 	}
-	fmt.Println(format)
+	return true
+}
+
+// Head ,get Double LinkedList Head
+func (l *LinkedList) Head() *Node {
+	return l.head
+}
+
+// IndexOf ,get the position of the value in the Single LinkedList
+// Why return index when there is an error?
+//All returned indexes are invalid. Avoid not checking error, but insist on using the returned value
+func (l *LinkedList) IndexOf(val interface{}) (int, error) {
+	if nil == l.head.value {
+		return -1, single.LinkedListIsEmptyError
+	}
+	cur := l.head
+	for i := 1; i <= l.len; i++ {
+		if cur.value == val {
+			return i, nil
+		}
+		cur = cur.next
+	}
+	return 0, single.ValueNotExistError
+}
+
+// InsertAfter ,insert a node after the specified node
+func (l *LinkedList) InsertAfter(n *Node, val interface{}) error {
+	if err := l.checkNodeAndLinkedList(n); err != nil {
+		return err
+	}
+	newNode := NewNode(val)
+	cur := l.head
+	for nil != cur {
+		next := cur.next
+		if cur.value == n.value {
+			cur.next, newNode.next = newNode, next
+			newNode.prev, next.prev = cur, newNode
+			l.len++
+			return nil
+		}
+		cur = next
+	}
+	return single.NodeNotExistError
+}
+
+// InsertBefore ,insert a node before the specified node
+func (l *LinkedList) InsertBefore(n *Node, val interface{}) error {
+	if err := l.checkNodeAndLinkedList(n); err != nil {
+		return err
+	}
+	if l.head == n {
+		l.AddToHead(val)
+		return nil
+	}
+	node := NewNode(val)
+	cur := l.head
+	for nil != cur.next {
+		next := cur.next
+		if next.value == n.value {
+			cur.next, node.next = node, next
+			node.prev, next.prev = cur, node
+			l.len++
+			return nil
+		}
+		cur = next
+	}
+	return single.NodeNotExistError
+}
+
+// LastIndexOf ,returns the index of the last occurrence of the specified element in the LinkedList
+func (l *LinkedList) LastIndexOf(val interface{}) (int, error) {
+	if l.len == 0 {
+		return -1, single.LinkedListIsEmptyError
+	}
+	cur := l.head
+	for i := 1; i <= l.len; i++ {
+		if cur.value == val {
+			return i, nil
+		}
+		cur = cur.next
+	}
+	return 0, single.ValueNotExistError
 }
