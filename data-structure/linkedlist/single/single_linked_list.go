@@ -102,7 +102,7 @@ func (l *LinkedList) checkNodeAndLinkedList(n *Node) error {
 	if nil == n {
 		return InputNodeIsEmptyError
 	}
-	if nil == l.head.value {
+	if 0 == l.len {
 		return LinkedListIsEmptyError
 	}
 	return nil
