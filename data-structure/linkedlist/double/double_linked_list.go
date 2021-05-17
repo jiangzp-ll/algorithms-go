@@ -4,8 +4,6 @@ import (
 	"github.com/zepeng-jiang/go-basic-demo/data-structure/linkedlist/single"
 )
 
-// 双向链表
-
 // Node ,LinkedList element
 type Node struct {
 	prev  *Node
@@ -52,7 +50,7 @@ func NewLinkedList() *LinkedList {
 // Add , add a value to Double LinkedList tail
 func (l *LinkedList) Add(v interface{}) {
 	node := NewNode(v)
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		l.head = node
 		l.tail = node
 		l.len++
@@ -62,7 +60,7 @@ func (l *LinkedList) Add(v interface{}) {
 	for nil != cur.next {
 		cur = cur.next
 	}
-	cur.next = node
+	cur.next, node.prev = node, cur
 	l.tail = node
 	l.len++
 	return
@@ -71,8 +69,9 @@ func (l *LinkedList) Add(v interface{}) {
 // AddToHead ,add a value to Double LinkedList head
 func (l *LinkedList) AddToHead(v interface{}) {
 	node := NewNode(v)
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		l.head = node
+		l.tail = node
 		l.len++
 		return
 	}
@@ -87,25 +86,33 @@ func (l *LinkedList) AddToHead(v interface{}) {
 // Using two pointers to speed up traversal of Double LinkedList
 func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error) {
 	indexes := make([]int, 0)
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		return indexes, single.LinkedListIsEmptyError
+	}
+	if l.tail == l.head && l.len == 1 {
+		if val == l.head.value {
+			indexes = append(indexes, 1)
+			return indexes, nil
+		} else {
+			return nil, single.ValueNotExistError
+		}
 	}
 	h, t := l.head, l.tail
 	for {
 		mid := l.len >> 1
-		for i := l.len; i >= mid; i-- {
-			if t.value == val {
-				indexes = append(indexes, i)
-			}
-			t = t.prev
-		}
 		for i := 1; i <= mid; i++ {
 			if h.value == val {
 				indexes = append(indexes, i)
 			}
 			h = h.next
 		}
-		if t == h {
+		for i := l.len; i > mid; i-- {
+			if t.value == val {
+				indexes = append(indexes, i)
+			}
+			t = t.prev
+		}
+		if t == h || t.next == h {
 			break
 		}
 	}
@@ -122,7 +129,7 @@ func (l *LinkedList) checkNodeAndLinkedList(n *Node) error {
 	if nil == n {
 		return single.InputNodeIsEmptyError
 	}
-	if 0 == l.len {
+	if l.IsEmpty() {
 		return single.LinkedListIsEmptyError
 	}
 	return nil
@@ -176,11 +183,11 @@ func (l *LinkedList) Head() *Node {
 	return l.head
 }
 
-// IndexOf ,get the position of the value in the Single LinkedList
+// IndexOf ,get the index where the element first appears in the Double LinkedList
 // Why return index when there is an error?
 //All returned indexes are invalid. Avoid not checking error, but insist on using the returned value
 func (l *LinkedList) IndexOf(val interface{}) (int, error) {
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		return -1, single.LinkedListIsEmptyError
 	}
 	cur := l.head
@@ -237,17 +244,89 @@ func (l *LinkedList) InsertBefore(n *Node, val interface{}) error {
 	return single.NodeNotExistError
 }
 
-// LastIndexOf ,returns the index of the last occurrence of the specified element in the LinkedList
+// IsEmpty ,determine whether the Double LinkedList is empty
+func (l *LinkedList) IsEmpty() bool {
+	return l.len == 0
+}
+
+// LastIndexOf ,returns the index of the last occurrence of the specified element in the Double LinkedList
 func (l *LinkedList) LastIndexOf(val interface{}) (int, error) {
-	if l.len == 0 {
+	if l.IsEmpty() {
 		return -1, single.LinkedListIsEmptyError
 	}
-	cur := l.head
-	for i := 1; i <= l.len; i++ {
+	cur := l.tail
+	for i := l.len; i > 0; i-- {
 		if cur.value == val {
 			return i, nil
 		}
-		cur = cur.next
+		cur = cur.prev
 	}
 	return 0, single.ValueNotExistError
+}
+
+// Len ,get the number of elements in the Double LinkedList
+func (l *LinkedList) Len() int {
+	return l.len
+}
+
+// Remove ,remove the specified node of Double LinkedList
+func (l *LinkedList) Remove(n *Node) error {
+	if err := l.checkNodeAndLinkedList(n); err != nil {
+		return err
+	}
+	if l.head == n {
+		l.Clear()
+		return nil
+	}
+	cur := l.head.next
+	for nil != cur {
+		if cur == n {
+			break
+		}
+		cur = cur.next
+	}
+	if nil == cur {
+		return single.NodeNotExistError
+	}
+	pre, next := cur.prev, cur.next
+	pre.next, next.prev = next, pre
+	l.len--
+	return nil
+}
+
+// RemoveOf ,remove the element of the specified index in the LinkedList
+func (l *LinkedList) RemoveOf(index int) (*Node, error) {
+	node, err := l.Get(index)
+	if err != nil {
+		return nil, err
+	}
+	_ = l.Remove(node)
+	return node, nil
+}
+
+// Reverse ,reverse the Double LinkedList
+func (l *LinkedList) Reverse() {
+	cur := l.tail
+	for nil != cur.prev {
+		pre, next := cur.prev, cur.next
+		cur.prev, cur.next = next, pre
+		cur = pre
+	}
+	l.head, l.tail = l.tail, l.head
+}
+
+// Set ,set the value of the specified index in the LinkedList
+func (l *LinkedList) Set(index int, val interface{}) (interface{}, error) {
+	if !l.checkElementIndex(index) {
+		return nil, single.InvalidIndexError
+	}
+	n, _ := l.Get(index)
+	oldVal := n.value
+	n.value = val
+	return oldVal, nil
+}
+
+// Tail ,get Double LinkedList tail
+func (l *LinkedList) Tail() *Node {
+	return l.tail
 }

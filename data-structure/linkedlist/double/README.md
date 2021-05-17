@@ -16,9 +16,10 @@
     * `func (l *LinkedList) Get(index int) (*Node, error)`：获取双向链表指定下标的元素
     * `func (l *LinkedList) HasCycle() bool`：判断双向链表是否有环
     * `func (l *LinkedList) Head() *Node`：获取双向链表头节点
-    * `func (l *LinkedList) IndexOf(val interface{}) (int, error)`：返回元素在双向链表中的位置 
+    * `func (l *LinkedList) IndexOf(val interface{}) (int, error)`：返回元素在双向链表中第一次出现的索引 
     * `func (l *LinkedList) InsertAfter(n *Node, val interface{}) error`：在双向链表指定下标后插入元素
     * `func (l *LinkedList) InsertBefore(n *Node, val interface{}) error`：在双向链表指定下标前插入元素
+    * `func (l *LinkedList) IsEmpty() bool`：判断双向链表是否为空
     * `func (l *LinkedList) LastIndexOf(val interface{}) (int, error)`：返回指定元素在双向链表中最后一次出现的索引
     * `func (l *LinkedList) Len() int`：获取双向链表的元素个数
     * `func (l *LinkedList) Remove(n *Node) error`：删除双向链表的指定节点
