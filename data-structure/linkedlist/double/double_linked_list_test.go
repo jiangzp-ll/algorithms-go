@@ -22,9 +22,7 @@ func Test_LinkedList_Add(t *testing.T) {
 	defer list.Clear()
 	in := 100
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	list.Add(in)
 	if list.Head().Value() == elements[0] && list.Tail().Value() == in && list.Len() == len(elements)+1 {
 		t.Log("add element to LinkedList with success")
@@ -48,9 +46,7 @@ func Test_LinkedList_AddToHead(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	list.AddToHead(in)
 	if list.Head().Value() == in && list.Len() == len(elements)+1 {
 		t.Log("add element to LinkedList head is success")
@@ -74,11 +70,9 @@ func Test_LinkedList_AllIndexesOf(t *testing.T) {
 	defer list.Clear()
 	flag := true
 	target := []int{1, 3}
-	in := "a"
-	elements := []string{in, "b", in}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	in := 2
+	elements := []int{in, 1, in}
+	addValueToLinkedList(elements)
 	indexes, err := list.AllIndexesOf(in)
 	if err != nil {
 		t.Errorf("get element all index has error! error: %v \n", err)
@@ -104,11 +98,9 @@ func Test_LinkedList_AllIndexesOf_With_LinkedList_Number_Is_Even(t *testing.T) {
 	defer list.Clear()
 	flag := true
 	target := []int{1, 3}
-	in := "a"
-	elements := []string{in, "b", in, "c"}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	in := 1
+	elements := []int{in, 2, in, 3}
+	addValueToLinkedList(elements)
 	indexes, err := list.AllIndexesOf(in)
 	if err != nil {
 		t.Errorf("get element all index has error! error: %v \n", err)
@@ -193,10 +185,8 @@ func Test_LinkedList_AllIndexesOf_With_LinkedList_Is_Empty(t *testing.T) {
 }
 
 func Test_LinkedList_Clear(t *testing.T) {
-	elements := []string{"a", "b", "c"}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	elements := []int{1, 2, 3}
+	addValueToLinkedList(elements)
 	list.Clear()
 	if list.len == 0 {
 		t.Log("clear Double LinkedList is success")
@@ -209,9 +199,7 @@ func Test_LinkedList_Contain(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	list.Add(in)
 	isContain := list.Contain(in)
 	if isContain {
@@ -225,9 +213,7 @@ func Test_LinkedList_Contain_With_Value_Not_In_The_LinkedList(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	isContain := list.Contain(in)
 	if !isContain {
 		t.Log("the value not in LinkedList")
@@ -238,12 +224,10 @@ func Test_LinkedList_Contain_With_Value_Not_In_The_LinkedList(t *testing.T) {
 
 func Test_LinkedList_Get(t *testing.T) {
 	defer list.Clear()
-	target := "b"
+	target := 2
 	index := 2
-	elements := []string{"a", "b", "c"}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	elements := []int{1, 2, 3}
+	addValueToLinkedList(elements)
 	ret, err := list.Get(index)
 	if err != nil {
 		t.Errorf("get element has error! error: %v \n", err)
@@ -260,9 +244,7 @@ func Test_LinkedList_Get_With_Index_Less_Than_Zero(t *testing.T) {
 	defer list.Clear()
 	index := -1
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	_, err := list.Get(index)
 	if err != nil {
 		if errors.Is(err, single.InvalidIndexError) {
@@ -281,9 +263,7 @@ func Test_LinkedList_Get_With_Index_Out_Of_LinkedList_Range(t *testing.T) {
 	defer list.Clear()
 	elements := []int{1, 2, 3}
 	index := len(elements) + 1
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	_, err := list.Get(index)
 	if err != nil {
 		if errors.Is(err, single.InvalidIndexError) {
@@ -300,10 +280,8 @@ func Test_LinkedList_Get_With_Index_Out_Of_LinkedList_Range(t *testing.T) {
 
 func Test_LinkedList_HasCycle(t *testing.T) {
 	defer list.Clear()
-	elements := []string{"a", "b", "c"}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	elements := []int{1, 2, 3}
+	addValueToLinkedList(elements)
 	list.head.next.next.next = list.head.next
 	hasCycle := list.HasCycle()
 	if hasCycle {
@@ -315,10 +293,8 @@ func Test_LinkedList_HasCycle(t *testing.T) {
 
 func Test_LinkedList_HasCycle_With_Not_Has_Cycle(t *testing.T) {
 	defer list.Clear()
-	elements := []string{"a", "b", "c"}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	elements := []int{1, 2, 3}
+	addValueToLinkedList(elements)
 	hasCycle := list.HasCycle()
 	if !hasCycle {
 		t.Log("LinkedList not has cycle")
@@ -351,11 +327,9 @@ func Test_LinkedList_HasCycle_With_LinkedList_Is_Empty(t *testing.T) {
 func Test_LinkedList_IndexOf(t *testing.T) {
 	defer list.Clear()
 	index := 2
-	target := "b"
-	elements := []string{"a", target, "c"}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	target := 2
+	elements := []int{1, 2, 3}
+	addValueToLinkedList(elements)
 	ret, err := list.IndexOf(target)
 	if err != nil {
 		t.Errorf("get index of the value has error! error: %v \n", err)
@@ -370,11 +344,9 @@ func Test_LinkedList_IndexOf(t *testing.T) {
 
 func Test_LinkedList_IndexOf_With_The_Value_Not_In_LinkedList(t *testing.T) {
 	defer list.Clear()
-	target := 1
-	elements := []string{"a", "b", "c"}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	target := "a"
+	elements := []int{1, 2, 3}
+	addValueToLinkedList(elements)
 	_, err := list.IndexOf(target)
 	if err != nil {
 		if errors.Is(err, single.ValueNotExistError) {
@@ -409,9 +381,7 @@ func Test_LinkedList_InsertAfter(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	index := 2
 	node, _ := list.Get(index)
 	if err := list.InsertAfter(node, in); err != nil {
@@ -430,9 +400,7 @@ func Test_LinkedList_InsertAfter_With_Not_Existed_Node(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	node := NewNode("A")
 	if err := list.InsertAfter(node, in); err != nil {
 		if errors.Is(err, single.NodeNotExistError) {
@@ -451,9 +419,7 @@ func Test_LinkedList_InsertAfter_With_Empty_Node(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	var node *Node
 	if err := list.InsertAfter(node, in); err != nil {
 		if errors.Is(err, single.InputNodeIsEmptyError) {
@@ -489,9 +455,7 @@ func Test_LinkedList_InsertBefore(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	index := 2
 	node, _ := list.Get(index)
 	if err := list.InsertBefore(node, in); err != nil {
@@ -510,9 +474,7 @@ func Test_LinkedList_InsertBefore_With_Head(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	index := 1
 	node, _ := list.Get(index)
 	if err := list.InsertBefore(node, in); err != nil {
@@ -530,9 +492,7 @@ func Test_LinkedList_InsertBefore_With_Not_Existed_Node(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	node := NewNode("A")
 	if err := list.InsertBefore(node, in); err != nil {
 		if errors.Is(err, single.NodeNotExistError) {
@@ -551,9 +511,7 @@ func Test_LinkedList_InsertBefore_With_Empty_Node(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	var node *Node
 	if err := list.InsertBefore(node, in); err != nil {
 		if errors.Is(err, single.InputNodeIsEmptyError) {
@@ -590,9 +548,7 @@ func Test_LinkedList_LastIndexOf(t *testing.T) {
 	ti := 5
 	in := 2
 	elements := []int{1, in, 3, 4, in}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	index, err := list.LastIndexOf(in)
 	if err != nil {
 		t.Errorf("get last index of value has error! error: %v \n", err)
@@ -609,9 +565,7 @@ func Test_LinkedList_LastIndexOf_With_Value_Not_In_LinkedList(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	_, err := list.LastIndexOf(in)
 	if err != nil {
 		if errors.Is(err, single.ValueNotExistError) {
@@ -646,9 +600,7 @@ func Test_LinkedList_LastIndexOf_With_LinkedList_Is_Empty(t *testing.T) {
 func Test_LinkedList_Len(t *testing.T) {
 	defer list.Clear()
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	if list.Len() == len(elements) {
 		t.Log("get LinkedList len is success")
 	} else {
@@ -668,9 +620,7 @@ func Test_LinkedList_Remove(t *testing.T) {
 	defer list.Clear()
 	index := 2
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	node, _ := list.Get(index)
 	if err := list.Remove(node); err != nil {
 		t.Errorf("remove node has error! error: %v \n", err)
@@ -719,9 +669,7 @@ func Test_LinkedList_Remove_With_LinkedList_Is_Empty(t *testing.T) {
 func Test_LinkedList_Remove_With_Node_Not_Existed(t *testing.T) {
 	defer list.Clear()
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	node := NewNode("a")
 	if err := list.Remove(node); err != nil {
 		if errors.Is(err, single.NodeNotExistError) {
@@ -739,9 +687,7 @@ func Test_LinkedList_Remove_With_Node_Not_Existed(t *testing.T) {
 func Test_LinkedList_Remove_With_Node_Is_Empty(t *testing.T) {
 	defer list.Clear()
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	var node *Node
 	if err := list.Remove(node); err != nil {
 		if errors.Is(err, single.InputNodeIsEmptyError) {
@@ -760,9 +706,7 @@ func Test_LinkedList_RemoveOf(t *testing.T) {
 	defer list.Clear()
 	index := 2
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	node, err := list.RemoveOf(index)
 	if err != nil {
 		t.Errorf("remove the specified index node has error! error: %v \n", err)
@@ -796,9 +740,7 @@ func Test_LinkedList_RemoveOf_With_Index_Not_In_Range(t *testing.T) {
 	defer list.Clear()
 	elements := []int{1, 2, 3}
 	index := len(elements) + 1
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	_, err := list.RemoveOf(index)
 	if err != nil {
 		if errors.Is(err, single.InvalidIndexError) {
@@ -816,9 +758,7 @@ func Test_LinkedList_RemoveOf_With_Index_Not_In_Range(t *testing.T) {
 func Test_LinkedList_Reverse(t *testing.T) {
 	defer list.Clear()
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	list.Reverse()
 	cur := list.head
 	flag := true
@@ -841,9 +781,7 @@ func Test_LinkedList_Set(t *testing.T) {
 	target := "a"
 	index := 2
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	old, err := list.Set(index, target)
 	if err != nil {
 		t.Errorf("set value has error! error: %v \n", err)
@@ -862,9 +800,7 @@ func Test_LinkedList_Set_With_Invalid_Index(t *testing.T) {
 	target := "a"
 	index := -1
 	elements := []int{1, 2, 3}
-	for _, e := range elements {
-		list.Add(e)
-	}
+	addValueToLinkedList(elements)
 	_, err := list.Set(index, target)
 	if err != nil {
 		if errors.Is(err, single.InvalidIndexError) {
@@ -876,5 +812,12 @@ func Test_LinkedList_Set_With_Invalid_Index(t *testing.T) {
 		}
 	} else {
 		t.Error("function Set has bug")
+	}
+}
+
+// addValueToLinkedList , add value to LinkedList
+func addValueToLinkedList(elements []int) {
+	for _, e := range elements {
+		list.Add(e)
 	}
 }
