@@ -10,7 +10,7 @@ func TestArrayStack_Push(t *testing.T) {
 	for i := 0; i < 5; i++ {
 		stack.Push(i)
 	}
-	if stack.GetTop() == 4 && stack.GetData()[stack.GetTop()] == 4{
+	if stack.Top() == 4 && stack.Data()[4] == 4 {
 		t.Log("压栈成功")
 	} else {
 		t.Error("压栈失败")
@@ -52,8 +52,8 @@ func TestArrayStack_Flush(t *testing.T) {
 		stack.Push(i)
 	}
 	stack.Flush()
-	fmt.Println("after:", stack.GetData())
-	if stack.GetTop() == -1 && len(stack.GetData()) == 0{
+	fmt.Println("after:", stack.Data())
+	if len(stack.Data()) == 0 {
 		t.Log("清空栈成功")
 	} else {
 		t.Error("清空栈失败")

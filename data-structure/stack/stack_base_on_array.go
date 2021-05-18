@@ -2,17 +2,15 @@ package stack
 
 import "fmt"
 
-// 基于数组实现的栈
-
-// ArrayStack 栈
+// ArrayStack ,Stack based on Array
 type ArrayStack struct {
-	// data 数据
+	// data ,store data
 	data []interface{}
-	// top 栈顶指针
+	// top ,top of the stack
 	top int
 }
 
-// NewArrayStack 初始化
+// NewArrayStack ,init ArrayStack
 func NewArrayStack() *ArrayStack {
 	return &ArrayStack{
 		data: make([]interface{}, 0, 32),
@@ -20,25 +18,33 @@ func NewArrayStack() *ArrayStack {
 	}
 }
 
-// GetTop
-func (s *ArrayStack) GetTop() int {
-	return s.top
-}
-
-// GetData
-func (s *ArrayStack) GetData() []interface{} {
+// Data ,get stack all data
+func (s *ArrayStack) Data() []interface{} {
 	return s.data
 }
 
-// IsEmpty 是否为空
-func (s *ArrayStack) IsEmpty() bool {
-	if s.top < 0 {
-		return true
-	}
-	return false
+// Flush ,clear the stack
+func (s *ArrayStack) Flush() {
+	s.data = make([]interface{}, 0, 32)
+	s.top = -1
 }
 
-// Push 压栈
+// IsEmpty ,determine whether the stack is empty
+func (s *ArrayStack) IsEmpty() bool {
+	return s.top < 0
+}
+
+// Pop ,pop the element from the top of the stack
+func (s *ArrayStack) Pop() interface{} {
+	if s.IsEmpty() {
+		return nil
+	}
+	v := s.data[s.top]
+	s.top--
+	return v
+}
+
+// Push ,push the element to top of the stack
 func (s *ArrayStack) Push(v interface{}) {
 	if s.top < 0 {
 		s.top = 0
@@ -52,28 +58,12 @@ func (s *ArrayStack) Push(v interface{}) {
 	}
 }
 
-// Pop 出栈
-func (s *ArrayStack) Pop() interface{} {
-	if s.IsEmpty() {
-		return nil
-	}
-	v := s.data[s.top]
-	s.top -= 1
-	return v
-}
-
-// Top 返回栈顶元素
+// Top ,get top of the stack
 func (s *ArrayStack) Top() interface{} {
 	if s.IsEmpty() {
 		return nil
 	}
 	return s.data[s.top]
-}
-
-// Flush
-func (s *ArrayStack) Flush() {
-	s.data = make([]interface{}, 0, 32)
-	s.top = -1
 }
 
 // Print 打印栈
@@ -82,9 +72,8 @@ func (s *ArrayStack) Print() {
 		fmt.Println("stack is null")
 	} else {
 		for i := s.top; i >= 0; i-- {
-			fmt.Printf("%v, ",s.data[i])
+			fmt.Printf("%v, ", s.data[i])
 		}
 		fmt.Println()
 	}
 }
-

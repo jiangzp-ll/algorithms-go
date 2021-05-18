@@ -6,10 +6,10 @@ type Stack interface {
 	Flush()
 	// IsEmpty ,determine whether the stack is empty
 	IsEmpty() bool
-	// Pop , pop the element from the top of the stack
+	// Pop ,pop the element from the top of the stack
 	Pop() interface{}
 	// Push ,push the element to top of the stack
 	Push(v interface{})
-	// Top , get top of the stack
+	// Top ,get top of the stack
 	Top() interface{}
 }
