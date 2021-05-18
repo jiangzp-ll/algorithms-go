@@ -47,7 +47,7 @@ func NewLinkedList() *LinkedList {
 // Add , add a value to Single LinkedList tail
 func (l *LinkedList) Add(v interface{}) {
 	node := NewNode(v)
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		l.head = node
 		l.len++
 		return
@@ -64,7 +64,7 @@ func (l *LinkedList) Add(v interface{}) {
 // AddToHead ,add a value to Single LinkedList head
 func (l *LinkedList) AddToHead(v interface{}) {
 	node := NewNode(v)
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		l.head = node
 		l.len++
 		return
@@ -79,7 +79,7 @@ func (l *LinkedList) AddToHead(v interface{}) {
 // AllIndexesOf ,Returns all indexes of the specified element in the LinkedList
 func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error) {
 	indexes := make([]int, 0)
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		return indexes, LinkedListIsEmptyError
 	}
 	cur := l.head
@@ -102,7 +102,7 @@ func (l *LinkedList) checkNodeAndLinkedList(n *Node) error {
 	if nil == n {
 		return InputNodeIsEmptyError
 	}
-	if 0 == l.len {
+	if l.IsEmpty() {
 		return LinkedListIsEmptyError
 	}
 	return nil
@@ -159,7 +159,7 @@ func (l *LinkedList) Head() *Node {
 // Why return index when there is an error?
 //All returned indexes are invalid. Avoid not checking error, but insist on using the returned value
 func (l *LinkedList) IndexOf(val interface{}) (int, error) {
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		return -1, LinkedListIsEmptyError
 	}
 	cur := l.head
@@ -216,9 +216,14 @@ func (l *LinkedList) InsertBefore(n *Node, val interface{}) error {
 	return NodeNotExistError
 }
 
+// IsEmpty ,determine whether the Double LinkedList is empty
+func (l *LinkedList) IsEmpty() bool {
+	return l.len == 0
+}
+
 // Last , get LinkedList last node
 func (l *LinkedList) Last() *Node {
-	if nil == l.head.value {
+	if l.IsEmpty() {
 		return nil
 	}
 	cur := l.head

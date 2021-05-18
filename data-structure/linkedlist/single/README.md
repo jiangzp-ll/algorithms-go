@@ -18,6 +18,7 @@
     * `func (l *LinkedList) IndexOf(val interface{}) (int, error)`：返回元素在单向链表中的位置 
     * `func (l *LinkedList) InsertAfter(n *Node, val interface{}) error`：在单向链表指定下标后插入元素
     * `func (l *LinkedList) InsertBefore(n *Node, val interface{}) error`：在单向链表指定下标前插入元素
+    * `func (l *LinkedList) IsEmpty() bool`：判断单向链表是否为空
     * `func (l *LinkedList) Last() *Node`：获取单向链表尾部
     * `func (l *LinkedList) LastIndexOf(val interface{}) (int, error)`：返回指定元素在单向链表中最后一次出现的索引
     * `func (l *LinkedList) Len() int`：获取单向链表的元素个数
