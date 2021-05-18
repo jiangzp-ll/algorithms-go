@@ -2,6 +2,7 @@ package single
 
 import (
 	"errors"
+	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
 	"testing"
 )
 
@@ -86,7 +87,7 @@ func Test_LinkedList_AllIndexesOf_With_LinkedList_Is_Empty(t *testing.T) {
 	l := NewLinkedList()
 	_, err := l.AllIndexesOf(in)
 	if err != nil {
-		if errors.Is(err, LinkedListIsEmptyError) {
+		if errors.Is(err, errors2.LinkedListIsEmptyError) {
 			t.Log("LinkedList is empty")
 			return
 		} else {
@@ -150,7 +151,7 @@ func Test_LinkedList_Get_With_Index_Less_Than_Zero(t *testing.T) {
 	addValueToLinkedList(elements)
 	_, err := list.Get(index)
 	if err != nil {
-		if errors.Is(err, InvalidIndexError) {
+		if errors.Is(err, errors2.InvalidIndexError) {
 			t.Log("index not in LinkedList range")
 			return
 		} else {
@@ -169,7 +170,7 @@ func Test_LinkedList_Get_With_Index_Out_Of_LinkedList_Range(t *testing.T) {
 	addValueToLinkedList(elements)
 	_, err := list.Get(index)
 	if err != nil {
-		if errors.Is(err, InvalidIndexError) {
+		if errors.Is(err, errors2.InvalidIndexError) {
 			t.Log("index not in LinkedList range")
 			return
 		} else {
@@ -252,7 +253,7 @@ func Test_LinkedList_IndexOf_With_The_Value_Not_In_LinkedList(t *testing.T) {
 	addValueToLinkedList(elements)
 	_, err := list.IndexOf(target)
 	if err != nil {
-		if errors.Is(err, ValueNotExistError) {
+		if errors.Is(err, errors2.ValueNotExistError) {
 			t.Log("value not in this LinkedList")
 			return
 		} else {
@@ -268,7 +269,7 @@ func Test_LinkedList_IndexOf_With_LinkedList_Is_Empty(t *testing.T) {
 	l := NewLinkedList()
 	_, err := l.IndexOf("a")
 	if err != nil {
-		if errors.Is(err, LinkedListIsEmptyError) {
+		if errors.Is(err, errors2.LinkedListIsEmptyError) {
 			t.Log("LinkedList is empty")
 			return
 		} else {
@@ -306,7 +307,7 @@ func Test_LinkedList_InsertAfter_With_Not_Existed_Node(t *testing.T) {
 	addValueToLinkedList(elements)
 	node := NewNode("A")
 	if err := list.InsertAfter(node, in); err != nil {
-		if errors.Is(err, NodeNotExistError) {
+		if errors.Is(err, errors2.NotExistError) {
 			t.Log("node not existed")
 			return
 		} else {
@@ -325,7 +326,7 @@ func Test_LinkedList_InsertAfter_With_Empty_Node(t *testing.T) {
 	addValueToLinkedList(elements)
 	var node *Node
 	if err := list.InsertAfter(node, in); err != nil {
-		if errors.Is(err, InputNodeIsEmptyError) {
+		if errors.Is(err, errors2.InputNodeIsEmptyError) {
 			t.Log("node is empty")
 			return
 		} else {
@@ -342,7 +343,7 @@ func Test_LinkedList_InsertAfter_With_Empty_LinkedList(t *testing.T) {
 	node := NewNode(1)
 	in := "a"
 	if err := l.InsertAfter(node, in); err != nil {
-		if errors.Is(err, LinkedListIsEmptyError) {
+		if errors.Is(err, errors2.LinkedListIsEmptyError) {
 			t.Log("LinkedList is empty")
 			return
 		} else {
@@ -398,7 +399,7 @@ func Test_LinkedList_InsertBefore_With_Not_Existed_Node(t *testing.T) {
 	addValueToLinkedList(elements)
 	node := NewNode("A")
 	if err := list.InsertBefore(node, in); err != nil {
-		if errors.Is(err, NodeNotExistError) {
+		if errors.Is(err, errors2.NotExistError) {
 			t.Log("node not existed")
 			return
 		} else {
@@ -417,7 +418,7 @@ func Test_LinkedList_InsertBefore_With_Empty_Node(t *testing.T) {
 	addValueToLinkedList(elements)
 	var node *Node
 	if err := list.InsertBefore(node, in); err != nil {
-		if errors.Is(err, InputNodeIsEmptyError) {
+		if errors.Is(err, errors2.InputNodeIsEmptyError) {
 			t.Log("node is empty")
 			return
 		} else {
@@ -434,7 +435,7 @@ func Test_LinkedList_InsertBefore_With_Empty_LinkedList(t *testing.T) {
 	node := NewNode(1)
 	in := "a"
 	if err := l.InsertBefore(node, in); err != nil {
-		if errors.Is(err, LinkedListIsEmptyError) {
+		if errors.Is(err, errors2.LinkedListIsEmptyError) {
 			t.Log("LinkedList is empty")
 			return
 		} else {
@@ -494,7 +495,7 @@ func Test_LinkedList_LastIndexOf_With_Value_Not_In_LinkedList(t *testing.T) {
 	addValueToLinkedList(elements)
 	_, err := list.LastIndexOf(in)
 	if err != nil {
-		if errors.Is(err, ValueNotExistError) {
+		if errors.Is(err, errors2.ValueNotExistError) {
 			t.Log("value not exist")
 			return
 		} else {
@@ -511,7 +512,7 @@ func Test_LinkedList_LastIndexOf_With_LinkedList_Is_Empty(t *testing.T) {
 	in := "a"
 	_, err := l.LastIndexOf(in)
 	if err != nil {
-		if errors.Is(err, LinkedListIsEmptyError) {
+		if errors.Is(err, errors2.LinkedListIsEmptyError) {
 			t.Log("LinkedList is empty")
 			return
 		} else {
@@ -561,7 +562,7 @@ func Test_LinkedList_Remove_With_LinkedList_Is_Empty(t *testing.T) {
 	defer list.Clear()
 	node := NewNode("a")
 	if err := list.Remove(node); err != nil {
-		if errors.Is(err, LinkedListIsEmptyError) {
+		if errors.Is(err, errors2.LinkedListIsEmptyError) {
 			t.Log("LinkedList is empty")
 			return
 		} else {
@@ -579,7 +580,7 @@ func Test_LinkedList_Remove_With_Node_Not_Existed(t *testing.T) {
 	addValueToLinkedList(elements)
 	node := NewNode("a")
 	if err := list.Remove(node); err != nil {
-		if errors.Is(err, NodeNotExistError) {
+		if errors.Is(err, errors2.NotExistError) {
 			t.Log("node not exited")
 			return
 		} else {
@@ -597,7 +598,7 @@ func Test_LinkedList_Remove_With_Node_Is_Empty(t *testing.T) {
 	addValueToLinkedList(elements)
 	var node *Node
 	if err := list.Remove(node); err != nil {
-		if errors.Is(err, InputNodeIsEmptyError) {
+		if errors.Is(err, errors2.InputNodeIsEmptyError) {
 			t.Log("input node is empty")
 			return
 		} else {
@@ -650,7 +651,7 @@ func Test_LinkedList_RemoveOf_With_Index_Not_In_Range(t *testing.T) {
 	addValueToLinkedList(elements)
 	_, err := list.RemoveOf(index)
 	if err != nil {
-		if errors.Is(err, InvalidIndexError) {
+		if errors.Is(err, errors2.InvalidIndexError) {
 			t.Log("invalid index")
 			return
 		} else {
@@ -712,7 +713,7 @@ func Test_LinkedList_Set_With_Invalid_Index(t *testing.T) {
 	addValueToLinkedList(elements)
 	_, err := list.Set(index, target)
 	if err != nil {
-		if errors.Is(err, InvalidIndexError) {
+		if errors.Is(err, errors2.InvalidIndexError) {
 			t.Log("invalid index")
 			return
 		} else {

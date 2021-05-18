@@ -2,6 +2,7 @@ package array
 
 import (
 	"errors"
+	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
 	"math/rand"
 	"strconv"
 	"testing"
@@ -187,7 +188,7 @@ func TestArray_Get_With_Index_Not_In_The_Array(t *testing.T) {
 	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.Get(index)
 	if err1 != nil {
-		if errors.Is(err1, IndexOutOfBoundsError) {
+		if errors.Is(err1, errors2.IndexOutOfBoundsError) {
 			t.Log("invalid index")
 		} else {
 			t.Errorf("unknown error! error: %v \n", err1)
@@ -251,7 +252,7 @@ func TestArray_Insert_With_Index_Not_In_The_Array_And_Array_Not_Full(t *testing.
 	capacity := 4
 	arr := initArrayAndAddValue(capacity, t, in)
 	if err := arr.Insert(index, target); err != nil {
-		if errors.Is(err, IndexOutOfBoundsError) {
+		if errors.Is(err, errors2.IndexOutOfBoundsError) {
 			t.Logf("Array not full and index out of bounds")
 		} else {
 			t.Errorf("unknown error! error: %v", err)
@@ -268,7 +269,7 @@ func TestArray_Insert_With_Index_Not_In_The_Array_And_Array_Is_Full(t *testing.T
 	capacity := 3
 	arr := initArrayAndAddValue(capacity, t, in)
 	if err := arr.Insert(index, target); err != nil {
-		if errors.Is(err, IndexOutOfBoundsError) {
+		if errors.Is(err, errors2.IndexOutOfBoundsError) {
 			t.Logf("Array not full and index out of bounds")
 		} else {
 			t.Errorf("unknown error! error: %v", err)
@@ -403,7 +404,7 @@ func TestArray_Remove_With_Index_Not_In_The_Array(t *testing.T) {
 	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.Remove(index)
 	if err1 != nil {
-		if errors.Is(err1, IndexOutOfBoundsError) {
+		if errors.Is(err1, errors2.IndexOutOfBoundsError) {
 			t.Logf("index out of bounds")
 			return
 		} else {
@@ -453,7 +454,7 @@ func TestArray_Replace_With_Index_Not_In_The_Array(t *testing.T) {
 	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.Replace(index, newVal)
 	if err1 != nil {
-		if errors.Is(err1, IndexOutOfBoundsError) {
+		if errors.Is(err1, errors2.IndexOutOfBoundsError) {
 			t.Logf("index out of bounds")
 			return
 		} else {
@@ -503,7 +504,7 @@ func TestArray_Set_With_Index_Not_In_The_Array(t *testing.T) {
 	arr := initArrayAndAddValue(capacity, t, in)
 	err := arr.Set(index, newVal)
 	if err != nil {
-		if errors.Is(err, IndexOutOfBoundsError) {
+		if errors.Is(err, errors2.IndexOutOfBoundsError) {
 			t.Logf("index out of bounds")
 			return
 		} else {
@@ -570,7 +571,7 @@ func TestArray_SubArray_With_Start_Less_Than_Zero(t *testing.T) {
 	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.SubArray(start, end)
 	if err1 != nil {
-		if errors.Is(err1, IndexOutOfBoundsError) {
+		if errors.Is(err1, errors2.IndexOutOfBoundsError) {
 			t.Logf("index out of bounds")
 			return
 		} else {
@@ -589,7 +590,7 @@ func TestArray_SubArray_With_End_Greater_Than_Array_Length(t *testing.T) {
 	arr := initArrayAndAddValue(capacity, t, in)
 	_, err1 := arr.SubArray(start, end)
 	if err1 != nil {
-		if errors.Is(err1, IndexOutOfBoundsError) {
+		if errors.Is(err1, errors2.IndexOutOfBoundsError) {
 			t.Logf("index out of bounds")
 			return
 		} else {

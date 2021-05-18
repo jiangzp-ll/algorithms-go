@@ -1,7 +1,7 @@
 package double
 
 import (
-	"github.com/zepeng-jiang/go-basic-demo/data-structure/linkedlist/single"
+	"github.com/zepeng-jiang/go-basic-demo/pkg/errors"
 )
 
 // Node ,LinkedList element
@@ -87,14 +87,14 @@ func (l *LinkedList) AddToHead(v interface{}) {
 func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error) {
 	indexes := make([]int, 0)
 	if l.IsEmpty() {
-		return indexes, single.LinkedListIsEmptyError
+		return indexes, errors.LinkedListIsEmptyError
 	}
 	if l.tail == l.head && l.len == 1 {
 		if val == l.head.value {
 			indexes = append(indexes, 1)
 			return indexes, nil
 		} else {
-			return nil, single.ValueNotExistError
+			return nil, errors.ValueNotExistError
 		}
 	}
 	h, t := l.head, l.tail
@@ -127,10 +127,10 @@ func (l *LinkedList) checkElementIndex(index int) bool {
 // checkNode , check whether the node and LinkedList is valid
 func (l *LinkedList) checkNodeAndLinkedList(n *Node) error {
 	if nil == n {
-		return single.InputNodeIsEmptyError
+		return errors.InputNodeIsEmptyError
 	}
 	if l.IsEmpty() {
-		return single.LinkedListIsEmptyError
+		return errors.LinkedListIsEmptyError
 	}
 	return nil
 }
@@ -154,7 +154,7 @@ func (l *LinkedList) Contain(val interface{}) bool {
 // Get ,Get the index element in the Double LinkedList
 func (l *LinkedList) Get(index int) (*Node, error) {
 	if !l.checkElementIndex(index) {
-		return nil, single.InvalidIndexError
+		return nil, errors.InvalidIndexError
 	}
 	cur := l.head
 	for i := 1; i < index; i++ {
@@ -188,7 +188,7 @@ func (l *LinkedList) Head() *Node {
 //All returned indexes are invalid. Avoid not checking error, but insist on using the returned value
 func (l *LinkedList) IndexOf(val interface{}) (int, error) {
 	if l.IsEmpty() {
-		return -1, single.LinkedListIsEmptyError
+		return -1, errors.LinkedListIsEmptyError
 	}
 	cur := l.head
 	for i := 1; i <= l.len; i++ {
@@ -197,7 +197,7 @@ func (l *LinkedList) IndexOf(val interface{}) (int, error) {
 		}
 		cur = cur.next
 	}
-	return 0, single.ValueNotExistError
+	return 0, errors.ValueNotExistError
 }
 
 // InsertAfter ,insert a node after the specified node
@@ -217,7 +217,7 @@ func (l *LinkedList) InsertAfter(n *Node, val interface{}) error {
 		}
 		cur = next
 	}
-	return single.NodeNotExistError
+	return errors.NotExistError
 }
 
 // InsertBefore ,insert a node before the specified node
@@ -241,7 +241,7 @@ func (l *LinkedList) InsertBefore(n *Node, val interface{}) error {
 		}
 		cur = next
 	}
-	return single.NodeNotExistError
+	return errors.NotExistError
 }
 
 // IsEmpty ,determine whether the Double LinkedList is empty
@@ -252,7 +252,7 @@ func (l *LinkedList) IsEmpty() bool {
 // LastIndexOf ,returns the index of the last occurrence of the specified element in the Double LinkedList
 func (l *LinkedList) LastIndexOf(val interface{}) (int, error) {
 	if l.IsEmpty() {
-		return -1, single.LinkedListIsEmptyError
+		return -1, errors.LinkedListIsEmptyError
 	}
 	cur := l.tail
 	for i := l.len; i > 0; i-- {
@@ -261,7 +261,7 @@ func (l *LinkedList) LastIndexOf(val interface{}) (int, error) {
 		}
 		cur = cur.prev
 	}
-	return 0, single.ValueNotExistError
+	return 0, errors.ValueNotExistError
 }
 
 // Len ,get the number of elements in the Double LinkedList
@@ -286,7 +286,7 @@ func (l *LinkedList) Remove(n *Node) error {
 		cur = cur.next
 	}
 	if nil == cur {
-		return single.NodeNotExistError
+		return errors.NotExistError
 	}
 	pre, next := cur.prev, cur.next
 	pre.next, next.prev = next, pre
@@ -318,7 +318,7 @@ func (l *LinkedList) Reverse() {
 // Set ,set the value of the specified index in the LinkedList
 func (l *LinkedList) Set(index int, val interface{}) (interface{}, error) {
 	if !l.checkElementIndex(index) {
-		return nil, single.InvalidIndexError
+		return nil, errors.InvalidIndexError
 	}
 	n, _ := l.Get(index)
 	oldVal := n.value

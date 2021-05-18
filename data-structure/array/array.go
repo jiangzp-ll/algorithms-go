@@ -1,10 +1,8 @@
 package array
 
 import (
-	"errors"
+	"github.com/zepeng-jiang/go-basic-demo/pkg/errors"
 )
-
-var IndexOutOfBoundsError = errors.New("array index out of bounds error")
 
 // Array ,like Java ArrayList
 type Array struct {
@@ -15,7 +13,7 @@ type Array struct {
 // NewArray ,init Array
 func NewArray(capacity int) (*Array, error) {
 	if capacity < 0 {
-		return nil, errors.New("capacity must be greater than or equal to zero")
+		return nil, errors.InvalidCapacityError
 	}
 	return &Array{
 		data: make([]string, capacity),
@@ -81,7 +79,7 @@ func (arr *Array) expansion() {
 // Get ,get the element at the specified index
 func (arr *Array) Get(index int) (string, error) {
 	if arr.isIndexOutOfRange(index) {
-		return "", IndexOutOfBoundsError
+		return "", errors.IndexOutOfBoundsError
 	}
 	return arr.data[index], nil
 }
@@ -93,7 +91,7 @@ func (arr *Array) IndexOf(val string) (int, error) {
 			return i, nil
 		}
 	}
-	return -1, errors.New("not exist the value in the Array")
+	return -1, errors.NotExistError
 }
 
 // Insert, insert the value at the specified index
@@ -102,7 +100,7 @@ func (arr *Array) Insert(index int, val string) error {
 		arr.expansion()
 	}
 	if index != arr.len && arr.isIndexOutOfRange(index) {
-		return IndexOutOfBoundsError
+		return errors.IndexOutOfBoundsError
 	}
 	for i := arr.len; i > index; i-- {
 		arr.data[i] = arr.data[i-1]
@@ -170,7 +168,7 @@ func (arr *Array) MergeArray(other *Array) *Array {
 // Remove , remove and return the element with the specified index
 func (arr *Array) Remove(index int) (string, error) {
 	if arr.isIndexOutOfRange(index) {
-		return "", IndexOutOfBoundsError
+		return "", errors.IndexOutOfBoundsError
 	}
 	val := arr.data[index]
 	for i := index; i < len(arr.data)-1; i++ {
@@ -183,7 +181,7 @@ func (arr *Array) Remove(index int) (string, error) {
 // Replace ,replace and return the new value with the specified index
 func (arr *Array) Replace(index int, val string) (string, error) {
 	if arr.isIndexOutOfRange(index) {
-		return "", IndexOutOfBoundsError
+		return "", errors.IndexOutOfBoundsError
 	}
 	old := arr.data[index]
 	arr.data[index] = val
@@ -193,7 +191,7 @@ func (arr *Array) Replace(index int, val string) (string, error) {
 // Set , set a value for the specified index
 func (arr *Array) Set(index int, val string) error {
 	if arr.isIndexOutOfRange(index) {
-		return IndexOutOfBoundsError
+		return errors.IndexOutOfBoundsError
 	}
 	arr.data[index] = val
 	return nil
@@ -202,10 +200,10 @@ func (arr *Array) Set(index int, val string) error {
 // SubArray ,get sub Array
 func (arr *Array) SubArray(start, end int) (*Array, error) {
 	if start > end {
-		return nil, errors.New("start must be less than or equal to end")
+		return nil, errors.SubArrayWithIndexError
 	}
 	if arr.isIndexOutOfRange(start) || arr.isIndexOutOfRange(end) {
-		return nil, IndexOutOfBoundsError
+		return nil, errors.IndexOutOfBoundsError
 	}
 	return &Array{
 		data: arr.data[start:end],
