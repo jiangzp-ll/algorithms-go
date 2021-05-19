@@ -16,4 +16,7 @@ var (
 	InputNodeIsEmptyError  = errors.New("input node is empty")
 	InvalidIndexError      = errors.New("invalid index")
 	ValueNotExistError     = errors.New("value exist in the LinkedList")
+
+	// Stack
+	StackIsEmptyError = errors.New("stack is empty")
 )
