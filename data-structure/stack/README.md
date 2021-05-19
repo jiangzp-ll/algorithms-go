@@ -3,9 +3,10 @@
     * `func NewStack() *Stack` ：初始化栈
     * `func Flush()`：清空栈
     * `func IsEmpty() bool`：判断栈是否为空
-    * `func Pop() interface{}`：元素出栈
-    * `func Push(v interface{})`：元素入栈
-    * `func Top() interface{}`：返回栈顶元素
+    * `funx Peek() (interface{}, error)`：获取栈顶元素但不删除
+    * `func Pop() interface{}`：获取栈顶元素并删除
+    * `func Push(v interface{})`：将元素放到栈顶
+    * `func Search(val interface{}) (int, error)`：返回该值在栈中的第几个位置
  #### <a id="stack">type Stack</a>
 ```
 type Stack interface {
@@ -13,11 +14,13 @@ type Stack interface {
     Flush()
     // IsEmpty ,determine whether the stack is empty
     IsEmpty() bool
-    // Pop , pop the element from the top of the stack
-    Pop() interface{}
+    // Peek ,get and not remove the element from the top of the stack
+    Peek() (interface{}, error)
+    // Pop ,pop and remove the element from the top of the stack
+    Pop() (interface{}, error)
     // Push ,push the element to top of the stack
     Push(v interface{})
-    // Top , get top of the stack
-    Top() interface{}
+    // Search ,return the index of the value in the stack
+    Search(val interface{}) (int, error)
 }
 ```

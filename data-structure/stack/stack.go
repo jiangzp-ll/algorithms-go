@@ -6,10 +6,12 @@ type Stack interface {
 	Flush()
 	// IsEmpty ,determine whether the stack is empty
 	IsEmpty() bool
-	// Pop ,pop the element from the top of the stack
-	Pop() interface{}
+	// Peek ,get and not remove the element from the top of the stack
+	Peek() (interface{}, error)
+	// Pop ,pop and remove the element from the top of the stack
+	Pop() (interface{}, error)
 	// Push ,push the element to top of the stack
 	Push(v interface{})
-	// Top ,get top of the stack
-	Top() interface{}
+	// Search ,return the index of the value in the stack
+	Search(val interface{}) (int, error)
 }
