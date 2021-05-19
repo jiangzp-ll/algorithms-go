@@ -1,85 +1,108 @@
 package stack
 
-import "fmt"
+import (
+	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+)
 
-// 基于链表实现的栈
-
-// Node 节点
-type Node struct {
-	// 	next 指针
-	next *Node
-	// 数据
+// node ,LinkedList element
+type node struct {
+	prev  *node
+	next  *node
 	value interface{}
 }
 
-// LinkedListStack 栈
+// LinkedListStack ,Stack based on Double LinkedList
 type LinkedListStack struct {
-	topNode *Node
+	top *node
 }
 
-// NewLinkedListStack 初始化栈
+// newNode ,init a node
+func newNode(val interface{}) *node {
+	return &node{
+		prev:  nil,
+		next:  nil,
+		value: val,
+	}
+}
+
+// NewLinkedListStack ,init LinkedListStack
 func NewLinkedListStack() *LinkedListStack {
-	return &LinkedListStack{nil}
+	return &LinkedListStack{newNode(nil)}
 }
 
-// GetNext
-func (n *Node) GetNext() *Node {
-	return n.next
-}
-
-// GetValue
-func (n *Node) GetValue() interface{} {
-	return n.value
-}
-// GetTopNode
-func (s *LinkedListStack) GetTopNode() *Node {
-	return s.topNode
-}
-// IsEmpty 是否为空
-func (s *LinkedListStack) IsEmpty() bool {
-	return s.topNode == nil
-}
-
-// Push 压栈
-func (s *LinkedListStack) Push(v interface{}) {
-	s.topNode = &Node{
-		next:  s.topNode,
-		value: v,
-	}
-}
-
-// Pop 出栈
-func (s *LinkedListStack) Pop() interface{} {
-	if s.IsEmpty() {
-		return nil
-	}
-	v := s.topNode.value
-	s.topNode = s.topNode.next
-	return v
-}
-
-// Top 返回栈顶元素
-func (s *LinkedListStack) Top() interface{} {
-	if s.IsEmpty() {
-		return nil
-	}
-	return s.topNode.value
-}
-
-// Flush 清空栈
+// Flush ,clear the stack
 func (s *LinkedListStack) Flush() {
-	s.topNode = nil
+	s.top = newNode(nil)
 }
 
-// Print 打印栈
-func (s *LinkedListStack) Print() {
+// IsEmpty ,determine whether the stack is empty
+func (s *LinkedListStack) IsEmpty() bool {
+	return nil == s.top.value
+}
+
+// Peek ,get and not remove the element from the top of the stack
+func (s *LinkedListStack) Peek() (interface{}, error) {
 	if s.IsEmpty() {
-		fmt.Println("stack is null")
-	} else {
-		cur := s.topNode
-		for nil != cur {
-			fmt.Printf("%v, ", cur.value)
-			cur = cur.next
+		return nil, errors2.StackIsEmptyError
+	}
+	cur := s.top
+	if nil != cur.next {
+		cur = cur.next
+	}
+	return cur.value, nil
+}
+
+// Pop ,pop and remove the element from the top of the stack
+func (s *LinkedListStack) Pop() (interface{}, error) {
+	if s.IsEmpty() {
+		return nil, errors2.StackIsEmptyError
+	}
+	cur := s.top
+	if nil != cur.next {
+		cur = cur.next
+	}
+	pre := cur.prev
+	pre.next = nil
+	return cur.value, nil
+}
+
+// Push ,push the element to top of the stack
+func (s *LinkedListStack) Push(val interface{}) {
+	node := newNode(val)
+	if s.IsEmpty() {
+		s.top = node
+		return
+	}
+	cur := s.top
+	if nil != cur.next {
+		cur = cur.next
+	}
+	cur.next = node
+	return
+}
+
+// Search , return the index of the value in the stack
+// Why return index when there is an error?
+//All returned indexes are invalid. Avoid not checking error, but insist on using the returned value
+func (s *LinkedListStack) Search(val interface{}) (int, error) {
+	if s.IsEmpty() {
+		return -1, errors2.StackIsEmptyError
+	}
+	if nil == s.top.next {
+		if s.top.value == val {
+			return 1, nil
+		} else {
+			return -2, errors2.NotExistError
 		}
 	}
+	var index = 1
+	cur := s.top
+	if nil != cur.next {
+		index++
+		if cur.value == val {
+			return index, nil
+		}
+		cur = cur.next
+	}
+	return index - 1, errors2.NotExistError
 }
