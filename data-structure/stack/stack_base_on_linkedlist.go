@@ -46,7 +46,7 @@ func (s *LinkedListStack) Peek() (interface{}, error) {
 		return nil, errors2.StackIsEmptyError
 	}
 	cur := s.top
-	if nil != cur.next {
+	for nil != cur.next {
 		cur = cur.next
 	}
 	return cur.value, nil
@@ -58,7 +58,7 @@ func (s *LinkedListStack) Pop() (interface{}, error) {
 		return nil, errors2.StackIsEmptyError
 	}
 	cur := s.top
-	if nil != cur.next {
+	for nil != cur.next {
 		cur = cur.next
 	}
 	pre := cur.prev
@@ -74,10 +74,10 @@ func (s *LinkedListStack) Push(val interface{}) {
 		return
 	}
 	cur := s.top
-	if nil != cur.next {
+	for nil != cur.next {
 		cur = cur.next
 	}
-	cur.next = node
+	cur.next, node.prev = node, cur
 	return
 }
 
@@ -97,11 +97,11 @@ func (s *LinkedListStack) Search(val interface{}) (int, error) {
 	}
 	var index = 1
 	cur := s.top
-	if nil != cur.next {
-		index++
+	for nil != cur.next {
 		if cur.value == val {
 			return index, nil
 		}
+		index++
 		cur = cur.next
 	}
 	return index - 1, errors2.NotExistError
