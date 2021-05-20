@@ -1,77 +1,42 @@
 package queue
 
-import "fmt"
+import errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
 
-// 数组实现顺序队列
-
-// ArrayQueue 队列
+// ArrayQueue ,Queue based on Array
 type ArrayQueue struct {
-	queue    []interface{}
-	capacity int
-	head     int
-	tail     int
+	// data ,store data
+	data []interface{}
+	// len ,the number of elements in the queue
+	len int
+	// head ,the head of the queue
+	head int
+	// tail ,the tail of the queue
+	tail int
 }
 
-// NewArrayQueue 初始化
+// NewArrayQueue ,init ArrayQueue
 func NewArrayQueue(n int) *ArrayQueue {
 	return &ArrayQueue{
-		queue:    make([]interface{}, n),
-		capacity: n,
-		head:     0,
-		tail:     0,
+		data: make([]interface{}, n),
+		len:  0,
+		head: -1,
+		tail: -1,
 	}
 }
 
-// GetQueue
-func (q *ArrayQueue) GetQueue() []interface{} {
-	return q.queue
-}
-
-// GetCapacity
-func (q *ArrayQueue) GetCapacity() int {
-	return q.capacity
-}
-
-// GetHead
-func (q *ArrayQueue) GetHead() int {
-	return q.head
-}
-
-// GetTail
-func (q *ArrayQueue) GetTail() int {
-	return q.tail
-}
-
-
-// EnQueue 入队
-func (q *ArrayQueue) EnQueue(v interface{}) bool {
-	if q.capacity == q.tail {
-		return false
+// Add ,add the element to the end of the queue
+func (q *ArrayQueue) Add(val interface{}) error {
+	if len(q.data) <= q.len {
+		return errors2.QueueIsFullError
 	}
-	q.queue[q.tail] = v
-	q.tail++
-	return true
-}
-
-// DeQueue 出队
-func (q *ArrayQueue) DeQueue() interface{} {
-	if q.tail == q.head {
+	if q.tail < 0 {
+		q.data[0] = val
+		q.head, q.tail = 0, 0
+		q.len++
 		return nil
 	}
-	h := q.queue[q.head]
-	q.head++
-	return h
-}
-
-// ToString 转成字符串
-func (q *ArrayQueue) ToString() string {
-	if q.head == q.tail {
-		return "empty queue"
-	}
-	ret := "head"
-	for i := q.head; i < q.tail; i++ {
-		ret += fmt.Sprintf("<-%+v", q.queue[i])
-	}
-	ret+="<-tail"
-	return ret
+	q.data[q.len] = val
+	q.tail++
+	q.len++
+	return nil
 }

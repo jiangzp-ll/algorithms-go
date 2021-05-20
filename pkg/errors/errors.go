@@ -19,4 +19,7 @@ var (
 
 	// Stack
 	StackIsEmptyError = errors.New("stack is empty")
+
+	// Queue
+	QueueIsFullError = errors.New("queue is full")
 )
