@@ -1,10 +1,5 @@
 package recursion
 
-import (
-	"fmt"
-	"github.com/zepeng-jiang/go-basic-demo/algorithms/sort"
-)
-
 // 递归实现斐波那契数列
 
 // Fib .
@@ -36,17 +31,17 @@ func (f *Fib) Fibonacci(n int) int {
 	}
 }
 
-// Print 打印结果
-func (f *Fib) Print() string {
-	var keys = []int{}
-	for k, _ := range f.value {
-		keys = append(keys, k)
-	}
-	newKeys := sort.QuickSort(keys, 0, len(keys)-1)
-	result := "["
-	for i := 0; i < len(newKeys)-1; i++ {
-		result += fmt.Sprintf("%d,", f.value[newKeys[i]])
-	}
-	result += fmt.Sprintf("%d]", f.value[newKeys[len(newKeys)-1]])
-	return result
-}
+//// Print 打印结果
+//func (f *Fib) Print() string {
+//	var keys = []int{}
+//	for k, _ := range f.value {
+//		keys = append(keys, k)
+//	}
+//	newKeys := sorts.QuickSort(keys, 0, len(keys)-1)
+//	result := "["
+//	for i := 0; i < len(newKeys)-1; i++ {
+//		result += fmt.Sprintf("%d,", f.value[newKeys[i]])
+//	}
+//	result += fmt.Sprintf("%d]", f.value[newKeys[len(newKeys)-1]])
+//	return result
+//}
