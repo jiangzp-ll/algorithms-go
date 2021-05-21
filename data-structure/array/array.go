@@ -6,7 +6,7 @@ import (
 
 // Array ,like Java ArrayList
 type Array struct {
-	data []string
+	data []interface{}
 	len  int
 }
 
@@ -16,13 +16,13 @@ func NewArray(capacity int) (*Array, error) {
 		return nil, errors.InvalidCapacityError
 	}
 	return &Array{
-		data: make([]string, capacity),
+		data: make([]interface{}, capacity),
 		len:  0,
 	}, nil
 }
 
 // Add , add a value to tail
-func (arr *Array) Add(val string) {
+func (arr *Array) Add(val interface{}) {
 	if len(arr.data) == arr.Len() {
 		arr.expansion()
 	}
@@ -38,7 +38,7 @@ func (arr *Array) Clear() {
 }
 
 // Contain, determine whether the value is included in the Array
-func (arr *Array) Contain(val string) bool {
+func (arr *Array) Contain(val interface{}) bool {
 	for i := 0; i < len(arr.data); i++ {
 		if arr.data[i] == val {
 			return true
@@ -48,7 +48,7 @@ func (arr *Array) Contain(val string) bool {
 }
 
 // Data ,get Array all element
-func (arr *Array) Data() []string {
+func (arr *Array) Data() []interface{} {
 	return arr.data
 }
 
@@ -58,17 +58,17 @@ func (arr *Array) Data() []string {
 func (arr *Array) expansion() {
 	if arr.len < 1024 {
 		if arr.len == 0 {
-			arr.data = make([]string, 1)
+			arr.data = make([]interface{}, 1)
 			return
 		}
-		newData := make([]string, 2*arr.len)
+		newData := make([]interface{}, 2*arr.len)
 		for i := 0; i < arr.Len(); i++ {
 			newData[i] = arr.data[i]
 		}
 		arr.data = newData
 	} else {
 		nl := float64(arr.Len()) * 1.25
-		newData := make([]string, int(nl))
+		newData := make([]interface{}, int(nl))
 		for i := 0; i < arr.Len(); i++ {
 			newData[i] = arr.data[i]
 		}
@@ -77,7 +77,7 @@ func (arr *Array) expansion() {
 }
 
 // Get ,get the element at the specified index
-func (arr *Array) Get(index int) (string, error) {
+func (arr *Array) Get(index int) (interface{}, error) {
 	if arr.isIndexOutOfRange(index) {
 		return "", errors.IndexOutOfBoundsError
 	}
@@ -85,7 +85,7 @@ func (arr *Array) Get(index int) (string, error) {
 }
 
 // IndexOf ,return the index of the value in the Array
-func (arr *Array) IndexOf(val string) (int, error) {
+func (arr *Array) IndexOf(val interface{}) (int, error) {
 	for i := 0; i < len(arr.data); i++ {
 		if arr.data[i] == val {
 			return i, nil
@@ -95,7 +95,7 @@ func (arr *Array) IndexOf(val string) (int, error) {
 }
 
 // Insert, insert the value at the specified index
-func (arr *Array) Insert(index int, val string) error {
+func (arr *Array) Insert(index int, val interface{}) error {
 	if len(arr.data) == arr.Len() {
 		arr.expansion()
 	}
@@ -126,36 +126,8 @@ func (arr *Array) Len() int {
 }
 
 // MergeArray , merge two Array
+// only append other Array to this Array tail
 func (arr *Array) MergeArray(other *Array) *Array {
-	////merge two arrays by merge sort
-	//al, ol := arr.len, other.len
-	//result, _ := NewArray(al + ol)
-	//var l, r, k int
-	//for l < al && r < ol {
-	//	if arr.data[l] < other.data[r] {
-	//		_ = result.Insert(k, arr.data[l])
-	//		l++
-	//	} else {
-	//		_ = result.Insert(k, other.data[r])
-	//		r++
-	//	}
-	//	k++
-	//}
-	//if l < al {
-	//	for i := l; i < al; i++ {
-	//		_ = result.Insert(k, arr.data[i])
-	//		k++
-	//	}
-	//}
-	//if r < ol {
-	//	for i := r; i < ol; i++ {
-	//		_ = result.Insert(k, other.data[i])
-	//		k++
-	//	}
-	//}
-	//return result
-
-	// only append other Array to this Array tail
 	if other.len < 1 {
 		return arr
 	}
@@ -166,7 +138,7 @@ func (arr *Array) MergeArray(other *Array) *Array {
 }
 
 // Remove , remove and return the element with the specified index
-func (arr *Array) Remove(index int) (string, error) {
+func (arr *Array) Remove(index int) (interface{}, error) {
 	if arr.isIndexOutOfRange(index) {
 		return "", errors.IndexOutOfBoundsError
 	}
@@ -179,7 +151,7 @@ func (arr *Array) Remove(index int) (string, error) {
 }
 
 // Replace ,replace and return the new value with the specified index
-func (arr *Array) Replace(index int, val string) (string, error) {
+func (arr *Array) Replace(index int, val interface{}) (interface{}, error) {
 	if arr.isIndexOutOfRange(index) {
 		return "", errors.IndexOutOfBoundsError
 	}
@@ -189,7 +161,7 @@ func (arr *Array) Replace(index int, val string) (string, error) {
 }
 
 // Set , set a value for the specified index
-func (arr *Array) Set(index int, val string) error {
+func (arr *Array) Set(index int, val interface{}) error {
 	if arr.isIndexOutOfRange(index) {
 		return errors.IndexOutOfBoundsError
 	}
@@ -216,9 +188,9 @@ func (arr *Array) ToString() string {
 	ret := "["
 	for i := 0; i < len(arr.data); i++ {
 		if i == len(arr.data)-1 {
-			ret = ret + arr.data[i]
+			ret = ret + arr.data[i].(string)
 		} else {
-			ret = ret + arr.data[i] + ", "
+			ret = ret + arr.data[i].(string) + ", "
 		}
 	}
 	return ret + "]"
