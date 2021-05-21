@@ -1,92 +1,109 @@
 package queue
 
-import "fmt"
+import errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
 
-// 基于连边的顺序队列
-
-// Node 节点
-type Node struct {
+// node ,LinkedList element
+type node struct {
+	prev  *node
+	next  *node
 	value interface{}
-	next  *Node
 }
 
-// LinkedListQueue 队列
+// LinkedListQueue ,Queue based on LinkedList
 type LinkedListQueue struct {
-	head   *Node
-	tail   *Node
-	length int
+	head *node
+	tail *node
+	len  int
 }
 
-// NewLinkedListQueue 初始化
+// newNode ,init a node
+func newNode(val interface{}) *node {
+	return &node{
+		prev:  nil,
+		next:  nil,
+		value: val,
+	}
+}
+
+// NewLinkedListQueue ,init LinkedListQueue
 func NewLinkedListQueue() *LinkedListQueue {
 	return &LinkedListQueue{
-		head:   nil,
-		tail:   nil,
-		length: 0,
+		head: newNode(nil),
+		tail: newNode(nil),
+		len:  0,
 	}
 }
 
-// GetValue
-func (n *Node) GetValue() interface{}{
-	return n.value
-}
-
-// GetNext
-func (n *Node) GetNext() *Node{
-	return n.next
-}
-
-// GetHead
-func (q *LinkedListQueue) GetHead() *Node {
-	return q.head
-}
-
-// GetTail
-func (q *LinkedListQueue) GetTail() *Node {
-	return q.tail
-}
-
-// GetTail
-func (q *LinkedListQueue) GetLength() int {
-	return q.length
-}
-
-// EnQueue 入队
-func (q *LinkedListQueue) EnQueue(v interface{}) {
-	node := &Node{
-		value: v,
-		next:  nil,
+// Add ,add the element to the end of the queue
+func (q *LinkedListQueue) Add(val interface{}) error {
+	if nil == val {
+		return errors2.InputValueCannotBeNilError
 	}
-	if nil == q.tail {
-		q.head = node
-		q.tail = node
-	} else {
-		q.tail.next = node
-		q.tail = node
-	}
-	q.length++
-}
-
-// DeQueue 出队
-func (q *LinkedListQueue) DeQueue() interface{} {
-	if nil == q.tail {
+	n := newNode(val)
+	if q.len == 0 {
+		q.head, q.tail = n, n
+		q.len++
 		return nil
 	}
-	old := q.head
-	q.head = q.head.next
-	q.length--
-	return old.value
+	t := q.tail
+	t.next, n.prev = n, t
+	q.tail = n
+	q.len++
+	return nil
 }
 
-// ToString 转成字符串
-func (q *LinkedListQueue) ToString() string {
-	if q.head == nil {
-		return "empty queue"
+// Clear ,clear the stack
+func (q *LinkedListQueue) Clear() {
+	q.head, q.tail = newNode(nil), newNode(nil)
+	q.len = 0
+	return
+}
+
+// Contain ,determine whether the value contain in the queue
+func (q *LinkedListQueue) Contain(val interface{}) bool {
+	if q.len == 0 {
+		return false
 	}
-	result := "head"
-	for cur := q.head; cur != nil; cur = cur.next {
-		result += fmt.Sprintf("<-%+v", cur.value)
+	cur := q.head
+	for nil != cur.next {
+		if val == cur.value {
+			return true
+		}
+		cur = cur.next
 	}
-	result += "<-tail"
-	return result
+	return false
+}
+
+// IsEmpty ,determine whether the queue is empty
+func (q *LinkedListQueue) IsEmpty() bool {
+	return q.len <= 0
+}
+
+// Len ,get the number of elements in the queue
+func (q *LinkedListQueue) Len() int {
+	return q.len
+}
+
+// Peek ,get and not remove the element from the header of the queue
+func (q *LinkedListQueue) Peek() (interface{}, error) {
+	if q.IsEmpty() {
+		return nil, errors2.QueueIsEmptyError
+	}
+	return q.head.value, nil
+}
+
+// Remove ,get and remove the element from the header of the queue
+func (q *LinkedListQueue) Remove() (interface{}, error) {
+	if q.IsEmpty() {
+		return nil, errors2.QueueIsEmptyError
+	}
+	head := q.head
+	if q.len == 1 {
+		q.Clear()
+		return head.value, nil
+	}
+	next := q.head.next
+	q.head = next
+	q.len--
+	return head.value, nil
 }

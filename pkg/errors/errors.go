@@ -21,6 +21,7 @@ var (
 	StackIsEmptyError = errors.New("stack is empty")
 
 	// Queue
-	QueueIsFullError  = errors.New("queue is full")
-	QueueIsEmptyError = errors.New("queue is empty")
+	QueueIsFullError           = errors.New("queue is full")
+	QueueIsEmptyError          = errors.New("queue is empty")
+	InputValueCannotBeNilError = errors.New("input value cannot be nil")
 )
