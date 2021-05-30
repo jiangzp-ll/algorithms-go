@@ -34,3 +34,41 @@ func BubbleSortOfTypeFloat64(arr []float64) []float64 {
 	}
 	return arr
 }
+
+// SelectionSortOfTypeInt , selection sort with input array type is int
+func SelectionSortOfTypeInt(arr []int) []int {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	for i := 0; i < length; i++ {
+		index := i
+		for j := i + 1; j < length; j++ {
+			if arr[j] < arr[i] {
+				index = j
+				break
+			}
+		}
+		arr[i], arr[index] = arr[index], arr[i]
+	}
+	return arr
+}
+
+// SelectionSortOfTypeInt , selection sort with input array type is float64
+func SelectionSortOfTypeFloat64(arr []float64) []float64 {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	for i := 0; i < length; i++ {
+		index := i
+		for j := i + 1; j < length; j++ {
+			if arr[j] < arr[i] {
+				index = j
+				break
+			}
+		}
+		arr[i], arr[index] = arr[index], arr[i]
+	}
+	return arr
+}
