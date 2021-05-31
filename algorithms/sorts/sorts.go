@@ -106,3 +106,47 @@ func InsertionSortOfTypeFloat64(arr []float64) []float64 {
 	}
 	return arr
 }
+
+// ShellSortOfTypeInt , shell sort with input array type is int
+func ShellSortOfTypeInt(arr []int) []int {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	gap := length >> 1
+	mid := gap
+	for i := 0; i < mid; i++ {
+		for j := 0; j <= mid; j++ {
+			if length%2 == 0 && j == mid && gap != 1 {
+				break
+			}
+			if arr[j] > arr[j+gap] {
+				arr[j], arr[j+gap] = arr[j+gap], arr[j]
+			}
+		}
+		gap = gap >> 1
+	}
+	return arr
+}
+
+// ShellSortOfTypeFloat64 , shell sort with input array type is float64
+func ShellSortOfTypeFloat64(arr []float64) []float64 {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	gap := length >> 1
+	mid := gap
+	for i := 0; i < mid; i++ {
+		for j := 0; j <= mid; j++ {
+			if length%2 == 0 && j == mid && gap != 1 {
+				break
+			}
+			if arr[j] > arr[j+gap] {
+				arr[j], arr[j+gap] = arr[j+gap], arr[j]
+			}
+		}
+		gap = gap >> 1
+	}
+	return arr
+}
