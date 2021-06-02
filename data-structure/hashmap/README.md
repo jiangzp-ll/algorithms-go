@@ -1,11 +1,14 @@
 ### HashMap API
-* <a href="#hash"><font size=4 color=#00f>type HashMap</font></a>：栈
-    * `func NewHashMap() *HashMap` ：初始化HashMap
+* <a href="#hash"><font size=4 color=#00f>type HashMap</font></a>：HashMap
+    * `func NewHashMap() *HashMap` ：初始化一个默认容量的 HashMap 
+    * `func NewHashMapWithCap(c int) (*HashMap, error)` ：初始化一个容量为 c 的 HashMap 
     * `func Clear()`：清空 HashMap
     * `func ContainKey(key string) bool`：判断 key 是否在 HashMap 中
     * `func ContainValue(value interface{}) bool`：判断 value 是否在 HashMap 中
     * `func EntrySet() []*Entry`：包含 key 和 value的集合
-    * `func Get(key string) (interface{}, error)`：根据 key 来获取 value
+    * `func Get(key string) (interface{}, error)`：根据 key 来获取在 HashMap 中的位置
+    * `func hash(key string) int`：获取 key 的 hash code
+    * `func hashCode(key string) int`：获取 key 的 hash code
     * `func IsEmpty() bool`：判断 HashMap 是否为空
     * `func KeySet() []string`：获取所有 key 的集合
     * `funx Put(key string, value interface{}) error`：将 key 和 value 放入 HashMap 中
