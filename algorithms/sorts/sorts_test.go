@@ -259,3 +259,59 @@ func Test_ShellSortOfTypeFloat64_With_Input_Array_Has_One_Element(t *testing.T) 
 		t.Error("shell sort is failed")
 	}
 }
+
+func Test_MergeSortOfTypeInt(t *testing.T) {
+	target := []int{1, 2, 3}
+	input := []int{3, 1, 2}
+	flag := true
+	ret := MergeSortOfTypeInt(input)
+	for i := 0; i < len(target); i++ {
+		if target[i] != ret[i] {
+			flag = false
+		}
+	}
+	if flag {
+		t.Log("merge sort is success")
+	} else {
+		t.Error("merge sort is failed")
+	}
+}
+
+func Test_MergeSortOfTypeInt_With_Input_Array_Has_One_Element(t *testing.T) {
+	target := []int{1}
+	input := []int{1}
+	ret := MergeSortOfTypeInt(input)
+	if ret[0] == target[0] {
+		t.Log("merge sort is success")
+	} else {
+		t.Error("merge sort is failed")
+	}
+}
+
+func Test_MergeSortOfTypeFloat64(t *testing.T) {
+	target := []float64{1.1, 2.2, 3.3}
+	input := []float64{3.3, 1.1, 2.2}
+	flag := true
+	ret := MergeSortOfTypeFloat64(input)
+	for i := 0; i < len(target); i++ {
+		if target[i] != ret[i] {
+			flag = false
+		}
+	}
+	if flag {
+		t.Log("merge sort is success")
+	} else {
+		t.Error("merge sort is failed")
+	}
+}
+
+func Test_MergeSortOfTypeFloat64_With_Input_Array_Has_One_Element(t *testing.T) {
+	target := []float64{1.1}
+	input := []float64{1.1}
+	ret := MergeSortOfTypeFloat64(input)
+	if ret[0] == target[0] {
+		t.Log("merge sort is success")
+	} else {
+		t.Error("merge sort is failed")
+	}
+}

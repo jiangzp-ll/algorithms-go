@@ -150,3 +150,83 @@ func ShellSortOfTypeFloat64(arr []float64) []float64 {
 	}
 	return arr
 }
+
+// MergeSortOfTypeInt , merge sort with input array type is int
+func MergeSortOfTypeInt(arr []int) []int {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	mid := length >> 1
+	left, right := MergeSortOfTypeInt(arr[:mid]), MergeSortOfTypeInt(arr[mid:])
+	return mergeTypeOfInt(left, right)
+}
+
+// mergeOfInt ,merge two arrays of type int
+func mergeTypeOfInt(left []int, right []int) []int {
+	ret := make([]int, len(left)+len(right))
+	var l, r, x int
+	for l < len(left) && r < len(right) {
+		if left[l] < right[r] {
+			ret[x] = left[l]
+			l++
+		} else {
+			ret[x] = right[r]
+			r++
+		}
+		x++
+	}
+	if l < len(left) {
+		for i := l; i < len(left); i++ {
+			ret[x] = left[i]
+			x++
+		}
+	}
+	if r < len(right) {
+		for i := r; i < len(right); i++ {
+			ret[x] = right[i]
+			x++
+		}
+	}
+	return ret
+}
+
+// MergeSortOfTypeFloat64 , merge sort with input array type is float64
+func MergeSortOfTypeFloat64(arr []float64) []float64 {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	mid := length >> 1
+	left, right := MergeSortOfTypeFloat64(arr[:mid]), MergeSortOfTypeFloat64(arr[mid:])
+	return mergeTypeOfFloat64(left, right)
+}
+
+// mergeOfInt ,merge two arrays of type float64
+func mergeTypeOfFloat64(left []float64, right []float64) []float64 {
+	ret := make([]float64, len(left)+len(right))
+	var l, r, x int
+	for l < len(left) && r < len(right) {
+		if left[l] < right[r] {
+			ret[x] = left[l]
+			l++
+		} else {
+			ret[x] = right[r]
+			r++
+		}
+		x++
+	}
+	if l < len(left) {
+		for i := l; i < len(left); i++ {
+			ret[x] = left[i]
+			x++
+		}
+	}
+	if r < len(right) {
+		for i := r; i < len(right); i++ {
+			ret[x] = right[i]
+			x++
+		}
+	}
+	return ret
+}
