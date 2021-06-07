@@ -202,7 +202,7 @@ func MergeSortOfTypeFloat64(arr []float64) []float64 {
 	return mergeTypeOfFloat64(left, right)
 }
 
-// mergeOfInt ,merge two arrays of type float64
+// mergeTypeOfFloat64 ,merge two arrays of type float64
 func mergeTypeOfFloat64(left []float64, right []float64) []float64 {
 	ret := make([]float64, len(left)+len(right))
 	var l, r, x int
@@ -229,4 +229,58 @@ func mergeTypeOfFloat64(left []float64, right []float64) []float64 {
 		}
 	}
 	return ret
+}
+
+// QuickSortOfTypeInt , quick sort with input array type is int
+// start and end represent the starting positions of the two pointers in the array.
+// The value of start is 0, and the value of end is len(arr)-1.
+func QuickSortOfTypeInt(arr []int, start, end int) []int {
+	if start >= end {
+		return arr
+	}
+	pivot := arr[start]
+	i, j := start, end
+	for {
+		for arr[j] >= pivot && i < j {
+			j--
+		}
+		for arr[i] <= pivot && i < j {
+			i++
+		}
+		if i >= j {
+			break
+		}
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+	arr[start], arr[i] = arr[i], pivot
+	QuickSortOfTypeInt(arr, 0, i-1)
+	QuickSortOfTypeInt(arr, i+1, end)
+	return arr
+}
+
+// QuickSortOfTypeFloat64 , quick sort with input array type is float64
+// start and end represent the starting positions of the two pointers in the array.
+// The value of start is 0, and the value of end is len(arr)-1.
+func QuickSortOfTypeFloat64(arr []float64, start, end int) []float64 {
+	if start >= end {
+		return arr
+	}
+	pivot := arr[start]
+	i, j := start, end
+	for {
+		for arr[j] >= pivot && i < j {
+			j--
+		}
+		for arr[i] <= pivot && i < j {
+			i++
+		}
+		if i >= j {
+			break
+		}
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+	arr[start], arr[i] = arr[i], pivot
+	QuickSortOfTypeFloat64(arr, 0, i-1)
+	QuickSortOfTypeFloat64(arr, i+1, end)
+	return arr
 }

@@ -315,3 +315,59 @@ func Test_MergeSortOfTypeFloat64_With_Input_Array_Has_One_Element(t *testing.T) 
 		t.Error("merge sort is failed")
 	}
 }
+
+func Test_QuickSortOfTypeInt(t *testing.T) {
+	target := []int{1, 2, 3}
+	input := []int{2, 3, 1}
+	flag := true
+	ret := QuickSortOfTypeInt(input, 0, len(input)-1)
+	for i := 0; i < len(target); i++ {
+		if target[i] != ret[i] {
+			flag = false
+		}
+	}
+	if flag {
+		t.Log("quick sort is success")
+	} else {
+		t.Error("quick sort is failed")
+	}
+}
+
+func Test_QuickSortOfTypeInt_With_Input_Array_Has_One_Element(t *testing.T) {
+	target := []int{1}
+	input := []int{1}
+	ret := QuickSortOfTypeInt(input, 0, len(input)-1)
+	if ret[0] == target[0] {
+		t.Log("quick sort is success")
+	} else {
+		t.Error("quick sort is failed")
+	}
+}
+
+func Test_QuickSortOfTypeFloat64(t *testing.T) {
+	target := []float64{1.1, 2.2, 3.3}
+	input := []float64{2.2, 3.3, 1.1}
+	flag := true
+	ret := QuickSortOfTypeFloat64(input, 0, len(input)-1)
+	for i := 0; i < len(target); i++ {
+		if target[i] != ret[i] {
+			flag = false
+		}
+	}
+	if flag {
+		t.Log("quick sort is success")
+	} else {
+		t.Error("quick sort is failed")
+	}
+}
+
+func Test_QuickSortOfTypeFloat64_With_Input_Array_Has_One_Element(t *testing.T) {
+	target := []float64{1.1}
+	input := []float64{1.1}
+	ret := QuickSortOfTypeFloat64(input, 0, len(input)-1)
+	if ret[0] == target[0] {
+		t.Log("quick sort is success")
+	} else {
+		t.Error("quick sort is failed")
+	}
+}
