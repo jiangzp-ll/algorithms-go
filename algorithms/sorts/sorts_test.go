@@ -371,3 +371,59 @@ func Test_QuickSortOfTypeFloat64_With_Input_Array_Has_One_Element(t *testing.T) 
 		t.Error("quick sort is failed")
 	}
 }
+
+func Test_HeapSortOfTypeInt(t *testing.T) {
+	target := []int{1, 2, 3}
+	input := []int{2, 3, 1}
+	flag := true
+	ret := HeapSortOfTypeInt(input)
+	for i := 0; i < len(target); i++ {
+		if target[i] != ret[i] {
+			flag = false
+		}
+	}
+	if flag {
+		t.Log("heap sort is success")
+	} else {
+		t.Error("heap sort is failed")
+	}
+}
+
+func Test_HeapSortOfTypeInt_With_Input_Array_Has_One_Element(t *testing.T) {
+	target := []int{1}
+	input := []int{1}
+	ret := HeapSortOfTypeInt(input)
+	if ret[0] == target[0] {
+		t.Log("heap sort is success")
+	} else {
+		t.Error("heap sort is failed")
+	}
+}
+
+func Test_HeapSortOfTypeFloat64(t *testing.T) {
+	target := []float64{1.1, 2.2, 3.3}
+	input := []float64{2.2, 3.3, 1.1}
+	flag := true
+	ret := HeapSortOfTypeFloat64(input)
+	for i := 0; i < len(target); i++ {
+		if target[i] != ret[i] {
+			flag = false
+		}
+	}
+	if flag {
+		t.Log("heap sort is success")
+	} else {
+		t.Error("heap sort is failed")
+	}
+}
+
+func Test_HeapSortOfTypeFloat64_With_Input_Array_Has_One_Element(t *testing.T) {
+	target := []float64{1.1}
+	input := []float64{1.1}
+	ret := HeapSortOfTypeFloat64(input)
+	if ret[0] == target[0] {
+		t.Log("heap sort is success")
+	} else {
+		t.Error("heap sort is failed")
+	}
+}

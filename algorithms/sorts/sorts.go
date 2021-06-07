@@ -284,3 +284,63 @@ func QuickSortOfTypeFloat64(arr []float64, start, end int) []float64 {
 	QuickSortOfTypeFloat64(arr, i+1, end)
 	return arr
 }
+
+// HeapSortOfTypeInt , heap sort with input array type is int
+func HeapSortOfTypeInt(arr []int) []int {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	for i := 0; i < length; i++ {
+		a := arr[i:]
+		minHeapTypeOfInt(a)
+	}
+	return arr
+}
+
+// minHeapTypeOfInt ,create a minimum heap of type int
+func minHeapTypeOfInt(arr []int) {
+	length := len(arr)
+	floor := length/2 - 1
+	for i := floor; i >= 0; i-- {
+		// 'fa' represents the parent node
+		fa := i
+		left, right := 2*i+1, 2*i+2
+		if right < length && arr[fa] > arr[right] {
+			arr[fa], arr[right] = arr[right], arr[fa]
+		}
+		if left < length && arr[fa] > arr[left] {
+			arr[fa], arr[left] = arr[left], arr[fa]
+		}
+	}
+}
+
+// HeapSortOfTypeFloat64 , heap sort with input array type is float64
+func HeapSortOfTypeFloat64(arr []float64) []float64 {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	for i := 0; i < length; i++ {
+		a := arr[i:]
+		minHeapTypeOfFloat64(a)
+	}
+	return arr
+}
+
+// minHeapTypeOfFloat64 ,create a minimum heap of type float64
+func minHeapTypeOfFloat64(arr []float64) {
+	length := len(arr)
+	floor := length/2 - 1
+	for i := floor; i >= 0; i-- {
+		// 'fa' represents the parent node
+		fa := i
+		left, right := 2*i+1, 2*i+2
+		if right < length && arr[fa] > arr[right] {
+			arr[fa], arr[right] = arr[right], arr[fa]
+		}
+		if left < length && arr[fa] > arr[left] {
+			arr[fa], arr[left] = arr[left], arr[fa]
+		}
+	}
+}
