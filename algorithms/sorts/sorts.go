@@ -159,11 +159,11 @@ func MergeSortOfTypeInt(arr []int) []int {
 	}
 	mid := length >> 1
 	left, right := MergeSortOfTypeInt(arr[:mid]), MergeSortOfTypeInt(arr[mid:])
-	return mergeTypeOfInt(left, right)
+	return mergeOfInt(left, right)
 }
 
 // mergeOfInt ,merge two arrays of type int
-func mergeTypeOfInt(left []int, right []int) []int {
+func mergeOfInt(left []int, right []int) []int {
 	ret := make([]int, len(left)+len(right))
 	var l, r, x int
 	for l < len(left) && r < len(right) {
@@ -199,11 +199,11 @@ func MergeSortOfTypeFloat64(arr []float64) []float64 {
 	}
 	mid := length >> 1
 	left, right := MergeSortOfTypeFloat64(arr[:mid]), MergeSortOfTypeFloat64(arr[mid:])
-	return mergeTypeOfFloat64(left, right)
+	return mergeOfFloat64(left, right)
 }
 
-// mergeTypeOfFloat64 ,merge two arrays of type float64
-func mergeTypeOfFloat64(left []float64, right []float64) []float64 {
+// mergeOfFloat64 ,merge two arrays of type float64
+func mergeOfFloat64(left []float64, right []float64) []float64 {
 	ret := make([]float64, len(left)+len(right))
 	var l, r, x int
 	for l < len(left) && r < len(right) {
@@ -293,13 +293,13 @@ func HeapSortOfTypeInt(arr []int) []int {
 	}
 	for i := 0; i < length; i++ {
 		a := arr[i:]
-		minHeapTypeOfInt(a)
+		minHeapOfInt(a)
 	}
 	return arr
 }
 
 // minHeapTypeOfInt ,create a minimum heap of type int
-func minHeapTypeOfInt(arr []int) {
+func minHeapOfInt(arr []int) {
 	length := len(arr)
 	floor := length/2 - 1
 	for i := floor; i >= 0; i-- {
@@ -323,13 +323,13 @@ func HeapSortOfTypeFloat64(arr []float64) []float64 {
 	}
 	for i := 0; i < length; i++ {
 		a := arr[i:]
-		minHeapTypeOfFloat64(a)
+		minHeapOfFloat64(a)
 	}
 	return arr
 }
 
 // minHeapTypeOfFloat64 ,create a minimum heap of type float64
-func minHeapTypeOfFloat64(arr []float64) {
+func minHeapOfFloat64(arr []float64) {
 	length := len(arr)
 	floor := length/2 - 1
 	for i := floor; i >= 0; i-- {
@@ -343,4 +343,43 @@ func minHeapTypeOfFloat64(arr []float64) {
 			arr[fa], arr[left] = arr[left], arr[fa]
 		}
 	}
+}
+
+// CountingSortOfTypeInt , counting sort with input array type is int
+func CountingSortOfTypeInt(arr []int) []int {
+	length := len(arr)
+	if length <= 1 {
+		return arr
+	}
+	// get min and max value in the Array
+	min, max := getMinAndMax(arr, length)
+	// fill counting array
+	ca := make([]int, max-min+1)
+	for i := 0; i < length; i++ {
+		index := arr[i] - min
+		ca[index] = ca[index] + 1
+	}
+	// replace the original array
+	index := 0
+	for i := 0; i < len(ca); i++ {
+		for j := 0; j < ca[i]; j++ {
+			arr[index] = i + min
+			index++
+		}
+	}
+	return arr
+}
+
+// getMinAndMax ,get min and max value in the Array type of int
+func getMinAndMax(arr []int, length int) (int, int) {
+	min, max := arr[0], arr[0]
+	for i := 0; i < length; i++ {
+		if min > arr[i] {
+			min = arr[i]
+		}
+		if max < arr[i] {
+			max = arr[i]
+		}
+	}
+	return min, max
 }

@@ -427,3 +427,31 @@ func Test_HeapSortOfTypeFloat64_With_Input_Array_Has_One_Element(t *testing.T) {
 		t.Error("heap sort is failed")
 	}
 }
+
+func Test_CountingSortOfTypeInt(t *testing.T) {
+	target := []int{1, 1, 1, 2, 2, 3}
+	input := []int{2, 1, 3, 1, 2, 1}
+	flag := true
+	ret := CountingSortOfTypeInt(input)
+	for i := 0; i < len(target); i++ {
+		if target[i] != ret[i] {
+			flag = false
+		}
+	}
+	if flag {
+		t.Log("counting sort is success")
+	} else {
+		t.Error("counting sort is failed")
+	}
+}
+
+func Test_CountingSortOfTypeInt_With_Input_Array_Has_One_Element(t *testing.T) {
+	target := []int{1}
+	input := []int{1}
+	ret := CountingSortOfTypeInt(input)
+	if ret[0] == target[0] {
+		t.Log("counting sort is success")
+	} else {
+		t.Error("counting sort is failed")
+	}
+}
