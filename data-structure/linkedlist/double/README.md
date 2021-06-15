@@ -5,9 +5,9 @@
     * `func (n *Node) Prev() *Node`：获取前一个节点
     * `func (n *Node) Value() interface{}`：获取节点值
 2. <a href="#list"><font size=4 color=#00f>type LinkedList</font></a>：双向链表
-    * `func NewLinkedList() *LinkedList`：初始化双向链表
-    * `func (l *LinkedList) Add(val interface{})`：添加元素到双向链表的尾部
-    * `func (l *LinkedList) AddToHead(v interface{})`：插入元素双向链表头部
+    * `func NewLinkedList(typeOf string) (*LinkedList, error)`：初始化双向链表
+    * `func (l *LinkedList) Add(val interface{}) error`：添加元素到双向链表的尾部
+    * `func (l *LinkedList) AddToHead(val interface{}) error`：插入元素双向链表头部
     * `func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error)`：返回指定元素在双向链表中出现的所有索引
     * `func (l *LinkedList) checkElementIndex(index int) bool`：检查下标是否在双向链表中
     * `func (l *LinkedList) checkNodeAndLinkedList(n *Node) error`：检查Node和LinkedList是否为空
