@@ -2,6 +2,7 @@ package single
 
 import (
 	"github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+	"reflect"
 )
 
 // Node ,LinkedList element
@@ -12,8 +13,13 @@ type Node struct {
 
 // LinkedList ,single LinkedList
 type LinkedList struct {
+	// head ,head Node
 	head *Node
-	len  int
+	// len ,,number of elements in LinkedList
+	len int
+	// typeOf , LinkedList type
+	// Because Go not have Generic
+	typeOf string
 }
 
 // NewNode ，init Node
@@ -32,17 +38,27 @@ func (n *Node) Value() interface{} {
 }
 
 // NewLinkedList ,init a empty Single LinkedList
-func NewLinkedList() *LinkedList {
-	return &LinkedList{NewNode(nil), 0}
+func NewLinkedList(typeOf string) (*LinkedList, error) {
+	if typeOf == "" {
+		return nil, errors.InvalidTypeError
+	}
+	return &LinkedList{
+		NewNode(nil),
+		0,
+		typeOf,
+	}, nil
 }
 
 // Add , add a value to Single LinkedList tail
-func (l *LinkedList) Add(v interface{}) {
-	node := NewNode(v)
+func (l *LinkedList) Add(val interface{}) error {
+	if err := l.checkType(val); err != nil {
+		return err
+	}
+	node := NewNode(val)
 	if l.IsEmpty() {
 		l.head = node
 		l.len++
-		return
+		return nil
 	}
 	cur := l.head
 	for nil != cur.next {
@@ -50,27 +66,33 @@ func (l *LinkedList) Add(v interface{}) {
 	}
 	cur.next = node
 	l.len++
-	return
+	return nil
 }
 
 // AddToHead ,add a value to Single LinkedList head
-func (l *LinkedList) AddToHead(v interface{}) {
-	node := NewNode(v)
+func (l *LinkedList) AddToHead(val interface{}) error {
+	if err := l.checkType(val); err != nil {
+		return err
+	}
+	node := NewNode(val)
 	if l.IsEmpty() {
 		l.head = node
 		l.len++
-		return
+		return nil
 	}
 	oldHead := l.head
 	node.next = oldHead
 	l.head = node
 	l.len++
-	return
+	return nil
 }
 
 // AllIndexesOf ,Returns all indexes of the specified element in the LinkedList
 func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error) {
 	indexes := make([]int, 0)
+	if err := l.checkType(val); err != nil {
+		return indexes, err
+	}
 	if l.IsEmpty() {
 		return indexes, errors.LinkedListIsEmptyError
 	}
@@ -96,6 +118,15 @@ func (l *LinkedList) checkNodeAndLinkedList(n *Node) error {
 	}
 	if l.IsEmpty() {
 		return errors.LinkedListIsEmptyError
+	}
+	return nil
+}
+
+// checkType ,check input type
+func (l *LinkedList) checkType(val interface{}) error {
+	t := reflect.TypeOf(val).Kind().String()
+	if l.typeOf != t {
+		return errors.InvalidTypeError
 	}
 	return nil
 }
@@ -151,6 +182,9 @@ func (l *LinkedList) Head() *Node {
 // Why return index when there is an error?
 //All returned indexes are invalid. Avoid not checking error, but insist on using the returned value
 func (l *LinkedList) IndexOf(val interface{}) (int, error) {
+	if err := l.checkType(val); err != nil {
+		return -1, err
+	}
 	if l.IsEmpty() {
 		return -1, errors.LinkedListIsEmptyError
 	}
@@ -166,16 +200,19 @@ func (l *LinkedList) IndexOf(val interface{}) (int, error) {
 
 // InsertAfter ,insert a node after the specified node
 func (l *LinkedList) InsertAfter(n *Node, val interface{}) error {
+	if err := l.checkType(val); err != nil {
+		return err
+	}
 	if err := l.checkNodeAndLinkedList(n); err != nil {
 		return err
 	}
-	newNode := NewNode(val)
+	NewNode := NewNode(val)
 	cur := l.head
 	for nil != cur {
 		next := cur.next
 		if cur.value == n.value {
-			cur.next = newNode
-			newNode.next = next
+			cur.next = NewNode
+			NewNode.next = next
 			l.len++
 			return nil
 		}
@@ -186,11 +223,14 @@ func (l *LinkedList) InsertAfter(n *Node, val interface{}) error {
 
 // InsertBefore ,insert a node before the specified node
 func (l *LinkedList) InsertBefore(n *Node, val interface{}) error {
+	if err := l.checkType(val); err != nil {
+		return err
+	}
 	if err := l.checkNodeAndLinkedList(n); err != nil {
 		return err
 	}
 	if l.head == n {
-		l.AddToHead(val)
+		_ = l.AddToHead(val)
 		return nil
 	}
 	node := NewNode(val)
@@ -291,6 +331,9 @@ func (l *LinkedList) Reverse() {
 
 // Set ,set the value of the specified index in the LinkedList
 func (l *LinkedList) Set(index int, val interface{}) (interface{}, error) {
+	if err := l.checkType(val); err != nil {
+		return nil, err
+	}
 	if !l.checkElementIndex(index) {
 		return nil, errors.InvalidIndexError
 	}

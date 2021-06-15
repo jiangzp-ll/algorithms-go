@@ -4,9 +4,9 @@
     * `func (n *Node) Next() *Node`：获取下一个节点
     * `func (n *Node) Value() interface{}`：获取节点值
 2. <a href="#list"><font size=4 color=#00f>type LinkedList</font></a>：单向链表
-    * `func NewLinkedList() *LinkedList`：初始化单向链表
-    * `func (l *LinkedList) Add(val interface{})`：添加元素到单向链表的尾部
-    * `func (l *LinkedList) AddToHead(v interface{})`：插入元素单向链表头部
+    * `func NewLinkedList(typeOf string) (*LinkedList, error)`：初始化单向链表
+    * `func (l *LinkedList) Add(val interface{}) error`：添加元素到单向链表的尾部
+    * `func (l *LinkedList) AddToHead(v interface{}) error`：插入元素单向链表头部
     * `func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error)`：返回指定元素在单向链表中出现的所有索引
     * `func (l *LinkedList) checkElementIndex(index int) bool`：检查下标是否在单向链表中
     * `func (l *LinkedList) checkNodeAndLinkedList(n *Node) error`：检查Node和LinkedList是否为空
@@ -40,9 +40,12 @@ type Node struct {
 #### <a id="list">type LinkedList</a>
 ```
 type LinkedList struct {
-    // head , first Node in LinkedList
+    // head ,head Node
     head *Node
-    // len , number of elements in LinkedList
-    len  int
+    // len ,,number of elements in LinkedList
+    len int
+    // typeOf , LinkedList type
+    // Because Go not have Generic
+    typeOf string
 }
 ```
