@@ -6,10 +6,11 @@ var (
 	// General error
 	NotExistError = errors.New("the value not exist")
 
-	// Array error
-	IndexOutOfBoundsError  = errors.New("array index out of bounds error")
-	InvalidCapacityError   = errors.New("capacity must be greater than or equal to zero")
-	SubArrayWithIndexError = errors.New("start must be less than or equal to end")
+	// ArrayList error
+	IndexOutOfBoundsError      = errors.New("array index out of bounds error")
+	InvalidCapacityError       = errors.New("capacity must be greater than or equal to zero")
+	InvalidTypeError           = errors.New("invalid type of ArrayList")
+	SubArrayListWithIndexError = errors.New("start must be less than or equal to end")
 
 	// Single/Double LinkedList error
 	LinkedListIsEmptyError = errors.New("LinkedList is empty")
