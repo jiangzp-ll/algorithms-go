@@ -6,7 +6,22 @@ import (
 	"testing"
 )
 
-var lq = NewLinkedListQueue()
+var lq, _ = NewLinkedListQueue("int")
+
+func TestLinkedListQueue_With_TypeOf_Is_Empty(t *testing.T) {
+	_, err := NewLinkedListQueue("")
+	if err != nil {
+		if errors.Is(err, errors2.InvalidTypeError) {
+			t.Logf("type must be not emtpy")
+			return
+		} else {
+			t.Errorf("unkown error! error: %v ", err)
+			return
+		}
+	} else {
+		t.Error("function NewArrayQueue hsa bug")
+	}
+}
 
 func Test_LinkedListQueue_Add(t *testing.T) {
 	defer lq.Clear()
@@ -26,6 +41,23 @@ func Test_LinkedListQueue_Add_With_Value_Is_Nil(t *testing.T) {
 			return
 		} else {
 			t.Errorf("unknown error! error: %v \n", err)
+			return
+		}
+	} else {
+		t.Error("function Add hsa bug")
+	}
+}
+
+func Test_LinkedListQueue_Add_With_Different_Type_Value(t *testing.T) {
+	defer lq.Clear()
+	in := []int{1, 2, 3}
+	addElementToLinkedListQueue(in)
+	if err := lq.Add("q"); err != nil {
+		if errors.Is(err, errors2.InvalidTypeError) {
+			t.Logf("type must be same")
+			return
+		} else {
+			t.Errorf("unkown error! error: %v ", err)
 			return
 		}
 	} else {
@@ -59,7 +91,7 @@ func Test_LinkedListQueue_Contain(t *testing.T) {
 
 func Test_LinkedListQueue_Contain_With_Queue_Not_Exist_The_Value(t *testing.T) {
 	defer lq.Clear()
-	target := "a"
+	target := 4
 	in := []int{1, 2, 3}
 	addElementToLinkedListQueue(in)
 	isContain := lq.Contain(target)
@@ -71,7 +103,20 @@ func Test_LinkedListQueue_Contain_With_Queue_Not_Exist_The_Value(t *testing.T) {
 }
 
 func Test_LinkedListQueue_Contain_With_Queue_Is_Empty(t *testing.T) {
+	target := 1
+	isContain := lq.Contain(target)
+	if !isContain {
+		t.Log("queue not has the value")
+	} else {
+		t.Error("function Contain has bug")
+	}
+}
+
+func Test_LinkedListQueue_Contain_With_Different_Type_Value(t *testing.T) {
+	defer lq.Clear()
 	target := "a"
+	in := []int{1, 2, 3}
+	addElementToLinkedListQueue(in)
 	isContain := lq.Contain(target)
 	if !isContain {
 		t.Log("queue not has the value")

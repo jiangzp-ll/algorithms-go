@@ -1,6 +1,9 @@
 package queue
 
-import errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+import (
+	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+	"reflect"
+)
 
 // node ,LinkedList element
 type node struct {
@@ -11,9 +14,15 @@ type node struct {
 
 // LinkedListQueue ,Queue based on LinkedList
 type LinkedListQueue struct {
+	// head ,head Node
 	head *node
+	// tail ,tail Node
 	tail *node
-	len  int
+	// len ,the number of elements in the queue
+	len int
+	// typeOf , LinkedList type
+	// Because Go not have Generic
+	typeOf string
 }
 
 // newNode ,init a node
@@ -26,18 +35,25 @@ func newNode(val interface{}) *node {
 }
 
 // NewLinkedListQueue ,init LinkedListQueue
-func NewLinkedListQueue() *LinkedListQueue {
-	return &LinkedListQueue{
-		head: newNode(nil),
-		tail: newNode(nil),
-		len:  0,
+func NewLinkedListQueue(typeOf string) (*LinkedListQueue, error) {
+	if typeOf == "" {
+		return nil, errors2.InvalidTypeError
 	}
+	return &LinkedListQueue{
+		head:   newNode(nil),
+		tail:   newNode(nil),
+		len:    0,
+		typeOf: typeOf,
+	}, nil
 }
 
 // Add ,add the element to the end of the queue
 func (q *LinkedListQueue) Add(val interface{}) error {
 	if nil == val {
 		return errors2.InputValueCannotBeNilError
+	}
+	if err := q.checkType(val); err != nil {
+		return err
 	}
 	n := newNode(val)
 	if q.len == 0 {
@@ -52,6 +68,15 @@ func (q *LinkedListQueue) Add(val interface{}) error {
 	return nil
 }
 
+// checkType ,check input type
+func (q *LinkedListQueue) checkType(val interface{}) error {
+	t := reflect.TypeOf(val).Kind().String()
+	if q.typeOf != t {
+		return errors2.InvalidTypeError
+	}
+	return nil
+}
+
 // Clear ,clear the stack
 func (q *LinkedListQueue) Clear() {
 	q.head, q.tail = newNode(nil), newNode(nil)
@@ -61,7 +86,10 @@ func (q *LinkedListQueue) Clear() {
 
 // Contain ,determine whether the value contain in the queue
 func (q *LinkedListQueue) Contain(val interface{}) bool {
-	if q.len == 0 {
+	if q.len == 0 || nil == val {
+		return false
+	}
+	if err := q.checkType(val); err != nil {
 		return false
 	}
 	cur := q.head
