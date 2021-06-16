@@ -1,6 +1,9 @@
 package queue
 
-import errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+import (
+	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+	"reflect"
+)
 
 // ArrayQueue ,Queue based on Array
 type ArrayQueue struct {
@@ -12,20 +15,33 @@ type ArrayQueue struct {
 	head int
 	// tail ,the tail of the queue
 	tail int
+	// typeOf , LinkedList type
+	// Because Go not have Generic
+	typeOf string
 }
 
 // NewArrayQueue ,init ArrayQueue
-func NewArrayQueue(n int) *ArrayQueue {
-	return &ArrayQueue{
-		data: make([]interface{}, n),
-		len:  0,
-		head: -1,
-		tail: -1,
+func NewArrayQueue(typeOf string, n int) (*ArrayQueue, error) {
+	if typeOf == "" {
+		return nil, errors2.InvalidTypeError
 	}
+	return &ArrayQueue{
+		data:   make([]interface{}, n),
+		len:    0,
+		head:   -1,
+		tail:   -1,
+		typeOf: typeOf,
+	}, nil
 }
 
 // Add ,add the element to the end of the queue
 func (q *ArrayQueue) Add(val interface{}) error {
+	if nil == val {
+		return errors2.InputValueCannotBeNilError
+	}
+	if err := q.checkType(val); err != nil {
+		return err
+	}
 	if len(q.data) <= q.len {
 		return errors2.QueueIsFullError
 	}
@@ -41,6 +57,15 @@ func (q *ArrayQueue) Add(val interface{}) error {
 	return nil
 }
 
+// checkType ,check input type
+func (q *ArrayQueue) checkType(val interface{}) error {
+	t := reflect.TypeOf(val).Kind().String()
+	if q.typeOf != t {
+		return errors2.InvalidTypeError
+	}
+	return nil
+}
+
 // Clear ,clear the stack
 func (q *ArrayQueue) Clear() {
 	q.data = make([]interface{}, len(q.data))
@@ -51,7 +76,10 @@ func (q *ArrayQueue) Clear() {
 
 // Contain ,determine whether the value contain in the queue
 func (q *ArrayQueue) Contain(val interface{}) bool {
-	if q.len == 0 {
+	if q.len == 0 || nil == val {
+		return false
+	}
+	if err := q.checkType(val); err != nil {
 		return false
 	}
 	for _, v := range q.data {

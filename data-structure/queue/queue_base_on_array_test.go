@@ -6,7 +6,22 @@ import (
 	"testing"
 )
 
-var aq = NewArrayQueue(3)
+var aq, _ = NewArrayQueue("int", 3)
+
+func TestNewArrayQueue_With_TypeOf_Is_Empty(t *testing.T) {
+	_, err := NewArrayQueue("", 3)
+	if err != nil {
+		if errors.Is(err, errors2.InvalidTypeError) {
+			t.Logf("type must be not emtpy")
+			return
+		} else {
+			t.Errorf("unkown error! error: %v ", err)
+			return
+		}
+	} else {
+		t.Error("function NewArrayQueue hsa bug")
+	}
+}
 
 func Test_ArrayQueue_Add(t *testing.T) {
 	defer aq.Clear()
@@ -43,6 +58,40 @@ func Test_ArrayQueue_Add_With_Queue_Is_Full(t *testing.T) {
 	}
 }
 
+func Test_ArrayQueue_Add_With_Value_Is_Nil(t *testing.T) {
+	defer aq.Clear()
+	in := []int{1, 2, 3}
+	addElementToArrayQueue(in)
+	if err := aq.Add(nil); err != nil {
+		if errors.Is(err, errors2.InputValueCannotBeNilError) {
+			t.Log("input value can not be nil")
+			return
+		} else {
+			t.Errorf("unknown error! error: %v \n", err)
+			return
+		}
+	} else {
+		t.Error("function Add hsa bug")
+	}
+}
+
+func Test_ArrayQueue_Add_With_Different_Type_Value(t *testing.T) {
+	defer aq.Clear()
+	in := []int{1, 2, 3}
+	addElementToArrayQueue(in)
+	if err := aq.Add("q"); err != nil {
+		if errors.Is(err, errors2.InvalidTypeError) {
+			t.Logf("type must be same")
+			return
+		} else {
+			t.Errorf("unkown error! error: %v ", err)
+			return
+		}
+	} else {
+		t.Error("function Add hsa bug")
+	}
+}
+
 func Test_ArrayQueue_Clear(t *testing.T) {
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -69,7 +118,7 @@ func Test_ArrayQueue_Contain(t *testing.T) {
 
 func Test_ArrayQueue_Contain_With_Queue_Not_Exist_The_Value(t *testing.T) {
 	defer aq.Clear()
-	target := "a"
+	target := 4
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
 	isContain := aq.Contain(target)
@@ -81,7 +130,33 @@ func Test_ArrayQueue_Contain_With_Queue_Not_Exist_The_Value(t *testing.T) {
 }
 
 func Test_ArrayQueue_Contain_With_Queue_Is_Empty(t *testing.T) {
+	defer aq.Clear()
+	target := 1
+	isContain := aq.Contain(target)
+	if !isContain {
+		t.Log("queue is empty")
+	} else {
+		t.Error("function Contain has bug")
+	}
+}
+
+func Test_ArrayQueue_Contain_With_Value_Is_Nil(t *testing.T) {
+	defer aq.Clear()
+	in := []int{1, 2, 3}
+	addElementToArrayQueue(in)
+	isContain := aq.Contain(nil)
+	if !isContain {
+		t.Log("input value can not be nil")
+	} else {
+		t.Error("function Contain has bug")
+	}
+}
+
+func Test_ArrayQueue_Contain_With_Different_Type_Value(t *testing.T) {
+	defer aq.Clear()
 	target := "a"
+	in := []int{1, 2, 3}
+	addElementToArrayQueue(in)
 	isContain := aq.Contain(target)
 	if !isContain {
 		t.Log("queue not has the value")
