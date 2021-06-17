@@ -1,5 +1,6 @@
 ### ArrayList API
 * <a href="#array"><font size=4 color=#00f>type ArrayList</font></a>：数组，类似 Java 的 ArrayListList  
+    * `func NewArrayList(typeOf string) (*ArrayList, error)` ：初始化数组，包含数组中元素类型
     * `func NewArrayList(typeOf string, cap int) (*ArrayList, error)` ：初始化数组，包含数组中元素类型以及容量
     * `func (arr *ArrayList) Add(val interface{}) error`：添加元素到末尾
     * `func (arr *ArrayList) checkType(val interface{}) error`：检查输入的 value 的类型是否和初始化一致
@@ -25,7 +26,7 @@ type ArrayList struct {
     data []interface{}
     // len ,number of elements in ArrayList
     len int
-    // typeOf , ArrayList type
+    // typeOf ,ArrayList type
     // Because Go not have Generic
     typeOf string
 }
