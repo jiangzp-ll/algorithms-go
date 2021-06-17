@@ -3,7 +3,7 @@
     * `func NewArrayList(typeOf string) (*ArrayList, error)` ：初始化数组，包含数组中元素类型
     * `func NewArrayList(typeOf string, cap int) (*ArrayList, error)` ：初始化数组，包含数组中元素类型以及容量
     * `func (arr *ArrayList) Add(val interface{}) error`：添加元素到末尾
-    * `func (arr *ArrayList) checkType(val interface{}) error`：检查输入的 value 的类型是否和初始化一致
+    * `func (arr *ArrayList) Check(val interface{}) error`：检查输入的 value 的类型是否和初始化一致
     * `func (arr *ArrayList) Clear()`：清空数组
     * `func (arr *ArrayList) Contain(val interface{}) bool`：判断数组中是否包含该元素
     * `func (arr *ArrayList) Data() []interface{}`：获取数组中所有元素
