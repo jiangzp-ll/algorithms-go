@@ -4,12 +4,13 @@ import "errors"
 
 var (
 	// General error
-	NotExistError    = errors.New("the value not exist")
-	InvalidTypeError = errors.New("invalid type")
+	NotExistError              = errors.New("the value not exist")
+	InvalidCapacityError       = errors.New("capacity must be greater than or equal to zero")
+	InvalidTypeError           = errors.New("invalid type")
+	InputValueCannotBeNilError = errors.New("input value cannot be nil")
 
 	// ArrayList error
 	IndexOutOfBoundsError      = errors.New("array index out of bounds error")
-	InvalidCapacityError       = errors.New("capacity must be greater than or equal to zero")
 	SubArrayListWithIndexError = errors.New("start must be less than or equal to end")
 
 	// Single/Double LinkedList error
@@ -22,7 +23,6 @@ var (
 	StackIsEmptyError = errors.New("stack is empty")
 
 	// Queue
-	QueueIsFullError           = errors.New("queue is full")
-	QueueIsEmptyError          = errors.New("queue is empty")
-	InputValueCannotBeNilError = errors.New("input value cannot be nil")
+	QueueIsFullError  = errors.New("queue is full")
+	QueueIsEmptyError = errors.New("queue is empty")
 )
