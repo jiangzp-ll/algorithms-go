@@ -1,6 +1,9 @@
 package stack
 
-import errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+import (
+	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+	"github.com/zepeng-jiang/go-basic-demo/pkg/generic"
+)
 
 const BasicCapacity = 16
 
@@ -8,16 +11,53 @@ const BasicCapacity = 16
 type ArrayStack struct {
 	// data ,store data
 	data []interface{}
+	// len ,the number of elements in the stack
+	len int
 	// top ,top of the stack
 	top int
+	// typeOf ,ArrayStack type
+	// Because Go not have Generic
+	typeOf string
 }
 
 // NewArrayStack ,init ArrayStack
-func NewArrayStack() *ArrayStack {
-	return &ArrayStack{
-		data: make([]interface{}, 0, BasicCapacity),
-		top:  -1,
+func NewArrayStack(typeOf string) (*ArrayStack, error) {
+	if typeOf == "" {
+		return nil, errors2.InvalidTypeError
 	}
+	return &ArrayStack{
+		data:   make([]interface{}, 0, BasicCapacity),
+		len:    0,
+		top:    -1,
+		typeOf: typeOf,
+	}, nil
+}
+
+// NewArrayStackWithCap ,init ArrayStack with capacity
+func NewArrayStackWithCap(typeOf string, c int) (*ArrayStack, error) {
+	if typeOf == "" {
+		return nil, errors2.InvalidTypeError
+	}
+	if c < 0 {
+		return nil, errors2.InvalidCapacityError
+	}
+	return &ArrayStack{
+		data:   make([]interface{}, 0, c),
+		len:    0,
+		top:    -1,
+		typeOf: typeOf,
+	}, nil
+}
+
+// Check ,check input value type
+func (s *ArrayStack) Check(val interface{}) error {
+	if nil == val {
+		return errors2.InputValueCannotBeNilError
+	}
+	if err := generic.CheckType(s.typeOf, val); err != nil {
+		return err
+	}
+	return nil
 }
 
 // expansion ,stack expansion
@@ -43,13 +83,19 @@ func (s *ArrayStack) expansion() {
 
 // Flush ,clear the stack
 func (s *ArrayStack) Flush() {
-	s.data = make([]interface{}, 0, BasicCapacity)
+	s.data = make([]interface{}, 0, cap(s.data))
+	s.len = 0
 	s.top = -1
 }
 
 // IsEmpty ,determine whether the stack is empty
 func (s *ArrayStack) IsEmpty() bool {
 	return s.top < 0
+}
+
+// Len ,get the number of elements in the stack
+func (s *ArrayStack) Len() int {
+	return s.len
 }
 
 // Peek ,get and not remove the element from the top of the stack
@@ -68,25 +114,34 @@ func (s *ArrayStack) Pop() (interface{}, error) {
 	}
 	v := s.data[s.top]
 	s.data = s.data[:s.top]
+	s.len--
 	s.top--
 	return v, nil
 }
 
 // Push ,push the element to top of the stack
-func (s *ArrayStack) Push(val interface{}) {
+func (s *ArrayStack) Push(val interface{}) error {
+	if err := s.Check(val); err != nil {
+		return err
+	}
 	if s.top == cap(s.data)-1 {
 		s.expansion()
 	}
 	s.data = append(s.data, val)
+	s.len++
 	s.top++
+	return nil
 }
 
-// Search , return the index of the value in the stack
+// Search ,return the index of the value in the stack
 // Why return index when there is an error?
-//All returned indexes are invalid. Avoid not checking error, but insist on using the returned value
+// All returned indexes are invalid. Avoid not checking error, but insist on using the returned value
 func (s *ArrayStack) Search(val interface{}) (int, error) {
 	if s.IsEmpty() {
 		return -1, errors2.StackIsEmptyError
+	}
+	if err := s.Check(val); err != nil {
+		return -1, err
 	}
 	var index int
 	for i := 0; i < len(s.data); i++ {

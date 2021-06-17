@@ -2,6 +2,7 @@ package stack
 
 import (
 	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
+	"github.com/zepeng-jiang/go-basic-demo/pkg/generic"
 )
 
 // node ,LinkedList element
@@ -13,7 +14,13 @@ type node struct {
 
 // LinkedListStack ,Stack based on Double LinkedList
 type LinkedListStack struct {
+	// top ,top of the stack
 	top *node
+	// len ,the number of elements in the stack
+	len int
+	// typeOf ,LinkedListStack type
+	// Because Go not have Generic
+	typeOf string
 }
 
 // newNode ,init a node
@@ -26,8 +33,26 @@ func newNode(val interface{}) *node {
 }
 
 // NewLinkedListStack ,init LinkedListStack
-func NewLinkedListStack() *LinkedListStack {
-	return &LinkedListStack{newNode(nil)}
+func NewLinkedListStack(typeOf string) (*LinkedListStack, error) {
+	if typeOf == "" {
+		return nil, errors2.InvalidTypeError
+	}
+	return &LinkedListStack{
+		top:    newNode(nil),
+		len:    0,
+		typeOf: typeOf,
+	}, nil
+}
+
+// Check ,check input value
+func (s *LinkedListStack) Check(val interface{}) error {
+	if nil == val {
+		return errors2.InputValueCannotBeNilError
+	}
+	if err := generic.CheckType(s.typeOf, val); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Flush ,clear the stack
@@ -38,6 +63,11 @@ func (s *LinkedListStack) Flush() {
 // IsEmpty ,determine whether the stack is empty
 func (s *LinkedListStack) IsEmpty() bool {
 	return nil == s.top.value
+}
+
+// Len ,get the number of elements in the stack
+func (s *LinkedListStack) Len() int {
+	return s.len
 }
 
 // Peek ,get and not remove the element from the top of the stack
@@ -63,22 +93,28 @@ func (s *LinkedListStack) Pop() (interface{}, error) {
 	}
 	pre := cur.prev
 	pre.next = nil
+	s.len--
 	return cur.value, nil
 }
 
 // Push ,push the element to top of the stack
-func (s *LinkedListStack) Push(val interface{}) {
+func (s *LinkedListStack) Push(val interface{}) error {
+	if err := s.Check(val); err != nil {
+		return err
+	}
 	node := newNode(val)
 	if s.IsEmpty() {
 		s.top = node
-		return
+		s.len = 1
+		return nil
 	}
 	cur := s.top
 	for nil != cur.next {
 		cur = cur.next
 	}
 	cur.next, node.prev = node, cur
-	return
+	s.len++
+	return nil
 }
 
 // Search , return the index of the value in the stack
@@ -87,6 +123,9 @@ func (s *LinkedListStack) Push(val interface{}) {
 func (s *LinkedListStack) Search(val interface{}) (int, error) {
 	if s.IsEmpty() {
 		return -1, errors2.StackIsEmptyError
+	}
+	if err := s.Check(val); err != nil {
+		return -1, err
 	}
 	if nil == s.top.next {
 		if s.top.value == val {
