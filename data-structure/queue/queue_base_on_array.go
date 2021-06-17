@@ -15,7 +15,7 @@ type ArrayQueue struct {
 	head int
 	// tail ,the tail of the queue
 	tail int
-	// typeOf , LinkedList type
+	// typeOf ,ArrayQueue type
 	// Because Go not have Generic
 	typeOf string
 }

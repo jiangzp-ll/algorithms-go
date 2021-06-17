@@ -20,7 +20,7 @@ type LinkedListQueue struct {
 	tail *node
 	// len ,the number of elements in the queue
 	len int
-	// typeOf , LinkedList type
+	// typeOf ,LinkedListQueue type
 	// Because Go not have Generic
 	typeOf string
 }
