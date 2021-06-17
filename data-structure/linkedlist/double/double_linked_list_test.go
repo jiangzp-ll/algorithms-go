@@ -11,7 +11,7 @@ var (
 	l    = initDoubleLinkedList("int")
 )
 
-func Test_Node_NewNode(t *testing.T) {
+func TestNode_NewNode(t *testing.T) {
 	in := "a"
 	node := NewNode(in)
 	if node.Value() == in && node.Next() == nil {
@@ -21,7 +21,7 @@ func Test_Node_NewNode(t *testing.T) {
 	}
 }
 
-func TestLinkedList_NewLinkedList(t *testing.T) {
+func TestNewLinkedList(t *testing.T) {
 	ll, err := NewLinkedList("string")
 	if err != nil {
 		t.Errorf("init a LinkedList has error! error: %v ", err)
@@ -30,7 +30,7 @@ func TestLinkedList_NewLinkedList(t *testing.T) {
 	t.Logf("init a LinkedList is success! LinkedList: %v ", ll)
 }
 
-func TestLinkedList_NewLinkedList_With_Type_Is_Empty(t *testing.T) {
+func TestNewLinkedList_With_Type_Is_Empty(t *testing.T) {
 	_, err := NewLinkedList("")
 	if err != nil {
 		if errors.Is(err, errors2.InvalidTypeError) {
@@ -45,7 +45,7 @@ func TestLinkedList_NewLinkedList_With_Type_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Add(t *testing.T) {
+func TestLinkedList_Add(t *testing.T) {
 	defer list.Clear()
 	in := "d"
 	elements := []string{"a", "b", "c"}
@@ -61,7 +61,7 @@ func Test_LinkedList_Add(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Add_With_LinkedList_Is_Empty(t *testing.T) {
+func TestLinkedList_Add_With_LinkedList_Is_Empty(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	if err := list.Add(in); err != nil {
@@ -75,7 +75,7 @@ func Test_LinkedList_Add_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Add_Different_Type_Value(t *testing.T) {
+func TestLinkedList_Add_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	in := 1
 	if err := list.Add(in); err != nil {
@@ -91,7 +91,7 @@ func Test_LinkedList_Add_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_AddToHead(t *testing.T) {
+func TestLinkedList_AddToHead(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -107,7 +107,7 @@ func Test_LinkedList_AddToHead(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_AddToHead_With_LinkedList_Is_Empty(t *testing.T) {
+func TestLinkedList_AddToHead_With_LinkedList_Is_Empty(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	if err := list.AddToHead(in); err != nil {
@@ -121,7 +121,7 @@ func Test_LinkedList_AddToHead_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_AddToHead_With_Different_Type_Value(t *testing.T) {
+func TestLinkedList_AddToHead_With_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	in := 1
 	if err := list.AddToHead(in); err != nil {
@@ -137,7 +137,7 @@ func Test_LinkedList_AddToHead_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_AllIndexesOf(t *testing.T) {
+func TestLinkedList_AllIndexesOf(t *testing.T) {
 	defer list.Clear()
 	flag := true
 	target := []int{1, 3}
@@ -165,7 +165,7 @@ func Test_LinkedList_AllIndexesOf(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_AllIndexesOf_With_LinkedList_Number_Is_Even(t *testing.T) {
+func TestLinkedList_AllIndexesOf_With_LinkedList_Number_Is_Even(t *testing.T) {
 	defer list.Clear()
 	flag := true
 	target := []int{1, 3}
@@ -193,7 +193,7 @@ func Test_LinkedList_AllIndexesOf_With_LinkedList_Number_Is_Even(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_AllIndexesOf_With_LinkedList_Only_One_Element(t *testing.T) {
+func TestLinkedList_AllIndexesOf_With_LinkedList_Only_One_Element(t *testing.T) {
 	defer list.Clear()
 	flag := true
 	target := []int{1}
@@ -220,7 +220,7 @@ func Test_LinkedList_AllIndexesOf_With_LinkedList_Only_One_Element(t *testing.T)
 	}
 }
 
-func Test_LinkedList_AllIndexesOf_With_LinkedList_Only_One_Element_And_Value_Not_In_LinkedList(t *testing.T) {
+func TestLinkedList_AllIndexesOf_With_LinkedList_Only_One_Element_And_Value_Not_In_LinkedList(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	_ = list.Add("b")
@@ -238,7 +238,7 @@ func Test_LinkedList_AllIndexesOf_With_LinkedList_Only_One_Element_And_Value_Not
 	}
 }
 
-func Test_LinkedList_AllIndexesOf_With_LinkedList_Is_Empty(t *testing.T) {
+func TestLinkedList_AllIndexesOf_With_LinkedList_Is_Empty(t *testing.T) {
 	defer l.Clear()
 	in := 1
 	_, err := l.AllIndexesOf(in)
@@ -255,7 +255,7 @@ func Test_LinkedList_AllIndexesOf_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_AllIndexesOf_With_Different_Type_Value(t *testing.T) {
+func TestLinkedList_AllIndexesOf_With_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	in := 1
 	_, err := list.AllIndexesOf(in)
@@ -272,7 +272,17 @@ func Test_LinkedList_AllIndexesOf_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Clear(t *testing.T) {
+func TestLinkedList_Check_With_Input_Is_Nil(t *testing.T) {
+	defer list.Clear()
+	_ = list.Add("a")
+	if err := list.Check(nil); err != nil {
+		t.Log("input value type not same with LinkedList type.")
+	} else {
+		t.Error("function Check has bug")
+	}
+}
+
+func TestLinkedList_Clear(t *testing.T) {
 	elements := []string{"a", "b", "c"}
 	addValueToLinkedList(elements)
 	list.Clear()
@@ -283,7 +293,7 @@ func Test_LinkedList_Clear(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Contain(t *testing.T) {
+func TestLinkedList_Contain(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -297,7 +307,7 @@ func Test_LinkedList_Contain(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Contain_With_Value_Not_In_The_LinkedList(t *testing.T) {
+func TestLinkedList_Contain_With_Value_Not_In_The_LinkedList(t *testing.T) {
 	defer list.Clear()
 	in := "d"
 	elements := []string{"a", "b", "c"}
@@ -310,7 +320,7 @@ func Test_LinkedList_Contain_With_Value_Not_In_The_LinkedList(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Contain_With_Different_Type_Value(t *testing.T) {
+func TestLinkedList_Contain_With_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	in := 1
 	elements := []string{"a", "b", "c"}
@@ -323,7 +333,7 @@ func Test_LinkedList_Contain_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Get(t *testing.T) {
+func TestLinkedList_Get(t *testing.T) {
 	defer list.Clear()
 	target := "b"
 	index := 2
@@ -341,7 +351,7 @@ func Test_LinkedList_Get(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Get_With_Index_Less_Than_Zero(t *testing.T) {
+func TestLinkedList_Get_With_Index_Less_Than_Zero(t *testing.T) {
 	defer list.Clear()
 	index := -1
 	elements := []string{"a", "b", "c"}
@@ -360,7 +370,7 @@ func Test_LinkedList_Get_With_Index_Less_Than_Zero(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Get_With_Index_Out_Of_LinkedList_Range(t *testing.T) {
+func TestLinkedList_Get_With_Index_Out_Of_LinkedList_Range(t *testing.T) {
 	defer list.Clear()
 	elements := []string{"a", "b", "c"}
 	index := len(elements) + 1
@@ -379,7 +389,7 @@ func Test_LinkedList_Get_With_Index_Out_Of_LinkedList_Range(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_HasCycle(t *testing.T) {
+func TestLinkedList_HasCycle(t *testing.T) {
 	defer list.Clear()
 	elements := []string{"a", "b", "c"}
 	addValueToLinkedList(elements)
@@ -392,7 +402,7 @@ func Test_LinkedList_HasCycle(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_HasCycle_With_Not_Has_Cycle(t *testing.T) {
+func TestLinkedList_HasCycle_With_Not_Has_Cycle(t *testing.T) {
 	defer list.Clear()
 	elements := []string{"a", "b", "c"}
 	addValueToLinkedList(elements)
@@ -404,7 +414,7 @@ func Test_LinkedList_HasCycle_With_Not_Has_Cycle(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_HasCycle_With_LinkedList_Only_One_Element(t *testing.T) {
+func TestLinkedList_HasCycle_With_LinkedList_Only_One_Element(t *testing.T) {
 	defer list.Clear()
 	_ = list.Add("a")
 	hasCycle := list.HasCycle()
@@ -415,7 +425,7 @@ func Test_LinkedList_HasCycle_With_LinkedList_Only_One_Element(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_HasCycle_With_LinkedList_Is_Empty(t *testing.T) {
+func TestLinkedList_HasCycle_With_LinkedList_Is_Empty(t *testing.T) {
 	hasCycle := l.HasCycle()
 	if !hasCycle {
 		t.Log("LinkedList not has cycle")
@@ -424,7 +434,7 @@ func Test_LinkedList_HasCycle_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_IndexOf(t *testing.T) {
+func TestLinkedList_IndexOf(t *testing.T) {
 	defer list.Clear()
 	index := 2
 	target := "b"
@@ -442,7 +452,7 @@ func Test_LinkedList_IndexOf(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_IndexOf_With_The_Value_Not_In_LinkedList(t *testing.T) {
+func TestLinkedList_IndexOf_With_The_Value_Not_In_LinkedList(t *testing.T) {
 	defer list.Clear()
 	target := "d"
 	elements := []string{"a", "b", "c"}
@@ -461,7 +471,7 @@ func Test_LinkedList_IndexOf_With_The_Value_Not_In_LinkedList(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_IndexOf_With_LinkedList_Is_Empty(t *testing.T) {
+func TestLinkedList_IndexOf_With_LinkedList_Is_Empty(t *testing.T) {
 	defer l.Clear()
 	_, err := l.IndexOf(1)
 	if err != nil {
@@ -477,7 +487,7 @@ func Test_LinkedList_IndexOf_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_IndexOf_With_Different_Type_Value(t *testing.T) {
+func TestLinkedList_IndexOf_With_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	_, err := list.IndexOf(1)
 	if err != nil {
@@ -493,7 +503,7 @@ func Test_LinkedList_IndexOf_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertAfter(t *testing.T) {
+func TestLinkedList_InsertAfter(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -512,7 +522,7 @@ func Test_LinkedList_InsertAfter(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertAfter_With_Not_Existed_Node(t *testing.T) {
+func TestLinkedList_InsertAfter_With_Not_Existed_Node(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -531,7 +541,7 @@ func Test_LinkedList_InsertAfter_With_Not_Existed_Node(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertAfter_With_Empty_Node(t *testing.T) {
+func TestLinkedList_InsertAfter_With_Empty_Node(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -550,7 +560,7 @@ func Test_LinkedList_InsertAfter_With_Empty_Node(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertAfter_With_Empty_LinkedList(t *testing.T) {
+func TestLinkedList_InsertAfter_With_Empty_LinkedList(t *testing.T) {
 	defer l.Clear()
 	node := NewNode(1)
 	in := 2
@@ -567,7 +577,7 @@ func Test_LinkedList_InsertAfter_With_Empty_LinkedList(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertAfter_With_Different_Type_Value(t *testing.T) {
+func TestLinkedList_InsertAfter_With_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	_ = list.Add("a")
 	node := list.Head()
@@ -585,7 +595,7 @@ func Test_LinkedList_InsertAfter_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertBefore(t *testing.T) {
+func TestLinkedList_InsertBefore(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -604,7 +614,7 @@ func Test_LinkedList_InsertBefore(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertBefore_With_Head(t *testing.T) {
+func TestLinkedList_InsertBefore_With_Head(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -622,7 +632,7 @@ func Test_LinkedList_InsertBefore_With_Head(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertBefore_With_Not_Existed_Node(t *testing.T) {
+func TestLinkedList_InsertBefore_With_Not_Existed_Node(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -641,7 +651,7 @@ func Test_LinkedList_InsertBefore_With_Not_Existed_Node(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertBefore_With_Empty_Node(t *testing.T) {
+func TestLinkedList_InsertBefore_With_Empty_Node(t *testing.T) {
 	defer list.Clear()
 	in := "a"
 	elements := []string{"a", "b", "c"}
@@ -660,7 +670,7 @@ func Test_LinkedList_InsertBefore_With_Empty_Node(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertBefore_With_Empty_LinkedList(t *testing.T) {
+func TestLinkedList_InsertBefore_With_Empty_LinkedList(t *testing.T) {
 	defer l.Clear()
 	node := NewNode(1)
 	in := 2
@@ -677,7 +687,7 @@ func Test_LinkedList_InsertBefore_With_Empty_LinkedList(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_InsertBefore_With_Different_Type_Value(t *testing.T) {
+func TestLinkedList_InsertBefore_With_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	_ = list.Add("a")
 	node := list.Head()
@@ -695,7 +705,7 @@ func Test_LinkedList_InsertBefore_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_LastIndexOf(t *testing.T) {
+func TestLinkedList_LastIndexOf(t *testing.T) {
 	defer list.Clear()
 	ti := 5
 	in := "b"
@@ -713,7 +723,7 @@ func Test_LinkedList_LastIndexOf(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_LastIndexOf_With_Value_Not_In_LinkedList(t *testing.T) {
+func TestLinkedList_LastIndexOf_With_Value_Not_In_LinkedList(t *testing.T) {
 	defer list.Clear()
 	in := "d"
 	elements := []string{"a", "b", "c"}
@@ -732,7 +742,7 @@ func Test_LinkedList_LastIndexOf_With_Value_Not_In_LinkedList(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_LastIndexOf_With_LinkedList_Is_Empty(t *testing.T) {
+func TestLinkedList_LastIndexOf_With_LinkedList_Is_Empty(t *testing.T) {
 	defer l.Clear()
 	in := 1
 	_, err := l.LastIndexOf(in)
@@ -749,7 +759,7 @@ func Test_LinkedList_LastIndexOf_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_LastIndexOf_With_Different_Type_Value(t *testing.T) {
+func TestLinkedList_LastIndexOf_With_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	_ = list.Add("a")
 	in := 1
@@ -767,7 +777,7 @@ func Test_LinkedList_LastIndexOf_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Len(t *testing.T) {
+func TestLinkedList_Len(t *testing.T) {
 	defer list.Clear()
 	elements := []string{"a", "b", "c"}
 	addValueToLinkedList(elements)
@@ -778,7 +788,7 @@ func Test_LinkedList_Len(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Len_With_LinkedList_Is_Empty(t *testing.T) {
+func TestLinkedList_Len_With_LinkedList_Is_Empty(t *testing.T) {
 	if list.Len() == 0 {
 		t.Log("get LinkedList len is success")
 	} else {
@@ -786,7 +796,7 @@ func Test_LinkedList_Len_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Remove(t *testing.T) {
+func TestLinkedList_Remove(t *testing.T) {
 	defer list.Clear()
 	index := 2
 	elements := []string{"a", "b", "c"}
@@ -803,7 +813,7 @@ func Test_LinkedList_Remove(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Remove_With_LinkedList_Only_One_Element(t *testing.T) {
+func TestLinkedList_Remove_With_LinkedList_Only_One_Element(t *testing.T) {
 	defer list.Clear()
 	index := 1
 	in := "a"
@@ -820,7 +830,7 @@ func Test_LinkedList_Remove_With_LinkedList_Only_One_Element(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Remove_With_LinkedList_Is_Empty(t *testing.T) {
+func TestLinkedList_Remove_With_LinkedList_Is_Empty(t *testing.T) {
 	defer list.Clear()
 	node := NewNode("a")
 	if err := list.Remove(node); err != nil {
@@ -836,7 +846,7 @@ func Test_LinkedList_Remove_With_LinkedList_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Remove_With_Node_Not_Existed(t *testing.T) {
+func TestLinkedList_Remove_With_Node_Not_Existed(t *testing.T) {
 	defer list.Clear()
 	elements := []string{"a", "b", "c"}
 	addValueToLinkedList(elements)
@@ -854,7 +864,7 @@ func Test_LinkedList_Remove_With_Node_Not_Existed(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Remove_With_Node_Is_Empty(t *testing.T) {
+func TestLinkedList_Remove_With_Node_Is_Empty(t *testing.T) {
 	defer list.Clear()
 	elements := []string{"a", "b", "c"}
 	addValueToLinkedList(elements)
@@ -872,7 +882,7 @@ func Test_LinkedList_Remove_With_Node_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_RemoveOf(t *testing.T) {
+func TestLinkedList_RemoveOf(t *testing.T) {
 	defer list.Clear()
 	index := 2
 	elements := []string{"a", "b", "c"}
@@ -889,7 +899,7 @@ func Test_LinkedList_RemoveOf(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_RemoveOf_With_LinkedList_Only_One_Element(t *testing.T) {
+func TestLinkedList_RemoveOf_With_LinkedList_Only_One_Element(t *testing.T) {
 	defer list.Clear()
 	index := 1
 	in := "a"
@@ -906,7 +916,7 @@ func Test_LinkedList_RemoveOf_With_LinkedList_Only_One_Element(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_RemoveOf_With_Index_Not_In_Range(t *testing.T) {
+func TestLinkedList_RemoveOf_With_Index_Not_In_Range(t *testing.T) {
 	defer list.Clear()
 	elements := []string{"a", "b", "c"}
 	index := len(elements) + 1
@@ -925,7 +935,7 @@ func Test_LinkedList_RemoveOf_With_Index_Not_In_Range(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Reverse(t *testing.T) {
+func TestLinkedList_Reverse(t *testing.T) {
 	defer list.Clear()
 	elements := []string{"a", "b", "c"}
 	addValueToLinkedList(elements)
@@ -946,7 +956,7 @@ func Test_LinkedList_Reverse(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Set(t *testing.T) {
+func TestLinkedList_Set(t *testing.T) {
 	defer list.Clear()
 	target := "a"
 	index := 2
@@ -965,7 +975,7 @@ func Test_LinkedList_Set(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Set_With_Invalid_Index(t *testing.T) {
+func TestLinkedList_Set_With_Invalid_Index(t *testing.T) {
 	defer list.Clear()
 	target := "a"
 	index := -1
@@ -985,7 +995,7 @@ func Test_LinkedList_Set_With_Invalid_Index(t *testing.T) {
 	}
 }
 
-func Test_LinkedList_Set_With_Different_Type_Value(t *testing.T) {
+func TestLinkedList_Set_With_Different_Type_Value(t *testing.T) {
 	defer list.Clear()
 	target := 1
 	index := 3

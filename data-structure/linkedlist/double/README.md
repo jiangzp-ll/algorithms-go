@@ -9,6 +9,7 @@
     * `func (l *LinkedList) Add(val interface{}) error`：添加元素到双向链表的尾部
     * `func (l *LinkedList) AddToHead(val interface{}) error`：插入元素双向链表头部
     * `func (l *LinkedList) AllIndexesOf(val interface{}) ([]int, error)`：返回指定元素在双向链表中出现的所有索引
+    * `func (l *LinkedList) Check(val interface{}) error`：检查输入值的类型是否与双向链表的一致
     * `func (l *LinkedList) checkElementIndex(index int) bool`：检查下标是否在双向链表中
     * `func (l *LinkedList) checkNodeAndLinkedList(n *Node) error`：检查Node和LinkedList是否为空
     * `func (l *LinkedList) Clear()`：清空双向链表
