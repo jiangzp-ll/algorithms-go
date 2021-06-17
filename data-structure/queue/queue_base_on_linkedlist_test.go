@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var lq, _ = NewLinkedListQueue("int")
+var lq = initLinkedListQueue("int")
 
 func TestLinkedListQueue_With_TypeOf_Is_Empty(t *testing.T) {
 	_, err := NewLinkedListQueue("")
@@ -62,6 +62,16 @@ func Test_LinkedListQueue_Add_With_Different_Type_Value(t *testing.T) {
 		}
 	} else {
 		t.Error("function Add hsa bug")
+	}
+}
+
+func TestLinkedListQueue_Check_With_Input_Is_Nil(t *testing.T) {
+	defer lq.Clear()
+	_ = lq.Add("a")
+	if err := lq.Check(nil); err != nil {
+		t.Log("input value type not same with LinkedListQueue type.")
+	} else {
+		t.Error("function Check has bug")
 	}
 }
 
@@ -227,6 +237,12 @@ func Test_LinkedListQueue_Remove_With_Queue_Is_Empty(t *testing.T) {
 	} else {
 		t.Error("function Remove hsa bug")
 	}
+}
+
+// initLinkedListQueue .
+func initLinkedListQueue(typeof string) *LinkedListQueue {
+	queue, _ := NewLinkedListQueue(typeof)
+	return queue
 }
 
 // addElementToLinkedListQueue .

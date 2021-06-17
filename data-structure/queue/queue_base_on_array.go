@@ -2,7 +2,7 @@ package queue
 
 import (
 	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
-	"reflect"
+	"github.com/zepeng-jiang/go-basic-demo/pkg/generic"
 )
 
 // ArrayQueue ,Queue based on Array
@@ -39,7 +39,7 @@ func (q *ArrayQueue) Add(val interface{}) error {
 	if nil == val {
 		return errors2.InputValueCannotBeNilError
 	}
-	if err := q.checkType(val); err != nil {
+	if err := q.Check(val); err != nil {
 		return err
 	}
 	if len(q.data) <= q.len {
@@ -57,11 +57,13 @@ func (q *ArrayQueue) Add(val interface{}) error {
 	return nil
 }
 
-// checkType ,check input type
-func (q *ArrayQueue) checkType(val interface{}) error {
-	t := reflect.TypeOf(val).Kind().String()
-	if q.typeOf != t {
-		return errors2.InvalidTypeError
+// Check ,check input value type
+func (q *ArrayQueue) Check(val interface{}) error {
+	if nil == val {
+		return errors2.InputValueCannotBeNilError
+	}
+	if err := generic.CheckType(q.typeOf, val); err != nil {
+		return err
 	}
 	return nil
 }
@@ -79,7 +81,7 @@ func (q *ArrayQueue) Contain(val interface{}) bool {
 	if q.len == 0 || nil == val {
 		return false
 	}
-	if err := q.checkType(val); err != nil {
+	if err := q.Check(val); err != nil {
 		return false
 	}
 	for _, v := range q.data {

@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var aq, _ = NewArrayQueue("int", 3)
+var aq = initArrayQueue("int", 3)
 
 func TestNewArrayQueue_With_TypeOf_Is_Empty(t *testing.T) {
 	_, err := NewArrayQueue("", 3)
@@ -23,7 +23,7 @@ func TestNewArrayQueue_With_TypeOf_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Add(t *testing.T) {
+func TestArrayQueue_Add(t *testing.T) {
 	defer aq.Clear()
 	flag := true
 	in := []int{1, 2, 3}
@@ -41,7 +41,7 @@ func Test_ArrayQueue_Add(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Add_With_Queue_Is_Full(t *testing.T) {
+func TestArrayQueue_Add_With_Queue_Is_Full(t *testing.T) {
 	defer aq.Clear()
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -58,7 +58,7 @@ func Test_ArrayQueue_Add_With_Queue_Is_Full(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Add_With_Value_Is_Nil(t *testing.T) {
+func TestArrayQueue_Add_With_Value_Is_Nil(t *testing.T) {
 	defer aq.Clear()
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -75,7 +75,7 @@ func Test_ArrayQueue_Add_With_Value_Is_Nil(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Add_With_Different_Type_Value(t *testing.T) {
+func TestArrayQueue_Add_With_Different_Type_Value(t *testing.T) {
 	defer aq.Clear()
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -92,7 +92,17 @@ func Test_ArrayQueue_Add_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Clear(t *testing.T) {
+func TestArrayQueue_Check_With_Input_Is_Nil(t *testing.T) {
+	defer aq.Clear()
+	_ = aq.Add("a")
+	if err := aq.Check(nil); err != nil {
+		t.Log("input value type not same with ArrayQueue type.")
+	} else {
+		t.Error("function Check has bug")
+	}
+}
+
+func TestArrayQueue_Clear(t *testing.T) {
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
 	aq.Clear()
@@ -103,7 +113,7 @@ func Test_ArrayQueue_Clear(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Contain(t *testing.T) {
+func TestArrayQueue_Contain(t *testing.T) {
 	defer aq.Clear()
 	target := 2
 	in := []int{1, target, 3}
@@ -116,7 +126,7 @@ func Test_ArrayQueue_Contain(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Contain_With_Queue_Not_Exist_The_Value(t *testing.T) {
+func TestArrayQueue_Contain_With_Queue_Not_Exist_The_Value(t *testing.T) {
 	defer aq.Clear()
 	target := 4
 	in := []int{1, 2, 3}
@@ -129,7 +139,7 @@ func Test_ArrayQueue_Contain_With_Queue_Not_Exist_The_Value(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Contain_With_Queue_Is_Empty(t *testing.T) {
+func TestArrayQueue_Contain_With_Queue_Is_Empty(t *testing.T) {
 	defer aq.Clear()
 	target := 1
 	isContain := aq.Contain(target)
@@ -140,7 +150,7 @@ func Test_ArrayQueue_Contain_With_Queue_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Contain_With_Value_Is_Nil(t *testing.T) {
+func TestArrayQueue_Contain_With_Value_Is_Nil(t *testing.T) {
 	defer aq.Clear()
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -152,7 +162,7 @@ func Test_ArrayQueue_Contain_With_Value_Is_Nil(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Contain_With_Different_Type_Value(t *testing.T) {
+func TestArrayQueue_Contain_With_Different_Type_Value(t *testing.T) {
 	defer aq.Clear()
 	target := "a"
 	in := []int{1, 2, 3}
@@ -165,7 +175,7 @@ func Test_ArrayQueue_Contain_With_Different_Type_Value(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_IsEmpty(t *testing.T) {
+func TestArrayQueue_IsEmpty(t *testing.T) {
 	isEmpty := aq.IsEmpty()
 	if isEmpty {
 		t.Log("queue is empty")
@@ -174,7 +184,7 @@ func Test_ArrayQueue_IsEmpty(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_IsEmpty_With_Queue_Not_Empty(t *testing.T) {
+func TestArrayQueue_IsEmpty_With_Queue_Not_Empty(t *testing.T) {
 	defer aq.Clear()
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -186,7 +196,7 @@ func Test_ArrayQueue_IsEmpty_With_Queue_Not_Empty(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Peek(t *testing.T) {
+func TestArrayQueue_Peek(t *testing.T) {
 	defer aq.Clear()
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -202,7 +212,7 @@ func Test_ArrayQueue_Peek(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Peek_With_Queue_Is_Empty(t *testing.T) {
+func TestArrayQueue_Peek_With_Queue_Is_Empty(t *testing.T) {
 	_, err := aq.Peek()
 	if err != nil {
 		if errors.Is(err, errors2.QueueIsEmptyError) {
@@ -217,7 +227,7 @@ func Test_ArrayQueue_Peek_With_Queue_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Remove(t *testing.T) {
+func TestArrayQueue_Remove(t *testing.T) {
 	defer aq.Clear()
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -233,7 +243,7 @@ func Test_ArrayQueue_Remove(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Remove_To_Queue_Is_Empty(t *testing.T) {
+func TestArrayQueue_Remove_To_Queue_Is_Empty(t *testing.T) {
 	defer aq.Clear()
 	in := []int{1, 2, 3}
 	addElementToArrayQueue(in)
@@ -254,7 +264,7 @@ func Test_ArrayQueue_Remove_To_Queue_Is_Empty(t *testing.T) {
 	}
 }
 
-func Test_ArrayQueue_Remove_With_Queue_Is_Empty(t *testing.T) {
+func TestArrayQueue_Remove_With_Queue_Is_Empty(t *testing.T) {
 	_, err := aq.Remove()
 	if err != nil {
 		if errors.Is(err, errors2.QueueIsEmptyError) {
@@ -267,6 +277,12 @@ func Test_ArrayQueue_Remove_With_Queue_Is_Empty(t *testing.T) {
 	} else {
 		t.Error("function Remove hsa bug")
 	}
+}
+
+// initArrayQueue .
+func initArrayQueue(typeof string, c int) *ArrayQueue {
+	queue, _ := NewArrayQueue(typeof, c)
+	return queue
 }
 
 // addElementToArrayQueue .

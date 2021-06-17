@@ -2,7 +2,7 @@
 * <a href="#queue"><font size=4 color=#00f>type Queue</font></a>：队列
     * `func NewQueue(typeOf string) (*Queue, error)` ：初始化队列
     * `func Add(val interface{}) error`：元素入队
-    * `func checkType(val interface{}) error`：检查输入元素类型是否和声明的一致
+    * `func Check(val interface{}) error`：检查输入元素类型是否和声明的一致
     * `func Clear()`：清空队列
     * `func Contain(val interface{}) bool`：判断元素是否在队列中
     * `func IsEmpty() bool`：判断队列是否为空
@@ -14,8 +14,8 @@
 type Queue interface {
     // Add ,add the element to the end of the queue
     Add(val interface{}) error
-    // checkType ,check input type
-    checkType(val interface{}) error
+    // Check ,check input value
+    Check(val interface{}) error
     // Clear ,clear the queue
     Clear()
     // Contain ,determine whether the value contain in the queue

@@ -4,8 +4,8 @@ package queue
 type Queue interface {
 	// Add ,add the element to the end of the queue
 	Add(val interface{}) error
-	// checkType ,check input type
-	checkType(val interface{}) error
+	// Check ,check input value
+	Check(val interface{}) error
 	// Clear ,clear the queue
 	Clear()
 	// Contain ,determine whether the value contain in the queue

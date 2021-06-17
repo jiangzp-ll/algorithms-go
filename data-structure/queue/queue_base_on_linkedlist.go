@@ -2,7 +2,7 @@ package queue
 
 import (
 	errors2 "github.com/zepeng-jiang/go-basic-demo/pkg/errors"
-	"reflect"
+	"github.com/zepeng-jiang/go-basic-demo/pkg/generic"
 )
 
 // node ,LinkedList element
@@ -52,7 +52,7 @@ func (q *LinkedListQueue) Add(val interface{}) error {
 	if nil == val {
 		return errors2.InputValueCannotBeNilError
 	}
-	if err := q.checkType(val); err != nil {
+	if err := q.Check(val); err != nil {
 		return err
 	}
 	n := newNode(val)
@@ -68,11 +68,13 @@ func (q *LinkedListQueue) Add(val interface{}) error {
 	return nil
 }
 
-// checkType ,check input type
-func (q *LinkedListQueue) checkType(val interface{}) error {
-	t := reflect.TypeOf(val).Kind().String()
-	if q.typeOf != t {
-		return errors2.InvalidTypeError
+// Check ,check input value type
+func (q *LinkedListQueue) Check(val interface{}) error {
+	if nil == val {
+		return errors2.InputValueCannotBeNilError
+	}
+	if err := generic.CheckType(q.typeOf, val); err != nil {
+		return err
 	}
 	return nil
 }
@@ -89,7 +91,7 @@ func (q *LinkedListQueue) Contain(val interface{}) bool {
 	if q.len == 0 || nil == val {
 		return false
 	}
-	if err := q.checkType(val); err != nil {
+	if err := q.Check(val); err != nil {
 		return false
 	}
 	cur := q.head
