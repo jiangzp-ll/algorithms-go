@@ -19,10 +19,10 @@ var (
 	InvalidIndexError      = errors.New("invalid index")
 	ValueNotExistError     = errors.New("value exist in the LinkedList")
 
-	// Stack
-	StackIsEmptyError = errors.New("stack is empty")
-
 	// Queue
 	QueueIsFullError  = errors.New("queue is full")
 	QueueIsEmptyError = errors.New("queue is empty")
+
+	// Stack
+	StackIsEmptyError = errors.New("stack is empty")
 )
