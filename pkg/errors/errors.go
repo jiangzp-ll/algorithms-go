@@ -3,6 +3,7 @@ package errors
 import "errors"
 
 var (
+	// Data Structure Sentinel Error
 	// General error
 	NotExistError              = errors.New("the value not exist")
 	InvalidCapacityError       = errors.New("capacity must be greater than or equal to zero")
@@ -19,10 +20,15 @@ var (
 	InvalidIndexError      = errors.New("invalid index")
 	ValueNotExistError     = errors.New("value exist in the LinkedList")
 
-	// Queue
+	// Queue error
 	QueueIsFullError  = errors.New("queue is full")
 	QueueIsEmptyError = errors.New("queue is empty")
 
-	// Stack
+	// Stack error
 	StackIsEmptyError = errors.New("stack is empty")
+
+	// Algorithm Sentinel Error
+	// BinarySearch error
+	InputSliceIsEmptyError = errors.New("slice not has element")
+	InvalidInputValueError = errors.New("input value not in slice element range")
 )
