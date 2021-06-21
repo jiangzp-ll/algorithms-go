@@ -2,7 +2,7 @@
 此项目是用 Go 简单实现一些常用的数据结构和算法，用于提升自己对数据结构和算法的理解。  
 
 ### Data Structures  
-- [ArrayList]((https://github.com/arnauddri/algorithms/tree/master/data-structures/binary-tree))
+- [ArrayList](https://github.com/jiangzp-ll/algorithms-go/blob/master/data-structure/arraylist/README.md)
 - LinkedList
    - [SingleLinkedList](https://github.com/jiangzp-ll/algorithms-go/blob/master/data-structure/linkedlist/single/README.md)
    - [DoubleLinkedList](https://github.com/jiangzp-ll/algorithms-go/blob/master/data-structure/linkedlist/double/README.md)  
